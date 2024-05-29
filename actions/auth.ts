@@ -8,7 +8,7 @@ import { signIn } from '@/auth';
 import { getUserByEmail } from '@/data/user';
 import { db } from '@/lib/prisma';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
-import { loginSchema, registerSchema } from '@/schemas';
+import { loginSchema, registerSchema } from '@/schemas/auth';
 
 export const login = async (values: z.infer<typeof loginSchema>) => {
   const validatedField = loginSchema.safeParse(values);

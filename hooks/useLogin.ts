@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 import { login } from '@/actions/auth';
-import { loginSchema } from '@/schemas';
+import { loginSchema } from '@/schemas/auth';
 /**
  * `useLogin` is a custom hook that manages the login state and interactions.
  *

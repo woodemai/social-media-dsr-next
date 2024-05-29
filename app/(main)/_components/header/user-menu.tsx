@@ -19,7 +19,6 @@ interface UserHeaderMenuProps {
 }
 
 export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
-
   if (!user) {
     return (
       <Button
@@ -42,25 +41,37 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
         <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href='/profile'>
-            <Button asChild variant='link'>Профиль</Button>
-          </Link>
+          <Button
+            asChild
+            variant='link'
+          >
+            <Link href='/profile'>Профиль</Link>
+          </Button>
         </DropdownMenuItem>
         <>
           <DropdownMenuItem>
-            <Link href='/favorite'>
-              <Button asChild variant='link'>Подписки</Button>
-            </Link>
+            <Button
+              asChild
+              variant='link'
+            >
+              <Link href='/favorite'>Подписки</Link>
+            </Button>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href='/cart'>
-              <Button asChild variant='link'>Понравившееся</Button>
-            </Link>
+            <Button
+              asChild
+              variant='link'
+            >
+              <Link href='/cart'>Понравившееся</Link>
+            </Button>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href='/cart'>
-              <Button asChild variant='link'>Сообщения</Button>
-            </Link>
+            <Button
+              asChild
+              variant='link'
+            >
+              <Link href='/cart'>Сообщения</Link>
+            </Button>
           </DropdownMenuItem>
         </>
         <DropdownMenuSeparator />
