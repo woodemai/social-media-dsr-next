@@ -13,6 +13,9 @@ const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 export const metadata: Metadata = {
   title: 'DevSphere',
   description: 'DevSphere social media for developers',
+  icons: {
+    shortcut: './icons/logo.svg'
+  }
 };
 
 export default function RootLayout({
