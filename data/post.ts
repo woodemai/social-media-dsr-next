@@ -27,6 +27,9 @@ export const getPosts = async (): Promise<FullPost[]> => {
         },
       },
     },
+    orderBy: {
+      createdAt: 'desc',
+    }
   });
   return posts;
 };

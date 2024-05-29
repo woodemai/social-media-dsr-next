@@ -40,7 +40,7 @@ export const Search = () => {
     <Dialog>
       <DialogTrigger>
         <Input
-          className='bg-muted px-2 py-1'
+          className='bg-muted/30 px-2 py-1'
           placeholder='Найти пользователя...'
         />
       </DialogTrigger>

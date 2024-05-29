@@ -16,3 +16,48 @@ export const getUsers = async (name: string) => {
     },
   });
 };
+
+export const subscribeToUser = async (id: string) => {
+  const user = await currentUser();
+  return db.user.update({
+    where: { id },
+    data: {
+      subscribers: {
+        connect: { id: user?.id }
+      }
+    },
+    include: {
+      _count: {
+        select: {
+          subscribers: {
+            where: {
+              id: user?.id
+            }
+          }
+        }
+      }
+    }
+  });
+};
+export const unsubscribeFromUser = async (id: string) => {
+  const user = await currentUser();
+  return db.user.update({
+    where: { id },
+    data: {
+      subscribers: {
+        disconnect: { id: user?.id },
+      },
+    },
+    include: {
+      _count: {
+        select: {
+          subscribers: {
+            where: {
+              id: user?.id,
+            },
+          },
+        },
+      },
+    },
+  });
+};

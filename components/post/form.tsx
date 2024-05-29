@@ -1,7 +1,13 @@
 'use client';
 import { FormError } from '../form-error';
 import { FormSuccess } from '../form-success';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '../ui/form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
@@ -34,6 +40,7 @@ export const PostForm = () => {
       if (res.success) {
         setSuccess(res.success);
         setError('');
+        form.reset();
       }
     });
   };
