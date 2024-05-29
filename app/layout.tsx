@@ -11,8 +11,8 @@ import { cn } from '@/lib/utils';
 const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'V-Share',
-  description: 'V-SHare social media',
+  title: 'DevSphere',
+  description: 'DevSphere social media for developers',
 };
 
 export default function RootLayout({

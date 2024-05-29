@@ -25,7 +25,7 @@ export default tseslint.config(
       import: fixupPluginRules(eslintImport),
       'unused-imports': eslintUnusedImports,
       unicorn: eslintUnicorn,
-      'next': eslintNext,
+      next: eslintNext,
     },
   },
   {
@@ -187,6 +187,16 @@ export default tseslint.config(
       'react/function-component-definition': [
         'error',
         { namedComponents: 'function-declaration' },
+      ],
+      'react-refresh/only-export-components': 'off',
+    },
+  },
+  {
+    files: ['app/**/_components/**/*.tsx'],
+    rules: {
+      'react/function-component-definition': [
+        'error',
+        { namedComponents: 'arrow-function' },
       ],
       'react-refresh/only-export-components': 'off',
     },
