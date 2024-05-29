@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+model User {
+  id             String    @id @default(cuid())
+  name           String?
+  bio            String?
+  privateProfiel Boolean?  @default(false)
+  email          String    @unique
+  emailVerified  DateTime?
+  password       String?
+  image          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  role           Role      @default(USER)
+  accounts       Account[]
+  posts          Post[]
+
+  subscribers User[] @relation("subscription")
+  subscribed  User[] @relation("subscription")
+
+  likedPost Post[] @relation("like")
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Post {
+  id       String  @id @default(cuid())
+  body     String
+  imageUrl String?
+  videUrl  String?
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  likedUsers User[] @relation("like")
+}

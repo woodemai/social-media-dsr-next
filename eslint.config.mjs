@@ -102,7 +102,6 @@ export default tseslint.config(
 
       'import/export': 'error',
       'import/no-empty-named-blocks': 'error',
-      'import/no-extraneous-dependencies': 'error',
       'import/no-mutable-exports': 'error',
       'import/no-amd': 'error',
       'import/no-commonjs': 'error',

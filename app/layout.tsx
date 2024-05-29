@@ -1,13 +1,18 @@
-import { Inter } from 'next/font/google';
+import { ThemeProvider } from './_components/theme-provider';
+
+import { Inter as FontSans } from 'next/font/google';
 
 import type { Metadata } from 'next';
-import './globals.css';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
+import './globals.css';
+import { cn } from '@/lib/utils';
+
+
+const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'Title',
-  description: 'Description',
+  title: 'V-Share',
+  description: 'V-SHare social media',
 };
 
 export default function RootLayout({
@@ -17,7 +22,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ru'>
-      <body className={inter.className}>{children}</body>
+      <body
+        className={cn(
+          'h-dvh bg-background font-sans antialiased',
+          fontSans.variable,
+        )}
+      >
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
