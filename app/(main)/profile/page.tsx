@@ -7,5 +7,5 @@ export default async function ProfilePage() {
 
   if (!user?.id) return <UserNotFound />;
 
-  return <Profile id={user?.id} owner />;
+  return <Profile id={user?.id} isOwner />;
 }

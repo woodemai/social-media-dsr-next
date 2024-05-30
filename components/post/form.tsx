@@ -127,35 +127,40 @@ export const PostForm = () => {
         </div>
         <FormSuccess message={success} />
         <FormError message={error} />
-        <div className='flex gap-x-4 items-center'>
-          {uploadedMedia.map(media => (
-            <div className='p-2' key={media}>
-              {media.includes('/video/') ? (
-                <video
-                  className='rounded-md'
-                  controls
-                  height={256}
-                  muted
-                  preload='none'
-                  width={256}
-                >
-                  <source
+        {uploadedMedia.length ? (
+          <div className='flex gap-x-4 items-center'>
+            {uploadedMedia.map(media => (
+              <div
+                className='p-2'
+                key={media}
+              >
+                {media.includes('/video/') ? (
+                  <video
+                    className='rounded-md'
+                    controls
+                    height={256}
+                    muted
+                    preload='none'
+                    width={256}
+                  >
+                    <source
+                      src={media}
+                      type='video/mp4'
+                    />
+                  </video>
+                ) : (
+                  <Image
+                    alt='Загруженное изображение'
+                    className='rounded-md'
+                    height={128}
                     src={media}
-                    type='video/mp4'
+                    width={128}
                   />
-                </video>
-              ) : (
-                <Image
-                  alt='Загруженное изображение'
-                  className='rounded-md'
-                  height={128}
-                  src={media}
-                  width={128}
-                />
-              )}
-            </div>
-          ))}
-        </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : null}
       </form>
     </Form>
   );
