@@ -1,10 +1,10 @@
 'use client';
 
-import { Button } from '../ui/button';
 
 import { useOptimistic, useState, useTransition } from 'react';
 
 import { subscribeToUser, unsubscribeFromUser } from '@/actions/user';
+import { Button } from '@/components/ui/button';
 
 interface SubscribeButtonProps {
   id: string;

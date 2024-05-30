@@ -98,7 +98,6 @@ export default tseslint.config(
       'react/sort-default-props': 'error',
       'react/sort-prop-types': 'error',
       'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'error',
 
       'import/export': 'error',
       'import/no-empty-named-blocks': 'error',

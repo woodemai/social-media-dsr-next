@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 import { currentUser } from '@/data/user';
 import { db } from '@/lib/prisma';
-import { createSchema } from '@/schemas/form';
+import { createSchema } from '@/schemas/post';
 
 export const createPostAction = async (
   values: z.infer<typeof createSchema>,
@@ -90,7 +90,7 @@ export const unlikePostAction = async (id: string) => {
       },
       _count: {
         select: {
-          likedUsers: true
+          likedUsers: true,
         },
       },
     },
