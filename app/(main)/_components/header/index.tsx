@@ -1,9 +1,10 @@
+import logo from '../../../../public/icons/logo.png';
+
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { Link } from 'next-view-transitions';
 import React from 'react';
 
-import logo from '/icons/logo.svg';
 
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 
