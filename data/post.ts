@@ -4,19 +4,46 @@ import { Post, User } from '@prisma/client';
 
 import { db } from '@/lib/prisma';
 
-export type FullPost = { author: Pick<User, 'name' | 'image'> } & Post;
+export type FullPost = {
+  author: Pick<User, 'name' | 'image'>;
+  _count: { likedUsers: number };
+  likedUsers: { id: string }[];
+} & Post;
 
-export const getPosts = async (userId?: string): Promise<FullPost[]> => {
+interface getPostsProps {
+  userId?: string;
+  page?: number;
+}
+
+export const getPosts = async ({
+  userId,
+  page = 1,
+}: getPostsProps): Promise<FullPost[]> => {
   const user = await currentUser();
   if (!user) return [];
   if (userId) {
     return db.post.findMany({
+      skip: (page - 1) * 10,
+      take: 10,
       where: {
         author: {
           id: userId,
         },
       },
       include: {
+        _count: {
+          select: {
+            likedUsers: true,
+          },
+        },
+        likedUsers: {
+          where: {
+            id: user.id,
+          },
+          select: {
+            id: true,
+          },
+        },
         author: {
           select: {
             name: true,
@@ -30,6 +57,8 @@ export const getPosts = async (userId?: string): Promise<FullPost[]> => {
     });
   }
   return await db.post.findMany({
+    skip: (page - 1) * 10,
+    take: 10,
     where: {
       author: {
         subscribers: {
@@ -40,6 +69,19 @@ export const getPosts = async (userId?: string): Promise<FullPost[]> => {
       },
     },
     include: {
+      _count: {
+        select: {
+          likedUsers: true,
+        },
+      },
+      likedUsers: {
+        where: {
+          id: user.id,
+        },
+        select: {
+          id: true,
+        },
+      },
       author: {
         select: {
           name: true,
