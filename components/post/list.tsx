@@ -7,7 +7,7 @@ interface PostListProps {
 }
 
 export const PostList = async ({ userId }: PostListProps) => {
-  const posts = await getPosts(userId);
+  const posts = await getPosts({userId});
 
   if (!posts.length) {
     return (
