@@ -1,7 +1,10 @@
+import logo from '../../../../public/icons/logo.png';
+
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { Link } from 'next-view-transitions';
 import React from 'react';
+
 
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 
@@ -26,7 +29,7 @@ export const Header = async () => {
             alt='Logo'
             className='rounded-full'
             height={32}
-            src='/icons/logo.svg'
+            src={logo}
             width={32}
           />
           <h5 className='font-bold'>DevSphere</h5>

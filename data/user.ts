@@ -15,22 +15,35 @@ export const getUserByIdWithSubscription = async (id: string) => {
 
   const user = await currentUser();
 
-  return db.user.findUnique({
+  const isSubscribed = await db.user.count({
+    where: {
+      id,
+      subscribers: {
+        some: {
+          id: user?.id
+        }
+      }
+    },
+  }) > 0;
+
+  const response = await db.user.findUnique({
     where: {
       id,
     },
     include: {
       _count: {
         select: {
-          subscribers: {
-            where: {
-              id: user?.id
-            }
-          }
-        }
+          subscribers: true,
+          subscribed: true,
+        },
       }
-    }
+    },
   });
+  return {
+    isSubscribed,
+    user: response
+  };
+
 };
 
 export const getUserByEmail = async (email: string) => {
