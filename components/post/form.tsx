@@ -25,7 +25,7 @@ import { z } from 'zod';
 import { createPostAction } from '@/actions/post';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { createSchema } from '@/schemas/form';
+import { createSchema } from '@/schemas/post';
 
 export const PostForm = () => {
   const [error, setError] = useState('');
@@ -86,11 +86,14 @@ export const PostForm = () => {
                   >
                     {({ open }) => (
                       <Button
+                        name='Загрузить'
                         onClick={() => open()}
                         size='icon'
+                        title='Загрузить'
                         type='button'
                         variant='ghost'
                       >
+                        <span className='sr-only'>Загрузить</span>
                         <UploadIcon className='size-4' />
                       </Button>
                     )}
@@ -124,35 +127,40 @@ export const PostForm = () => {
         </div>
         <FormSuccess message={success} />
         <FormError message={error} />
-        <div className='flex gap-x-4 items-center'>
-          {uploadedMedia.map(media => (
-            <div className='p-2' key={media}>
-              {media.includes('/video/') ? (
-                <video
-                  className='rounded-md'
-                  controls
-                  height={256}
-                  muted
-                  preload='none'
-                  width={256}
-                >
-                  <source
+        {uploadedMedia.length ? (
+          <div className='flex gap-x-4 items-center'>
+            {uploadedMedia.map(media => (
+              <div
+                className='p-2'
+                key={media}
+              >
+                {media.includes('/video/') ? (
+                  <video
+                    className='rounded-md'
+                    controls
+                    height={256}
+                    muted
+                    preload='none'
+                    width={256}
+                  >
+                    <source
+                      src={media}
+                      type='video/mp4'
+                    />
+                  </video>
+                ) : (
+                  <Image
+                    alt='Загруженное изображение'
+                    className='rounded-md'
+                    height={128}
                     src={media}
-                    type='video/mp4'
+                    width={128}
                   />
-                </video>
-              ) : (
-                <Image
-                  alt='Загруженное изображение'
-                  className='rounded-md'
-                  height={128}
-                  src={media}
-                  width={128}
-                />
-              )}
-            </div>
-          ))}
-        </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : null}
       </form>
     </Form>
   );
