@@ -4,7 +4,11 @@ import { Post, User } from '@prisma/client';
 
 import { db } from '@/lib/prisma';
 
-export type FullPost = { author: Pick<User, 'name' | 'image'> } & Post;
+export type FullPost = {
+  author: Pick<User, 'name' | 'image'>;
+  _count: { likedUsers: number; };
+  likedUsers: {id: string}[]
+} & Post;
 
 export const getPosts = async (userId?: string): Promise<FullPost[]> => {
   const user = await currentUser();
@@ -17,6 +21,19 @@ export const getPosts = async (userId?: string): Promise<FullPost[]> => {
         },
       },
       include: {
+        _count: {
+          select: {
+            likedUsers: true,
+          },
+        },
+        likedUsers: {
+          where: {
+            id: user.id
+          },
+          select: {
+            id: true
+          }
+        },
         author: {
           select: {
             name: true,
@@ -40,6 +57,19 @@ export const getPosts = async (userId?: string): Promise<FullPost[]> => {
       },
     },
     include: {
+      _count: {
+        select: {
+          likedUsers: true,
+        },
+      },
+      likedUsers: {
+        where: {
+          id: user.id,
+        },
+        select: {
+          id: true,
+        },
+      },
       author: {
         select: {
           name: true,

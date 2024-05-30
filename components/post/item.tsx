@@ -1,3 +1,7 @@
+import { MediaList } from './media-list';
+
+import { Social } from './social';
+
 import { UserAvatar } from '../user/avatar';
 
 import { Link } from 'next-view-transitions';
@@ -25,6 +29,8 @@ export const PostItem = ({ post }: PostItemProps) => {
         </Link>
       </div>
       <p>{post.body}</p>
+      <MediaList media={post.multimedia} />
+      <Social id={post.id} initialIsLiked={post.likedUsers.length > 0} likesCount={post._count.likedUsers} />
     </li>
   );
 };
