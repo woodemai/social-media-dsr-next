@@ -1,5 +1,6 @@
 import { ThemeProvider } from './_components/theme-provider';
 
+import { Analytics } from '@vercel/analytics/react';
 import { Inter as FontSans } from 'next/font/google';
 import { ViewTransitions } from 'next-view-transitions';
 
@@ -39,6 +40,7 @@ export default function RootLayout({
             enableSystem
           >
             {children}
+            <Analytics />
           </ThemeProvider>
         </body>
       </html>

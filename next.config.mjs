@@ -2,7 +2,7 @@
 const nextConfig = {
   experimental: {
     ppr: true,
-    reactCompiler: true
+    reactCompiler: true,
   },
   reactStrictMode: true,
 };
