@@ -3,7 +3,7 @@
  * These router do not require authentication
  * @type {string[]}
  */
-export const publicRoutes = [];
+export const publicRoutes:string[] = [];
 
 /**
  * An array of router that are used for authentication
