@@ -7,6 +7,8 @@ import { User } from '@prisma/client';
 import dynamic from 'next/dynamic';
 import { useOptimistic, useState } from 'react';
 
+import { Button } from '@/components/ui/button';
+
 const SubscribeButton = dynamic(() =>
   import('./subscribe-button').then(mob => mob.SubscribeButton),
 );
@@ -21,6 +23,8 @@ interface ProfileInfoProps {
   id: string;
   isOwner?: boolean;
   isSubscribed?: boolean;
+  subscribersCount: number;
+  subscribedCount: number;
 }
 
 export type ProfileState = Pick<User, 'bio' | 'name'>;
@@ -32,6 +36,8 @@ export const ProfileInfo = ({
   bio: initialBio,
   isOwner = false,
   isSubscribed = false,
+  subscribersCount,
+  subscribedCount
 }: ProfileInfoProps) => {
   const [state, setState] = useState<ProfileState>({
     name: initialName,
@@ -43,31 +49,42 @@ export const ProfileInfo = ({
   >(state, newState => newState);
 
   return (
-    <>
-      <div className='flex gap-x-4'>
-        <UserAvatar
-          height={256}
-          src={initialImage}
-          width={256}
-        />
-        <h1 className='font-bold tracking-tight text-3xl'>{state.name}</h1>
-        {!isOwner ? (
-          <SubscribeButton
-            id={id}
-            initialIsSubscribed={isSubscribed}
-          />
-        ) : (
-          state.name && (
-            <EditButton
+    <div className='flex gap-x-4'>
+      <UserAvatar
+        height={256}
+        size='lg'
+        src={initialImage}
+        width={256}
+      />
+      <div className='space-y-4'>
+        <div className='flex gap-x-4'>
+          <h1 className='font-bold tracking-tight text-3xl'>{state.name}</h1>
+          {!isOwner ? (
+            <SubscribeButton
               id={id}
-              setState={setState}
-              state={optimisticState}
-              updateState={updateState}
+              initialIsSubscribed={isSubscribed}
             />
-          )
-        )}
+          ) : (
+            state.name && (
+              <EditButton
+                id={id}
+                setState={setState}
+                state={optimisticState}
+                updateState={updateState}
+              />
+            )
+          )}
+        </div>
+        <p>{state.bio}</p>
+        <div>
+          <Button className='pl-0 text-muted-foreground hover:text-foreground' size='sm' variant='link'>
+            Подписчики:{' '}{subscribersCount}
+          </Button>
+          <Button className='pl-0 text-muted-foreground hover:text-foreground' size='sm' variant='link'>
+            Подписки:{' '}{subscribedCount}
+          </Button>
+        </div>
       </div>
-      <p>{state.bio}</p>
-    </>
+    </div>
   );
 };

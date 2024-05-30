@@ -4,7 +4,7 @@ interface UserLayoutProps {
 
 export default function UserLayout({children}:UserLayoutProps) {
   return (
-    <div className='mx-auto w-full max-w-3xl py-8 space-y-4'>
+    <div className='mx-auto w-full max-w-3xl py-8 space-y-8'>
       {children}
     </div>
   );

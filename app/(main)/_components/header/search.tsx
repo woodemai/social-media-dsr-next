@@ -47,7 +47,7 @@ export const Search = () => {
 
   return (
     <Dialog>
-      <DialogTrigger className='bg-muted rounded-md py-2 px-4 text-sm text-muted-foreground flex gap-x-2 items-center'>
+      <DialogTrigger className='bg-muted/50 rounded-md py-2 px-4 text-sm text-muted-foreground flex gap-x-2 items-center'>
         <MagnifyingGlassIcon className='size-4' />
         Найти пользователя...
       </DialogTrigger>
