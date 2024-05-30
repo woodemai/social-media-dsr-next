@@ -1,6 +1,7 @@
 import { ThemeProvider } from './_components/theme-provider';
 
 import { Inter as FontSans } from 'next/font/google';
+import { ViewTransitions } from 'next-view-transitions';
 
 import type { Metadata } from 'next';
 
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   title: 'DevSphere',
   description: 'DevSphere social media for developers',
   icons: {
-    shortcut: './icons/logo.svg'
-  }
+    shortcut: './icons/logo.svg',
+  },
 };
 
 export default function RootLayout({
@@ -24,21 +25,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='ru'>
-      <body
-        className={cn(
-          'h-dvh bg-background font-sans antialiased',
-          fontSans.variable,
-        )}
-      >
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
+    <ViewTransitions>
+      <html lang='ru'>
+        <body
+          className={cn(
+            'h-dvh bg-background font-sans antialiased',
+            fontSans.variable,
+          )}
         >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='system'
+            enableSystem
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
