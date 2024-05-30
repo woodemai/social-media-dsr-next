@@ -1,4 +1,8 @@
+import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
+
 import Image from 'next/image';
+
+import { cn } from '@/lib/utils';
 
 interface MediaListProps {
   media: string[];
@@ -6,9 +10,9 @@ interface MediaListProps {
 
 export const MediaList = ({ media }: MediaListProps) => {
   return (
-    <div className='flex gap-x-4 size-full'>
+    <div className={cn('grid gap-4 size-full', media.length > 1 ? 'grid-cols-2' : 'grid-cols-1')}>
       {media.map(item => (
-        <div className='size-full' key={item}>
+        <div className='mx-auto' key={item}>
           {item.includes('/video/') ? (
             <video
               className='rounded-lg size-full'
@@ -24,13 +28,26 @@ export const MediaList = ({ media }: MediaListProps) => {
               />
             </video>
           ) : (
-            <Image
-              alt='Изображение'
-              className='size-full rounded-lg'
-              height={256}
-              src={item}
-              width={256}
-            />
+            <Dialog>
+              <DialogTrigger className='p-0'>
+                <Image
+                  alt='Изображение'
+                  className='m-0 rounded-lg'
+                  height={512}
+                  src={item}
+                  width={512}
+                />
+              </DialogTrigger>
+              <DialogContent className='overflow-hidden object-contain w-full sm:w-fit h-fit max-h-[90%] p-0'>
+                <Image
+                  alt='Изображение'
+                  className='rounded-lg'
+                  height={2048}
+                  src={item}
+                  width={2048}
+                />
+              </DialogContent>
+            </Dialog>
           )}
         </div>
       ))}
