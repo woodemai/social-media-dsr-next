@@ -6,15 +6,25 @@ import { db } from '@/lib/prisma';
 
 export type FullPost = {
   author: Pick<User, 'name' | 'image'>;
-  _count: { likedUsers: number; };
-  likedUsers: {id: string}[]
+  _count: { likedUsers: number };
+  likedUsers: { id: string }[];
 } & Post;
 
-export const getPosts = async (userId?: string): Promise<FullPost[]> => {
+interface getPostsProps {
+  userId?: string;
+  page?: number;
+}
+
+export const getPosts = async ({
+  userId,
+  page = 1,
+}: getPostsProps): Promise<FullPost[]> => {
   const user = await currentUser();
   if (!user) return [];
   if (userId) {
     return db.post.findMany({
+      skip: (page - 1) * 10,
+      take: 10,
       where: {
         author: {
           id: userId,
@@ -28,11 +38,11 @@ export const getPosts = async (userId?: string): Promise<FullPost[]> => {
         },
         likedUsers: {
           where: {
-            id: user.id
+            id: user.id,
           },
           select: {
-            id: true
-          }
+            id: true,
+          },
         },
         author: {
           select: {
@@ -47,6 +57,8 @@ export const getPosts = async (userId?: string): Promise<FullPost[]> => {
     });
   }
   return await db.post.findMany({
+    skip: (page - 1) * 10,
+    take: 10,
     where: {
       author: {
         subscribers: {
