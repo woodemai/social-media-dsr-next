@@ -25,7 +25,7 @@ import { z } from 'zod';
 import { createPostAction } from '@/actions/post';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { createSchema } from '@/schemas/form';
+import { createSchema } from '@/schemas/post';
 
 export const PostForm = () => {
   const [error, setError] = useState('');
@@ -86,11 +86,14 @@ export const PostForm = () => {
                   >
                     {({ open }) => (
                       <Button
+                        name='Загрузить'
                         onClick={() => open()}
                         size='icon'
+                        title='Загрузить'
                         type='button'
                         variant='ghost'
                       >
+                        <span className='sr-only'>Загрузить</span>
                         <UploadIcon className='size-4' />
                       </Button>
                     )}

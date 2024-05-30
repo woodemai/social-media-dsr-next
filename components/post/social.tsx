@@ -56,11 +56,14 @@ export const Social = ({
         <Button
           className='rounded-full'
           disabled={isPending}
+          name='Лайк'
           onClick={handleLike}
           size='icon'
+          title='Лайк'
           type='button'
           variant='ghost'
         >
+          <span className='sr-only'>{optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}</span>
           {optimisticIsLiked ? (
             <HeartFilledIcon className='size-4 text-red-500' />
           ) : (
