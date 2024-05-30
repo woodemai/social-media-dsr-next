@@ -49,7 +49,7 @@ export const ProfileInfo = ({
   >(state, newState => newState);
 
   return (
-    <div className='flex gap-x-4'>
+    <div className='flex gap-x-4 p-2 sm:p-0 justify-center sm:justify-start'>
       <UserAvatar
         height={256}
         size='lg'
@@ -57,8 +57,8 @@ export const ProfileInfo = ({
         width={256}
       />
       <div className='space-y-4'>
-        <div className='flex gap-x-4'>
-          <h1 className='font-bold tracking-tight text-3xl'>{state.name}</h1>
+        <div className='flex flex-col sm:flex-row gap-4'>
+          <h1 className='font-bold tracking-tight text-xl sm:text-3xl'>{state.name}</h1>
           {!isOwner ? (
             <SubscribeButton
               id={id}
