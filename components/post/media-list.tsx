@@ -32,8 +32,9 @@ export const MediaList = ({ media }: MediaListProps) => {
               <DialogTrigger className='p-0'>
                 <Image
                   alt='Изображение'
-                  className='m-0 rounded-lg'
+                  className='m-0 rounded-lg size-auto'
                   height={512}
+                  priority
                   src={item}
                   width={512}
                 />

@@ -96,3 +96,9 @@ export const unlikePostAction = async (id: string) => {
     },
   });
 };
+
+export const deleteAction = async (id: string) => {
+  return db.post.delete({
+    where: {id}
+  });
+};

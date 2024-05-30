@@ -4,9 +4,10 @@ import { getPosts } from '@/data/post';
 
 interface PostListProps {
   userId?: string;
+  isOwner?: boolean
 }
 
-export const PostList = async ({ userId }: PostListProps) => {
+export const PostList = async ({ userId, isOwner }: PostListProps) => {
   const posts = await getPosts({userId});
 
   if (!posts.length) {
@@ -26,6 +27,7 @@ export const PostList = async ({ userId }: PostListProps) => {
     <ul className='space-y-4'>
       {posts.map(post => (
         <PostItem
+          isOwner={isOwner}
           key={post.id}
           post={post}
         />
