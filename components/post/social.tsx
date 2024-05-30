@@ -4,7 +4,7 @@ import { Button } from '../ui/button';
 
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 
-import { useEffect, useOptimistic, useState, useTransition } from 'react';
+import { useOptimistic, useState, useTransition } from 'react';
 
 import { likePostAction, unlikePostAction } from '@/actions/post';
 
@@ -30,9 +30,6 @@ export const Social = ({
     likesCount,
     likesCount => (isLiked ? likesCount - 1 : likesCount + 1),
   );
-  useEffect(() => {
-    console.log(isLiked);
-  }, [optimisticIsLiked]);
 
   const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -62,7 +59,8 @@ export const Social = ({
           onClick={handleLike}
           size='icon'
           type='button'
-          variant='ghost'>
+          variant='ghost'
+        >
           {optimisticIsLiked ? (
             <HeartFilledIcon className='size-4 text-red-500' />
           ) : (
