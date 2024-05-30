@@ -28,7 +28,7 @@ export default async function UserPage({ params: { id } }: UserPageProps) {
 
   const { image, name, bio } = user;
   return (
-    <div className='mx-auto w-full max-w-3xl py-8 space-y-4'>
+    <>
       <div className='flex gap-x-4'>
         <UserAvatar
           height={256}
@@ -42,6 +42,6 @@ export default async function UserPage({ params: { id } }: UserPageProps) {
       <Suspense fallback={<ListSkeleton />}>
         <PostList userId={id} />
       </Suspense>
-    </div>
+    </>
   );
 }
