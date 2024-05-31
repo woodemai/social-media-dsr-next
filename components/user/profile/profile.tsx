@@ -39,7 +39,7 @@ export const Profile = async ({ id, isOwner = false }: ProfileProps) => {
       />
       {isOwner ? <PostForm /> : null}
       <Suspense fallback={<ListSkeleton />}>
-        <PostList isOwner userId={id} />
+        <PostList isOwner={isOwner} userId={id} />
       </Suspense>
     </>
   );
