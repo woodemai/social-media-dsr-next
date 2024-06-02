@@ -9,14 +9,19 @@ import { Button } from '@/components/ui/button';
 interface SubscribeButtonProps {
   id: string;
   initialIsSubscribed: boolean;
+  onSubscribersCount: (isIncreasing: boolean) => void;
+  setSubscribersCount: (value:number) => void
 }
 
 export const SubscribeButton = ({
   id,
   initialIsSubscribed,
+  onSubscribersCount: handleSubscribersCount,
+  setSubscribersCount
 }: SubscribeButtonProps) => {
   const [isSubscribed, setIsSubscribed] = useState(initialIsSubscribed);
   const [isPending, startTransition] = useTransition();
+
   const [optimisticIsSubscribed, toggleSubscription] = useOptimistic<
     boolean,
     void
@@ -25,15 +30,18 @@ export const SubscribeButton = ({
   const handleSubscribe = () => {
     startTransition(async () => {
       toggleSubscription();
+      handleSubscribersCount(!isSubscribed);
       if (isSubscribed) {
         const response = await unsubscribeFromUser(id);
         if (response) {
-          setIsSubscribed(response._count.subscribers > 0);
+          setIsSubscribed(response.subscribers.length > 0);
+          setSubscribersCount(response._count.subscribers);
         }
       } else {
         const response = await subscribeToUser(id);
         if (response) {
-          setIsSubscribed(response._count.subscribers > 0);
+          setIsSubscribed(response.subscribers.length > 0);
+          setSubscribersCount(response._count.subscribers);
         }
       }
     });

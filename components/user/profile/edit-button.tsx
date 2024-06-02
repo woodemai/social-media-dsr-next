@@ -3,16 +3,16 @@
 import { ProfileState } from './profile-info';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { z } from 'zod';
 
 import { updateProfileAction } from '@/actions/user';
+import { FormError } from '@/components/form-error';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -27,6 +27,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/components/ui/use-toast';
 import { updateSchema } from '@/schemas/user';
 
 interface EditButtonProps {
@@ -42,34 +43,45 @@ export const EditButton = ({
   updateState,
   setState,
 }: EditButtonProps) => {
+  const [error, setError] = useState<string | undefined>();
+  const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof updateSchema>>({
     resolver: zodResolver(updateSchema),
     defaultValues: {
       name: name ?? '',
       bio: bio ?? '',
+      password: '',
     },
   });
 
   const onSubmit = async (values: z.infer<typeof updateSchema>) => {
+    setError(undefined);
+    updateState({
+      name: values.name,
+      bio: values.bio ?? null,
+    });
     startTransition(async () => {
-      updateState({
-        name: values.name,
-        bio: values.bio ?? null,
-      });
       const response = await updateProfileAction(id, values);
-      if (response) {
+      setError(response.error);
+      if (response?.name && response?.bio) {
+        setOpen(false);
         setState({
           name: response.name,
           bio: response.bio ?? null,
+        });
+        toast({
+          title: 'Успех',
+          description: 'Данные сохранены'
         });
       }
     });
   };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={isOpen => setOpen(isOpen)} open={open}>
       <DialogTrigger asChild>
         <Button
           disabled={isPending}
@@ -117,15 +129,31 @@ export const EditButton = ({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name='password'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Пароль</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder='Придумайте надежный пароль'
+                      type='password'
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormError message={error} />
             <DialogFooter className='flex justify-end'>
-              <DialogClose asChild>
-                <Button
-                  className='ml-auto'
-                  type='submit'
-                >
-                  Обновить
-                </Button>
-              </DialogClose>
+              <Button
+                className='ml-auto'
+                type='submit'
+              >
+                Обновить
+              </Button>
             </DialogFooter>
           </form>
         </Form>

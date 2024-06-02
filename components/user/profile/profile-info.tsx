@@ -36,7 +36,7 @@ export const ProfileInfo = ({
   bio: initialBio,
   isOwner = false,
   isSubscribed = false,
-  subscribersCount,
+  subscribersCount: initialSubscribersCount,
   subscribedCount
 }: ProfileInfoProps) => {
   const [state, setState] = useState<ProfileState>({
@@ -46,7 +46,12 @@ export const ProfileInfo = ({
   const [optimisticState, updateState] = useOptimistic<
     ProfileState,
     ProfileState
-  >(state, newState => newState);
+    >(state, newState => newState);
+  const [subscribersCount, setSubscribersCount] = useState(initialSubscribersCount);
+  const [optimisticSubscribersCount, handleSubscribersCount] = useOptimistic<number, boolean>(
+    subscribersCount,
+    (subscribersCount, isIncreasing) => isIncreasing ? subscribersCount + 1 : subscribersCount - 1
+  );
 
   return (
     <div className='flex gap-x-4 p-2 sm:p-0 justify-center sm:justify-start'>
@@ -63,6 +68,8 @@ export const ProfileInfo = ({
             <SubscribeButton
               id={id}
               initialIsSubscribed={isSubscribed}
+              onSubscribersCount={handleSubscribersCount}
+              setSubscribersCount={setSubscribersCount}
             />
           ) : (
             state.name && (
@@ -78,7 +85,7 @@ export const ProfileInfo = ({
         <p>{state.bio}</p>
         <div>
           <Button className='pl-0 text-muted-foreground hover:text-foreground' size='sm' variant='link'>
-            Подписчики:{' '}{subscribersCount}
+            Подписчики:{' '}{optimisticSubscribersCount}
           </Button>
           <Button className='pl-0 text-muted-foreground hover:text-foreground' size='sm' variant='link'>
             Подписки:{' '}{subscribedCount}
