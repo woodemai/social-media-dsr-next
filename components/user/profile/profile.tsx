@@ -16,30 +16,25 @@ interface ProfileProps {
 }
 
 export const Profile = async ({ id, isOwner = false }: ProfileProps) => {
-
   const response = await getUserByIdWithSubscription(id);
 
   if (!response.user) {
     return <UserNotFound />;
   }
 
-  const { image, name, bio, _count } = response.user;
-
   return (
     <>
       <ProfileInfo
-        bio={bio}
-        id={id}
-        image={image}
         isOwner={isOwner}
         isSubscribed={response.isSubscribed}
-        name={name}
-        subscribedCount={_count.subscribed}
-        subscribersCount={_count.subscribers}
+        user={response.user}
       />
       {isOwner ? <PostForm /> : null}
       <Suspense fallback={<ListSkeleton />}>
-        <PostList isOwner={isOwner} userId={id} />
+        <PostList
+          isOwner={isOwner}
+          userId={id}
+        />
       </Suspense>
     </>
   );

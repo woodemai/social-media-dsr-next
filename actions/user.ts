@@ -21,38 +21,20 @@ export const getUsers = async (name: string) => {
   });
 };
 
-export const subscribeToUser = async (id: string) => {
+export const handleSubscribeAction = async (
+  id: string,
+  isSubscribed: boolean,
+) => {
   const user = await currentUser();
+  const subscribers = isSubscribed
+    ? { disconnect: { id: user?.id } }
+    : { connect: { id: user?.id } };
   return db.user.update({
-    where: { id },
-    data: {
-      subscribers: {
-        connect: { id: user?.id },
-      },
+    where: {
+      id,
     },
-    include: {
-      _count: {
-        select: {
-          subscribers: true,
-        },
-      },
-      subscribers: {
-        where: {
-          id: user?.id,
-        },
-      },
-    },
-  });
-};
-export const unsubscribeFromUser = async (id: string) => {
-  const user = await currentUser();
-
-  return db.user.update({
-    where: { id },
     data: {
-      subscribers: {
-        disconnect: { id: user?.id },
-      },
+      subscribers,
     },
     include: {
       _count: {

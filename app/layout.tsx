@@ -16,6 +16,7 @@ import type { Metadata } from 'next';
 
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import StoreProvider from '@/lib/store/provider';
 import { cn } from '@/lib/utils';
 
 
@@ -77,9 +78,11 @@ export default function RootLayout({
             defaultTheme='system'
             enableSystem
           >
-            <Toaster />
-            {children}
-            <Analytics />
+            <StoreProvider>
+              <Toaster />
+              {children}
+              <Analytics />
+            </StoreProvider>
           </ThemeProvider>
         </body>
       </html>

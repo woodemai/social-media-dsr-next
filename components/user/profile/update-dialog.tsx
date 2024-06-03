@@ -1,7 +1,5 @@
 'use client';
 
-import { ProfileState } from './profile-info';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -28,21 +26,13 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
+import { updateUser, useUser } from '@/lib/store/slices/user-slice';
+import { useAppDispatch } from '@/lib/store/store';
 import { updateSchema } from '@/schemas/user';
 
-interface EditButtonProps {
-  id: string;
-  state: ProfileState;
-  updateState: (action: ProfileState) => void;
-  setState: (action: ProfileState) => void;
-}
-
-export const EditButton = ({
-  id,
-  state: { name, bio },
-  updateState,
-  setState,
-}: EditButtonProps) => {
+export const UpdateDialog = () => {
+  const dispatch = useAppDispatch();
+  const { id, name, bio } = useUser();
   const [error, setError] = useState<string | undefined>();
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -59,29 +49,26 @@ export const EditButton = ({
 
   const onSubmit = async (values: z.infer<typeof updateSchema>) => {
     setError(undefined);
-    updateState({
-      name: values.name,
-      bio: values.bio ?? null,
-    });
+    dispatch(updateUser(values));
     startTransition(async () => {
-      const response = await updateProfileAction(id, values);
-      setError(response.error);
-      if (response?.name && response?.bio) {
+      const { error, name, bio } = await updateProfileAction(id, values);
+      setError(error);
+      if (name && bio) {
         setOpen(false);
-        setState({
-          name: response.name,
-          bio: response.bio ?? null,
-        });
+        dispatch(updateUser({ name, bio }));
         toast({
           title: 'Успех',
-          description: 'Данные сохранены'
+          description: 'Данные сохранены',
         });
       }
     });
   };
 
   return (
-    <Dialog onOpenChange={isOpen => setOpen(isOpen)} open={open}>
+    <Dialog
+      onOpenChange={isOpen => setOpen(isOpen)}
+      open={open}
+    >
       <DialogTrigger asChild>
         <Button
           disabled={isPending}
@@ -150,6 +137,7 @@ export const EditButton = ({
             <DialogFooter className='flex justify-end'>
               <Button
                 className='ml-auto'
+                disabled={isPending}
                 type='submit'
               >
                 Обновить
