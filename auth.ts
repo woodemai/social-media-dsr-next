@@ -3,8 +3,8 @@ import { Role } from '@prisma/client';
 import NextAuth, { DefaultSession } from 'next-auth';
 
 import authConfig from '@/auth.config';
-import { getUserById } from '@/data/user';
-import { db } from '@/lib/prisma';
+import { getUserById } from '@/src/data/user';
+import { db } from '@/src/lib/prisma';
 
 declare module 'next-auth' {
   interface Session {
