@@ -1,14 +1,15 @@
 'use server';
 
+import { signIn } from '../auth';
+
 import bcrypt from 'bcryptjs';
 import { AuthError } from 'next-auth';
 import { z } from 'zod';
 
-import { signIn } from '@/auth';
-import { getUserByEmail } from '@/src/data/user';
-import { db } from '@/src/lib/prisma';
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
-import { loginSchema, registerSchema } from '@/src/schemas/auth';
+import { db } from '@/config/prisma';
+import { DEFAULT_LOGIN_REDIRECT } from '@/config/routes';
+import { getUserByEmail } from '@/data/user';
+import { loginSchema, registerSchema } from '@/schemas/auth';
 
 export const login = async (values: z.infer<typeof loginSchema>) => {
   const validatedField = loginSchema.safeParse(values);

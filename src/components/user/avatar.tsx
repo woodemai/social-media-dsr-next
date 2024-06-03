@@ -1,7 +1,7 @@
 import { PersonIcon } from '@radix-ui/react-icons';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { cn } from '@/src/lib/utils';
+import { cn } from '@/config/utils';
 interface UserAvatarProps {
   src?: string | null;
   width?: number;

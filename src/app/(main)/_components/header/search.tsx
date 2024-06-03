@@ -20,7 +20,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { UserAvatar } from '@/components/user/avatar';
-import { cn } from '@/src/lib/utils';
+import { cn } from '@/config/utils';
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');

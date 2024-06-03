@@ -26,9 +26,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
-import { updateUser, useUser } from '@/src/lib/store/slices/user-slice';
-import { useAppDispatch } from '@/src/lib/store/store';
-import { updateSchema } from '@/src/schemas/user';
+import { updateUser, useUser } from '@/config/store/slices/user-slice';
+import { useAppDispatch } from '@/config/store/store';
+import { updateSchema } from '@/schemas/user';
 
 export const UpdateDialog = () => {
   const dispatch = useAppDispatch();

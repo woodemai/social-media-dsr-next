@@ -2,7 +2,7 @@ import { currentUser } from './user';
 
 import { Post, User } from '@prisma/client';
 
-import { db } from '@/src/lib/prisma';
+import { db } from '@/config/prisma';
 
 export type FullPost = {
   author: Pick<User, 'name' | 'image'>;

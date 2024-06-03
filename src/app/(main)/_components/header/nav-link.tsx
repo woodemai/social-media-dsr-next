@@ -5,7 +5,7 @@ import { ReactNode } from 'react';
 
 import { Button, ButtonProps } from '@/components/ui/button';
 
-import { cn } from '@/src/lib/utils';
+import { cn } from '@/config/utils';
 
 interface Props extends ButtonProps {
   href: string;

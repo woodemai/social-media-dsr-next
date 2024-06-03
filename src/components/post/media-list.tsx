@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 
 import Image from 'next/image';
 
-import { cn } from '@/src/lib/utils';
+import { cn } from '@/config/utils';
 
 interface MediaListProps {
   media: string[];

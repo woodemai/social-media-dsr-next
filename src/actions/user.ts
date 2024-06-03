@@ -3,9 +3,9 @@
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
-import { currentUser } from '@/src/data/user';
-import { db } from '@/src/lib/prisma';
-import { updateSchema } from '@/src/schemas/user';
+import { db } from '@/config/prisma';
+import { currentUser } from '@/data/user';
+import { updateSchema } from '@/schemas/user';
 
 export const getUsers = async (name: string) => {
   const user = await currentUser();

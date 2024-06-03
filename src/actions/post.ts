@@ -2,9 +2,9 @@
 
 import { z } from 'zod';
 
-import { currentUser } from '@/src/data/user';
-import { db } from '@/src/lib/prisma';
-import { createSchema } from '@/src/schemas/post';
+import { db } from '@/config/prisma';
+import { currentUser } from '@/data/user';
+import { createSchema } from '@/schemas/post';
 
 export const createPostAction = async (
   values: z.infer<typeof createSchema>,

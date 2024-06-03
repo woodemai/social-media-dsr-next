@@ -1,7 +1,7 @@
 'use client';
 
-import { UpdateDialog } from './update-dialog';
 import { SubscriptionButton } from './subscripition-button';
+import { UpdateDialog } from './update-dialog';
 
 import { UserAvatar } from '../avatar';
 
@@ -14,8 +14,8 @@ import {
   setSubscription,
   setUser,
   useUser,
-} from '@/src/lib/store/slices/user-slice';
-import { useAppDispatch } from '@/src/lib/store/store';
+} from '@/config/store/slices/user-slice';
+import { useAppDispatch } from '@/config/store/store';
 
 interface ProfileInfoProps {
   isOwner?: boolean;

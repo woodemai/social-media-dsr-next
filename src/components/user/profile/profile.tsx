@@ -8,7 +8,7 @@ import { PostForm } from '@/components/post/form';
 import { PostList } from '@/components/post/list';
 import { ListSkeleton } from '@/components/post/list-skeleton';
 
-import { getUserByIdWithSubscription } from '@/src/data/user';
+import { getUserByIdWithSubscription } from '@/data/user';
 
 interface ProfileProps {
   id: string;

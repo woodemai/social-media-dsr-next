@@ -7,7 +7,7 @@ import { UserAvatar } from '../user/avatar';
 import dynamic from 'next/dynamic';
 import { Link } from 'next-view-transitions';
 
-import { FullPost } from '@/src/data/post';
+import { FullPost } from '@/data/post';
 
 interface PostItemProps {
   post: FullPost;

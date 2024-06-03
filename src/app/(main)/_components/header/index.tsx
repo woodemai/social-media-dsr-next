@@ -1,14 +1,12 @@
-import logo from '../../../../public/icons/logo.png';
-
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { Link } from 'next-view-transitions';
 import React from 'react';
 
-
+import logo from '@/../public/icons/logo.png';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 
-import { getFullCurrentUser } from '@/src/data/user';
+import { getFullCurrentUser } from '@/data/user';
 
 const UserHeaderMenu = dynamic(() =>
   import('./user-menu').then(mod => mod.UserHeaderMenu),

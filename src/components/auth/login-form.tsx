@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useLogin } from '@/src/hooks/useLogin';
+import { useLogin } from '@/hooks/useLogin';
 
 export const LoginForm = () => {
   const { form, error, success, isPending, onSubmit } = useLogin();

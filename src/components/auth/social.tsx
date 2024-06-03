@@ -6,7 +6,7 @@ import { FcGoogle } from 'react-icons/fc';
 
 import { YandexLogo } from '@/components/icons/yandex-logo';
 import { Button } from '@/components/ui/button';
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
+import { DEFAULT_LOGIN_REDIRECT } from '@/config/routes';
 
 const onClick = (provider: 'google' | 'github' | 'yandex') => {
   signIn(provider, {

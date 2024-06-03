@@ -51,7 +51,7 @@ export default tseslint.config(
     },
   },
   {
-    ignores: ['components/ui/**/*'],
+    ignores: ['**/components/ui/**/*'],
     rules: {
       'react-compiler/react-compiler': 'error',
       'react/react-in-jsx-scope': 'off',
@@ -181,7 +181,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['app/**/*.tsx'],
+    files: ['src/app/**/*.tsx'],
     rules: {
       'react/function-component-definition': [
         'error',
@@ -191,7 +191,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['app/**/_components/**/*.tsx'],
+    files: ['src/app/**/_components/**/*.tsx'],
     rules: {
       'react/function-component-definition': [
         'error',
@@ -212,7 +212,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['hooks/*.ts'],
+    files: ['src/hooks/*.ts'],
     rules: {
       'unicorn/filename-case': [
         'error',

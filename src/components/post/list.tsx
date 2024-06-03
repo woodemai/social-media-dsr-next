@@ -1,6 +1,6 @@
 import { PostItem } from './item';
 
-import { getPosts } from '@/src/data/post';
+import { getPosts } from '@/data/post';
 
 interface PostListProps {
   userId?: string;

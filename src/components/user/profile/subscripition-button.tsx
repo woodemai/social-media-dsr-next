@@ -9,8 +9,8 @@ import {
   setUser,
   useSubscription,
   useUser,
-} from '@/src/lib/store/slices/user-slice';
-import { useAppDispatch } from '@/src/lib/store/store';
+} from '@/config/store/slices/user-slice';
+import { useAppDispatch } from '@/config/store/store';
 
 export const SubscriptionButton = () => {
   const dispatch = useAppDispatch();

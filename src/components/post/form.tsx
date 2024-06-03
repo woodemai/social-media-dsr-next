@@ -25,7 +25,7 @@ import { z } from 'zod';
 import { createPostAction } from '@/actions/post';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { createSchema } from '@/src/schemas/post';
+import { createSchema } from '@/schemas/post';
 
 export const PostForm = () => {
   const [error, setError] = useState('');
