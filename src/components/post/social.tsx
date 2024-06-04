@@ -52,9 +52,8 @@ export const Social = ({
   return (
     <div>
       <div className='flex items-center'>
-        <LikesCount count={optimisticLikesCount} />
         <Button
-          className='rounded-full'
+          className='space-x-2 w-full max-w-16 rounded-lg'
           disabled={isPending}
           name='Лайк'
           onClick={handleLike}
@@ -69,6 +68,7 @@ export const Social = ({
           ) : (
             <HeartIcon className='size-4' />
           )}
+          <LikesCount count={optimisticLikesCount} />
         </Button>
       </div>
     </div>

@@ -3,7 +3,7 @@
 import { z } from 'zod';
 
 import { db } from '@/config/prisma';
-import { currentUser } from '@/data/user';
+import { getCurrentUser } from '@/data/user';
 import { createSchema } from '@/schemas/post';
 
 export const createPostAction = async (
@@ -16,7 +16,7 @@ export const createPostAction = async (
       error: 'Ошибка валидации',
     };
 
-  const user = await currentUser();
+  const user = await getCurrentUser();
 
   if (!user)
     return {
@@ -41,7 +41,7 @@ export const createPostAction = async (
 };
 
 export const likePostAction = async (id: string) => {
-  const user = await currentUser();
+  const user = await getCurrentUser();
   return db.post.update({
     where: {
       id,
@@ -69,7 +69,7 @@ export const likePostAction = async (id: string) => {
 };
 
 export const unlikePostAction = async (id: string) => {
-  const user = await currentUser();
+  const user = await getCurrentUser();
 
   return db.post.update({
     where: {

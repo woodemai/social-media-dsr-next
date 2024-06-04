@@ -17,17 +17,17 @@ import {
 } from '@/config/store/slices/user-slice';
 import { useAppDispatch } from '@/config/store/store';
 
-interface ProfileInfoProps {
+interface UserInfoProps {
   isOwner?: boolean;
   isSubscribed?: boolean;
   user: User;
 }
 
-export const ProfileInfo = ({
+export const UserInfo = ({
   isOwner = false,
   isSubscribed = false,
   user,
-}: ProfileInfoProps) => {
+}: UserInfoProps) => {
   const dispatch = useAppDispatch();
   const { name, bio, image } = useUser();
 

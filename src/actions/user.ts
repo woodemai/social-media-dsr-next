@@ -4,11 +4,11 @@ import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
 import { db } from '@/config/prisma';
-import { currentUser } from '@/data/user';
+import { getCurrentUser } from '@/data/user';
 import { updateSchema } from '@/schemas/user';
 
 export const getUsers = async (name: string) => {
-  const user = await currentUser();
+  const user = await getCurrentUser();
 
   return db.user.findMany({
     where: {
@@ -25,7 +25,7 @@ export const handleSubscribeAction = async (
   id: string,
   isSubscribed: boolean,
 ) => {
-  const user = await currentUser();
+  const user = await getCurrentUser();
   const subscribers = isSubscribed
     ? { disconnect: { id: user?.id } }
     : { connect: { id: user?.id } };

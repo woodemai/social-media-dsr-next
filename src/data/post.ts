@@ -1,4 +1,4 @@
-import { currentUser } from './user';
+import { getCurrentUser } from './user';
 
 import { Post, User } from '@prisma/client';
 
@@ -19,7 +19,7 @@ export const getPosts = async ({
   userId,
   page = 1,
 }: getPostsProps): Promise<FullPost[]> => {
-  const user = await currentUser();
+  const user = await getCurrentUser();
   if (!user) return [];
   if (userId) {
     return db.post.findMany({

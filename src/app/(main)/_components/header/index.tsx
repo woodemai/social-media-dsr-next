@@ -17,7 +17,7 @@ export const Header = async () => {
   const user = await getFullCurrentUser();
 
   return (
-    <header className='fixed top-0 z-50 h-16 w-full p-2 border-b border-border/50 backdrop-blur-md bg-card/30'>
+    <header className='sticky top-0 z-50 h-16 w-full p-2 border-b border-border/50 backdrop-blur-md bg-card/30'>
       <div className='size-full max-w-7xl mx-auto flex items-center justify-between'>
         <Link
           className='flex flex-row items-center gap-x-4'
