@@ -12,38 +12,24 @@ export const getUserById = async (id: string) => {
   }
 };
 
-export const getUserByIdWithSubscription = async (id: string) => {
-  const user = await currentUser();
+export const getIsSubscribed = async (id: string) => {
+  const currentUser = await getCurrentUser();
+  
+  if (currentUser?.id === id) {
+    return false;
+  }
 
-  const isSubscribed =
-    (await db.user.count({
-      where: {
-        id,
-        subscribers: {
-          some: {
-            id: user?.id,
-          },
-        },
-      },
-    })) > 0;
-
-  const response = await db.user.findUnique({
+  const subscribersWithCurrentUserId = await db.user.count({
     where: {
       id,
-    },
-    include: {
-      _count: {
-        select: {
-          subscribers: true,
-          subscribed: true,
+      subscribers: {
+        some: {
+          id: currentUser?.id,
         },
       },
     },
   });
-  return {
-    isSubscribed,
-    user: response,
-  };
+  return subscribersWithCurrentUserId > 0;
 };
 
 export const getUserByEmail = async (email: string) => {
@@ -54,7 +40,7 @@ export const getUserByEmail = async (email: string) => {
   }
 };
 
-export const currentUser = async () => {
+export const getCurrentUser = async () => {
   const session = await auth();
 
   return session?.user;
@@ -63,7 +49,7 @@ export const currentUser = async () => {
 export const getFullCurrentUser = async (): Promise<
   User | null | undefined
 > => {
-  const user = await currentUser();
+  const user = await getCurrentUser();
   if (!user?.id) return;
   return db.user.findUnique({
     where: {

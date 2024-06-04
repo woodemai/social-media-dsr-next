@@ -70,7 +70,7 @@ export const PostForm = () => {
   return (
     <Form {...form}>
       <form
-        className='flex flex-col gap-y-4 border rounded-md'
+        className='flex flex-col gap-y-4 border rounded-md shadow-sm'
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className='flex gap-x-2 p-4'>

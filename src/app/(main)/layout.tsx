@@ -9,7 +9,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <>
       <Header />
-      <main className='h-full pt-16'>
+      <main className='h-full'>
         {children}
       </main>
     </>

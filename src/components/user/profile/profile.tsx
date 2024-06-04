@@ -8,26 +8,29 @@ import { PostForm } from '@/components/post/form';
 import { PostList } from '@/components/post/list';
 import { ListSkeleton } from '@/components/post/list-skeleton';
 
-import { getUserByIdWithSubscription } from '@/data/user';
+import { getCurrentUser, getIsSubscribed, getUserById } from '@/data/user';
 
 interface ProfileProps {
   id: string;
-  isOwner?: boolean;
 }
 
-export const Profile = async ({ id, isOwner = false }: ProfileProps) => {
-  const response = await getUserByIdWithSubscription(id);
+export const Profile = async ({ id }: ProfileProps) => {
+  const user = await getUserById(id);
+  const currentUser = await getCurrentUser();
 
-  if (!response.user) {
+  if (!user) {
     return <UserNotFound />;
   }
+
+  const isOwner = currentUser?.id === user.id;
+  const isSubscribed = await getIsSubscribed(id);
 
   return (
     <>
       <ProfileInfo
         isOwner={isOwner}
-        isSubscribed={response.isSubscribed}
-        user={response.user}
+        isSubscribed={isSubscribed}
+        user={user}
       />
       {isOwner ? <PostForm /> : null}
       <Suspense fallback={<ListSkeleton />}>

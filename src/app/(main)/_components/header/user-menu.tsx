@@ -3,13 +3,13 @@ import { User } from '@prisma/client';
 import { signOut } from 'next-auth/react';
 import { Link } from 'next-view-transitions';
 
+import { useState } from 'react';
+
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { UserAvatar } from '@/components/user/avatar';
@@ -19,6 +19,8 @@ interface UserHeaderMenuProps {
 }
 
 export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
+  const [open, setOpen] = useState(false);
+
   if (!user) {
     return (
       <Button
@@ -32,49 +34,29 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu
+      onOpenChange={() => setOpen(!open)}
+      open={open}
+    >
       <DropdownMenuTrigger>
         <span className='sr-only'>Меню пользователя</span>
         <UserAvatar src={user.image} />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Button
             asChild
+            onClick={() => setOpen(false)}
             variant='link'
           >
-            <Link href='/profile'>Профиль</Link>
+            <Link
+              className='font-bold'
+              href={`/user/${user.id}`}
+            >
+              {user.name}
+            </Link>
           </Button>
         </DropdownMenuItem>
-        <>
-          <DropdownMenuItem>
-            <Button
-              asChild
-              variant='link'
-            >
-              <Link href='/favorite'>Подписки</Link>
-            </Button>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Button
-              asChild
-              variant='link'
-            >
-              <Link href='/cart'>Понравившееся</Link>
-            </Button>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Button
-              asChild
-              variant='link'
-            >
-              <Link href='/cart'>Сообщения</Link>
-            </Button>
-          </DropdownMenuItem>
-        </>
-        <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Button
             onClick={() => signOut()}

@@ -18,8 +18,8 @@ const DeleteButton = dynamic(() => import('./delete-button').then(mob => mob.Del
 
 export const PostItem = ({ post, isOwner = false }: PostItemProps) => {
   return (
-    <li className='border p-4 rounded-md space-y-4 prose dark:prose-invert max-w-full'>
-      <div className='flex justify-between'>
+    <li className='p-4 space-y-4  max-w-full'>
+      <div className='flex justify-between w-full prose dark:prose-invert'>
         <div className='flex gap-x-4 items-end'>
           <UserAvatar
             height={32}

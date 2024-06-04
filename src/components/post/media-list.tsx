@@ -1,3 +1,5 @@
+import { VideoItem } from './video-item';
+
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 
 import Image from 'next/image';
@@ -10,42 +12,42 @@ interface MediaListProps {
 
 export const MediaList = ({ media }: MediaListProps) => {
   return (
-    <div className={cn('grid gap-4 size-full', media.length > 1 ? 'grid-cols-2' : 'grid-cols-1')}>
+    <div
+      className={cn(
+        'grid gap-1 size-full',
+        media.length < 2
+          ? 'grid-cols-1'
+          : media.length % 2 === 0
+            ? 'grid-cols-2'
+            : 'grid-cols-2',
+      )}
+    >
       {media.map(item => (
-        <div className='mx-auto' key={item}>
+        <div
+          className='mx-auto size-fit p-0 m-0 '
+          key={item}
+        >
           {item.includes('/video/') ? (
-            <video
-              className='rounded-lg size-full'
-              controls
-              height={256}
-              muted
-              preload='none'
-              width={256}
-            >
-              <source
-                src={item}
-                type='video/mp4'
-              />
-            </video>
+            <VideoItem src={item} />
           ) : (
             <Dialog>
-              <DialogTrigger className='p-0'>
+              <DialogTrigger className='p-0 m-0 size-fit h-full'>
                 <Image
                   alt='Изображение'
-                  className='m-0 rounded-lg size-auto'
-                  height={512}
+                  className='m-0 rounded-sm size-full object-cover'
+                  height={1024}
                   priority
                   src={item}
-                  width={512}
+                  width={1024}
                 />
               </DialogTrigger>
-              <DialogContent className='overflow-hidden object-contain w-full sm:w-fit h-fit max-h-[90%] p-0'>
+              <DialogContent className='size-full bg-transparent border-0 grid max-w-fit shadow-none h-fit place-content-center'>
                 <Image
                   alt='Изображение'
-                  className='rounded-lg'
-                  height={2048}
+                  className='rounded-sm'
+                  height={1024}
                   src={item}
-                  width={2048}
+                  width={1024}
                 />
               </DialogContent>
             </Dialog>
