@@ -70,7 +70,7 @@ export const PostForm = () => {
   return (
     <Form {...form}>
       <form
-        className='flex flex-col gap-y-4 border rounded-md shadow-sm'
+        className='flex flex-col gap-y-4 border rounded-md shadow-sm bg-card'
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className='flex gap-x-2 p-4'>
@@ -110,7 +110,7 @@ export const PostForm = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    className='w-full border-none hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
+                    className='w-full bg-card border-none hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
                     placeholder='Напишите, что у вас нового...'
                   />
                 </FormControl>

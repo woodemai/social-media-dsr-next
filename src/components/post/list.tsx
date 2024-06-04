@@ -24,7 +24,7 @@ export const PostList = async ({ userId, isOwner }: PostListProps) => {
   }
 
   return (
-    <ul className='divide-y border-x px-2'>
+    <ul className='divide-y border-x px-2 bg-card rounded-md'>
       {posts.map(post => (
         <PostItem
           isOwner={isOwner}
