@@ -29,7 +29,7 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
       if (error.type === 'CredentialsSignin') {
         return { error: 'Неверные логины или пароль' };
       } else {
-        return { error: 'Что-то пошло не так' };
+        return { error: 'Пользователь с данным email не найден' };
       }
     }
     throw error;

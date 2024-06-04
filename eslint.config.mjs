@@ -114,14 +114,6 @@ export default tseslint.config(
         'error',
         { allow: 'as-needed', extensions: ['.tsx'] },
       ],
-      'react/jsx-handler-names': [
-        'error',
-        {
-          eventHandlerPrefix: 'handle',
-          eventHandlerPropPrefix: 'on',
-          checkLocalVariables: true,
-        },
-      ],
       'react/jsx-no-bind': [
         'error',
         {

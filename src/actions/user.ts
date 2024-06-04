@@ -1,11 +1,13 @@
 'use server';
 
+import { SubscriptionRequest, User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
 import { db } from '@/config/prisma';
-import { getCurrentUser } from '@/data/user';
+import { getCurrentUser, getFullCurrentUser, getUserById } from '@/data/user';
 import { updateSchema } from '@/schemas/user';
+import { FullSubscriptionRequest } from '@/data/subscription-request';
 
 export const getUsers = async (name: string) => {
   const user = await getCurrentUser();
@@ -21,39 +23,111 @@ export const getUsers = async (name: string) => {
   });
 };
 
-export const handleSubscribeAction = async (
-  id: string,
-  isSubscribed: boolean,
+type SubscriptionActionReturnType = {
+  request?: SubscriptionRequest;
+  user?: { _count: { subscribers: number }; subscribers: User[] } & User;
+  error?: string;
+};
+
+export const subscribeAcceptAction = async (
+  subscriptionRequest: FullSubscriptionRequest,
 ) => {
-  const user = await getCurrentUser();
-  const subscribers = isSubscribed
-    ? { disconnect: { id: user?.id } }
-    : { connect: { id: user?.id } };
-  return db.user.update({
+  await db.user.update({
     where: {
-      id,
+      id: subscriptionRequest.requestToId,
     },
     data: {
-      subscribers,
-    },
-    include: {
-      _count: {
-        select: {
-          subscribers: true,
-        },
-      },
       subscribers: {
-        where: {
-          id: user?.id,
+        connect: {
+          id: subscriptionRequest.requestById,
         },
       },
     },
   });
+  await db.subscriptionRequest.delete({
+    where: {
+      id: subscriptionRequest.id,
+    },
+  });
+};
+
+export const subscribeRejectAction = async (
+  subscriptionRequest: FullSubscriptionRequest,
+) => {
+  return db.subscriptionRequest.delete({
+    where: {
+      id: subscriptionRequest.id,
+    },
+  });
+};
+
+export const subscribeAction = async (
+  id: string,
+  isSubscribed: boolean,
+): Promise<SubscriptionActionReturnType> => {
+  const user = await getUserById(id);
+  const currentUser = await getCurrentUser();
+
+  if (user?.isPrivate && !isSubscribed) {
+    if (currentUser?.id) {
+      const isRequestExists = await db.subscriptionRequest.findFirst({
+        where: {
+          requestById: currentUser.id,
+          requestToId: user.id,
+        },
+      });
+      if (isRequestExists) {
+        return {
+          error: 'Запрос на подписку уже отправлен',
+        };
+      }
+      const newSubscriptionRequest = await db.subscriptionRequest.create({
+        data: {
+          requestById: currentUser.id,
+          requestToId: user.id,
+        },
+      });
+      return {
+        request: newSubscriptionRequest,
+      };
+    } else {
+      return {
+        error: 'Пользователь не авторизован',
+      };
+    }
+  } else {
+    const subscribers = isSubscribed
+      ? { disconnect: { id: currentUser?.id } }
+      : { connect: { id: currentUser?.id } };
+    return {
+      user: await db.user.update({
+        where: {
+          id,
+        },
+        data: {
+          subscribers,
+        },
+        include: {
+          _count: {
+            select: {
+              subscribers: true,
+            },
+          },
+          subscribers: {
+            where: {
+              id: user?.id,
+            },
+          },
+        },
+      }),
+    };
+  }
 };
 
 type UpdateUserInfoResponse = {
   name?: string | null;
   bio?: string | null;
+  isPrivate?: boolean | null;
   error?: string;
 };
 
@@ -69,7 +143,7 @@ export const updateProfileAction = async (
       error: 'Поля заполнены неверно',
     };
 
-  const { name, bio, password } = validatedFields.data;
+  const { name, bio, password, isPrivate } = validatedFields.data;
 
   let hashedNewPassword = undefined;
 
@@ -90,10 +164,12 @@ export const updateProfileAction = async (
       name,
       bio,
       password: hashedNewPassword,
+      isPrivate,
     },
     select: {
       name: true,
       bio: true,
+      isPrivate: true,
     },
   });
 };

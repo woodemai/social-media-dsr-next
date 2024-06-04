@@ -14,17 +14,17 @@ export const getUserById = async (id: string) => {
 
 export const getIsSubscribed = async (id: string) => {
   const currentUser = await getCurrentUser();
-  
-  if (currentUser?.id === id) {
-    return false;
-  }
+
+  if (!currentUser) return false;
+
+  if (currentUser?.id === id) return false;
 
   const subscribersWithCurrentUserId = await db.user.count({
     where: {
       id,
       subscribers: {
         some: {
-          id: currentUser?.id,
+          id: currentUser.id,
         },
       },
     },

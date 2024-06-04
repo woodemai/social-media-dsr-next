@@ -17,7 +17,6 @@ model User {
   id             String    @id @default(cuid())
   name           String?
   bio            String?
-  privateProfiel Boolean?  @default(false)
   email          String    @unique
   emailVerified  DateTime?
   password       String?
@@ -28,10 +27,38 @@ model User {
   accounts       Account[]
   posts          Post[]
 
+  isPrivate Boolean?  @default(false)
+
   subscribers User[] @relation("subscription")
   subscribed  User[] @relation("subscription")
 
   likedPost Post[] @relation("like")
+
+  incomingSubscriptionRequests SubscriptionRequest[] @relation("requestTo")
+  outgoingSubscriptionRequests SubscriptionRequest[] @relation("requestBy")
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+model SubscriptionRequest {
+  id             String    @id @default(cuid())
+
+  requestById String
+  requestToId String
+
+  status RequestStatus @default(PENDING)
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  requestBy User @relation("requestBy", fields: [requestById], references: [id])
+  requestTo User @relation("requestTo", fields: [requestToId], references: [id])
+
+  @@unique([requestById, requestToId])
 }
 
 model Account {

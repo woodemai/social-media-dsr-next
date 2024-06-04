@@ -2,8 +2,9 @@
 
 import { useTransition } from 'react';
 
-import { handleSubscribeAction } from '@/actions/user';
+import { subscribeAction } from '@/actions/user';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 import {
   setSubscription,
   setUser,
@@ -17,16 +18,32 @@ export const SubscriptionButton = () => {
 
   const { id } = useUser();
   const isSubscribed = useSubscription();
+  const { toast } = useToast();
 
   const [isPending, startTransition] = useTransition();
 
   const handleSubscribe = () => {
-    const isSubscribedBefore = isSubscribed;
-    dispatch(setSubscription(!isSubscribed));
     startTransition(async () => {
-      const response = await handleSubscribeAction(id, isSubscribedBefore);
-      dispatch(setUser(response));
-      dispatch(setSubscription(response.subscribers.length > 0));
+      const { user, request, error } = await subscribeAction(
+        id,
+        isSubscribed,
+      );
+
+      if (user) {
+        dispatch(setUser(user));
+        dispatch(setSubscription(user.subscribers.length > 0));
+      } else if (error) {
+        toast({
+          title: 'Подписка',
+          description: error,
+          variant: 'destructive',
+        });
+      } else if (request) {
+        toast({
+          title: 'Подписка',
+          description: 'Запрос на подписку успешно отправлен',
+        });
+      }
     });
   };
 
@@ -34,8 +51,7 @@ export const SubscriptionButton = () => {
     <Button
       disabled={isPending}
       onClick={handleSubscribe}
-      variant={isSubscribed ? 'outline' : 'default'}
-    >
+      variant={isSubscribed ? 'outline' : 'default'}>
       {isSubscribed ? 'Отписаться' : 'Подписаться'}
     </Button>
   );
