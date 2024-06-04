@@ -24,12 +24,13 @@ export const userSlice = createSlice({
     },
     updateUser(
       state,
-      action: PayloadAction<Partial<Pick<User, 'name' | 'bio' | 'password'>>>,
+      action: PayloadAction<Partial<Pick<User, 'name' | 'bio' | 'password' | 'isPrivate'>>>,
     ) {
-      const { name, bio } = action.payload;
+      const { name, bio, isPrivate } = action.payload;
       if (state.user) {
         if (name) state.user.name = name;
         if (bio) state.user.bio = bio;
+        if (isPrivate) state.user.isPrivate = isPrivate;
       }
     },
   },

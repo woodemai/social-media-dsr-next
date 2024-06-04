@@ -25,6 +25,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
 import { updateUser, useUser } from '@/config/store/slices/user-slice';
 import { useAppDispatch } from '@/config/store/store';
@@ -32,7 +33,7 @@ import { updateSchema } from '@/schemas/user';
 
 export const UpdateDialog = () => {
   const dispatch = useAppDispatch();
-  const { id, name, bio } = useUser();
+  const { id, name, bio, isPrivate } = useUser();
   const [error, setError] = useState<string | undefined>();
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -44,6 +45,7 @@ export const UpdateDialog = () => {
       name: name ?? '',
       bio: bio ?? '',
       password: '',
+      isPrivate: isPrivate ?? false,
     },
   });
 
@@ -51,11 +53,11 @@ export const UpdateDialog = () => {
     setError(undefined);
     dispatch(updateUser(values));
     startTransition(async () => {
-      const { error, name, bio } = await updateProfileAction(id, values);
+      const { error, name, bio, isPrivate } = await updateProfileAction(id, values);
       setError(error);
-      if (name && bio) {
+      if (name && bio && isPrivate) {
         setOpen(false);
-        dispatch(updateUser({ name, bio }));
+        dispatch(updateUser({ name, bio, isPrivate }));
         toast({
           title: 'Успех',
           description: 'Данные сохранены',
@@ -67,13 +69,11 @@ export const UpdateDialog = () => {
   return (
     <Dialog
       onOpenChange={isOpen => setOpen(isOpen)}
-      open={open}
-    >
+      open={open}>
       <DialogTrigger asChild>
         <Button
           disabled={isPending}
-          variant='secondary'
-        >
+          variant='secondary'>
           Изменить
         </Button>
       </DialogTrigger>
@@ -82,8 +82,7 @@ export const UpdateDialog = () => {
         <Form {...form}>
           <form
             className='space-y-4 w-full'
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
+            onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name='name'
@@ -133,13 +132,28 @@ export const UpdateDialog = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name='isPrivate'
+              render={({ field }) => (
+                <FormItem className='flex items-center space-x-2'>
+                  <FormLabel className='pt-1'>Приватный профиль</FormLabel>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormError message={error} />
             <DialogFooter className='flex justify-end'>
               <Button
                 className='ml-auto'
                 disabled={isPending}
-                type='submit'
-              >
+                type='submit'>
                 Обновить
               </Button>
             </DialogFooter>
