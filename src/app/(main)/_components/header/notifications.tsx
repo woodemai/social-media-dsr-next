@@ -1,8 +1,9 @@
+import { BellIcon } from '@radix-ui/react-icons';
+
 import { NotificationList } from '@/components/notification/list';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { getSubscriptionRequests } from '@/data/subscription-request';
-import { BellIcon } from '@radix-ui/react-icons';
 
 export const Notifications = async () => {
   const subscriptionRequests = await getSubscriptionRequests();
@@ -11,7 +12,7 @@ export const Notifications = async () => {
     <Dialog>
       <DialogTrigger className='relative'>
         {subscriptionRequests.length > 0 && (
-          <Badge variant='notification' className='absolute top-[-10px] right-[-10px]'>{subscriptionRequests.length}</Badge>
+          <Badge className='absolute top-[-10px] right-[-10px]' variant='notification'>{subscriptionRequests.length}</Badge>
         )}
         <BellIcon className='size-6' />
       </DialogTrigger>

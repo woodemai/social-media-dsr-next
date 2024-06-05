@@ -1,6 +1,8 @@
-import { db } from '@/config/prisma';
 import { getCurrentUser } from './user';
+
 import { SubscriptionRequest } from '@prisma/client';
+
+import { db } from '@/config/prisma';
 
 export type FullSubscriptionRequest = {
   requestBy: {

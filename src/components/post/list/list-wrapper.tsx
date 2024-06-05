@@ -1,4 +1,4 @@
-import { PostItem } from './item';
+import { ListClient } from './list-client';
 
 import { getPosts } from '@/data/post';
 
@@ -8,7 +8,7 @@ interface PostListProps {
 }
 
 export const PostList = async ({ userId, isOwner }: PostListProps) => {
-  const posts = await getPosts({ userId });
+  const posts = await getPosts({ userId, page: 1 });
 
   if (!posts.length) {
     return (
@@ -23,15 +23,7 @@ export const PostList = async ({ userId, isOwner }: PostListProps) => {
     );
   }
 
-  return (
-    <ul className='divide-y border-x px-2 bg-card rounded-md'>
-      {posts.map(post => (
-        <PostItem
-          isOwner={isOwner}
-          key={post.id}
-          post={post}
-        />
-      ))}
-    </ul>
-  );
+  return <ListClient isOwner={isOwner} posts={posts} userId={userId} />;
+
+
 };

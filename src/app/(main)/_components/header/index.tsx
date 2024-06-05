@@ -1,3 +1,5 @@
+import { Notifications } from './notifications';
+
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { Link } from 'next-view-transitions';
@@ -7,7 +9,6 @@ import logo from '@/../public/icons/logo.png';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 import { getFullCurrentUser } from '@/data/user';
-import { Notifications } from './notifications';
 
 const UserHeaderMenu = dynamic(() =>
   import('./user-menu').then(mod => mod.UserHeaderMenu),
@@ -22,7 +23,8 @@ export const Header = async () => {
       <div className='size-full max-w-7xl mx-auto flex items-center justify-between'>
         <Link
           className='flex flex-row items-center gap-x-4'
-          href='/'>
+          href='/'
+        >
           <Image
             alt='Logo'
             className='rounded-full'
