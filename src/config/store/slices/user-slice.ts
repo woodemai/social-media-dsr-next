@@ -1,14 +1,14 @@
+import { FullUser } from '@/data/user';
 import { RootState, useAppSelector } from '../store';
 
-import { User } from '@prisma/client';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type userStateType = {
-  user: User;
+  user: FullUser;
   isSubscribed: boolean;
 };
 const initialState: userStateType = {
-  user: {} as User,
+  user: {} as FullUser,
   isSubscribed: false,
 };
 
@@ -16,7 +16,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<User>) {
+    setUser(state, action: PayloadAction<FullUser>) {
       state.user = action.payload;
     },
     setSubscription(state, action: PayloadAction<boolean>) {
@@ -24,7 +24,9 @@ export const userSlice = createSlice({
     },
     updateUser(
       state,
-      action: PayloadAction<Partial<Pick<User, 'name' | 'bio' | 'password' | 'isPrivate'>>>,
+      action: PayloadAction<
+        Partial<Pick<FullUser, 'name' | 'bio' | 'password' | 'isPrivate'>>
+      >,
     ) {
       const { name, bio, isPrivate } = action.payload;
       if (state.user) {

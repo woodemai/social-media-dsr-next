@@ -18,7 +18,7 @@ export default async function UserPage({ params: { id } }: UserPageProps) {
   const currentUser = await getCurrentUser();
   const isSubscribed = await getIsSubscribed(id);
   const isOwner = currentUser?.id === id;
-  const isShowingPosts = isSubscribed || isOwner;
+  const isShowingPosts = isSubscribed || isOwner || !user?.isPrivate;
   if (!user) {
     return <UserNotFound />;
   }
