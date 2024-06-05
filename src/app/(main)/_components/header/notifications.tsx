@@ -14,7 +14,7 @@ export const Notifications = async () => {
         {subscriptionRequests.length > 0 && (
           <Badge className='absolute top-[-10px] right-[-10px]' variant='notification'>{subscriptionRequests.length}</Badge>
         )}
-        <BellIcon className='size-6' />
+        <BellIcon className='size-4' />
       </DialogTrigger>
       <DialogContent>
         {subscriptionRequests.length > 0 ? (
