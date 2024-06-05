@@ -5,8 +5,6 @@ import { UpdateDialog } from './update-dialog';
 
 import { UserAvatar } from '../avatar';
 
-import { User } from '@prisma/client';
-
 import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -16,11 +14,12 @@ import {
   useUser,
 } from '@/config/store/slices/user-slice';
 import { useAppDispatch } from '@/config/store/store';
+import { FullUser } from '@/data/user';
 
 interface UserInfoProps {
   isOwner?: boolean;
   isSubscribed?: boolean;
-  user: User;
+  user: FullUser;
 }
 
 export const UserInfo = ({
@@ -29,12 +28,17 @@ export const UserInfo = ({
   user,
 }: UserInfoProps) => {
   const dispatch = useAppDispatch();
-  const { name, bio, image } = useUser();
+  const {
+    name,
+    bio,
+    image,
+    _count,
+  } = useUser();
 
   useEffect(() => {
     dispatch(setUser(user));
     dispatch(setSubscription(isSubscribed));
-  }, [user, dispatch, setUser]);
+  }, [user, dispatch, setUser, isSubscribed]);
 
   return (
     <div className='flex gap-x-4 p-2 sm:p-0 justify-center sm:justify-start'>
@@ -56,16 +60,14 @@ export const UserInfo = ({
           <Button
             className='pl-0 text-muted-foreground hover:text-foreground'
             size='sm'
-            variant='link'
-          >
-            Подписчики: {/**TODO: subscribers count */}
+            variant='link'>
+            Подписчики: {_count?.subscribers}
           </Button>
           <Button
             className='pl-0 text-muted-foreground hover:text-foreground'
             size='sm'
-            variant='link'
-          >
-            Подписки: {/**TODO: subscribed count */}
+            variant='link'>
+            Подписки: {_count?.subscribed}
           </Button>
         </div>
       </div>

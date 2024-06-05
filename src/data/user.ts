@@ -4,12 +4,26 @@ import { User } from '@prisma/client';
 
 import { db } from '@/config/prisma';
 
-export const getUserById = async (id: string) => {
-  try {
-    return await db.user.findUnique({ where: { id } });
-  } catch {
-    return;
-  }
+export type FullUser = {
+  _count: {
+    subscribed: number;
+    subscribers: number;
+  };
+  subscribers?: User[];
+} & User;
+
+export const getUserById = async (id: string): Promise<FullUser | null> => {
+  return await db.user.findUnique({
+    where: { id },
+    include: {
+      _count: {
+        select: {
+          subscribed: true,
+          subscribers: true,
+        },
+      },
+    },
+  });
 };
 
 export const getIsSubscribed = async (id: string) => {

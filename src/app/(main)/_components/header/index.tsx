@@ -36,8 +36,8 @@ export const Header = async () => {
         </Link>
         <nav className='flex h-full items-center justify-center gap-x-4'>
           <Search />
-          <Notifications />
           <UserHeaderMenu user={user} />
+          <Notifications />
           <ThemeToggle />
         </nav>
       </div>

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { PostItem } from '@/components/post/item';
 import { FullPost, getPosts } from '@/data/post';
+import { PAGE_SIZE } from '@/config/consts';
 
 interface ListClientProps {
   userId?: string;
@@ -21,8 +22,9 @@ export const ListClient = ({
   const [page, setPage] = useState(1);
 
   useEffect(() => {
+    if (page === 1 || posts.length % PAGE_SIZE !== 0) return;
     getPosts({ userId, page }).then(newPosts =>
-      setPosts([...posts, ...newPosts]),
+      setPosts(prev => [...prev, ...newPosts]),
     );
   }, [page]);
 

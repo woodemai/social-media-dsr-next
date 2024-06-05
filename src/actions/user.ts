@@ -6,7 +6,7 @@ import { z } from 'zod';
 
 import { db } from '@/config/prisma';
 import { FullSubscriptionRequest } from '@/data/subscription-request';
-import { getCurrentUser, getUserById } from '@/data/user';
+import { FullUser, getCurrentUser, getUserById } from '@/data/user';
 import { updateSchema } from '@/schemas/user';
 
 export const getUsers = async (name: string) => {
@@ -25,7 +25,7 @@ export const getUsers = async (name: string) => {
 
 type SubscriptionActionReturnType = {
   request?: SubscriptionRequest;
-  user?: { _count: { subscribers: number }; subscribers: User[] } & User;
+  user?: FullUser;
   error?: string;
 };
 
@@ -111,11 +111,12 @@ export const subscribeAction = async (
           _count: {
             select: {
               subscribers: true,
+              subscribed: true,
             },
           },
           subscribers: {
             where: {
-              id: user?.id,
+              id: currentUser?.id,
             },
           },
         },

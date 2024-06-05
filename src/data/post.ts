@@ -5,6 +5,8 @@ import { getCurrentUser } from './user';
 import { Post, User } from '@prisma/client';
 
 import { db } from '@/config/prisma';
+import { PAGE_SIZE } from '@/config/consts';
+
 
 const PAGE_SIZE = 10;
 
@@ -16,12 +18,12 @@ export type FullPost = {
 
 interface getPostsProps {
   userId?: string;
-  page?: number;
+  page: number;
 }
 
 export const getPosts = async ({
   userId,
-  page = 1,
+  page,
 }: getPostsProps): Promise<FullPost[]> => {
   const user = await getCurrentUser();
   if (!user) return [];
