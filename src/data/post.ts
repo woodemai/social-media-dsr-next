@@ -4,11 +4,9 @@ import { getCurrentUser } from './user';
 
 import { Post, User } from '@prisma/client';
 
-import { db } from '@/config/prisma';
 import { PAGE_SIZE } from '@/config/consts';
+import { db } from '@/config/prisma';
 
-
-const PAGE_SIZE = 10;
 
 export type FullPost = {
   author: Pick<User, 'name' | 'image'>;

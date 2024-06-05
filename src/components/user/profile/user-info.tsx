@@ -60,13 +60,15 @@ export const UserInfo = ({
           <Button
             className='pl-0 text-muted-foreground hover:text-foreground'
             size='sm'
-            variant='link'>
+            variant='link'
+          >
             Подписчики: {_count?.subscribers}
           </Button>
           <Button
             className='pl-0 text-muted-foreground hover:text-foreground'
             size='sm'
-            variant='link'>
+            variant='link'
+          >
             Подписки: {_count?.subscribed}
           </Button>
         </div>

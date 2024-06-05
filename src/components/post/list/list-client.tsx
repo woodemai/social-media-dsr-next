@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { PostItem } from '@/components/post/item';
-import { FullPost, getPosts } from '@/data/post';
 import { PAGE_SIZE } from '@/config/consts';
+import { FullPost, getPosts } from '@/data/post';
 
 interface ListClientProps {
   userId?: string;

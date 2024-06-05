@@ -1,6 +1,6 @@
 'use server';
 
-import { SubscriptionRequest, User } from '@prisma/client';
+import { SubscriptionRequest } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
