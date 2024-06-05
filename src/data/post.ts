@@ -8,6 +8,8 @@ import { db } from '@/config/prisma';
 import { PAGE_SIZE } from '@/config/consts';
 
 
+const PAGE_SIZE = 10;
+
 export type FullPost = {
   author: Pick<User, 'name' | 'image'>;
   _count: { likedUsers: number };
