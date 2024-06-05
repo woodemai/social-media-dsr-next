@@ -32,13 +32,13 @@ export const UserInfo = ({
     name,
     bio,
     image,
-    _count: { subscribed, subscribers },
+    _count,
   } = useUser();
 
   useEffect(() => {
     dispatch(setUser(user));
     dispatch(setSubscription(isSubscribed));
-  }, [user, dispatch, setUser]);
+  }, [user, dispatch, setUser, isSubscribed]);
 
   return (
     <div className='flex gap-x-4 p-2 sm:p-0 justify-center sm:justify-start'>
@@ -61,13 +61,13 @@ export const UserInfo = ({
             className='pl-0 text-muted-foreground hover:text-foreground'
             size='sm'
             variant='link'>
-            Подписчики: {subscribers}
+            Подписчики: {_count?.subscribers}
           </Button>
           <Button
             className='pl-0 text-muted-foreground hover:text-foreground'
             size='sm'
             variant='link'>
-            Подписки: {subscribed}
+            Подписки: {_count?.subscribed}
           </Button>
         </div>
       </div>

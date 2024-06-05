@@ -31,7 +31,10 @@ export const SubscriptionButton = () => {
 
       if (user) {
         dispatch(setUser(user));
-        dispatch(setSubscription(user.subscribers.length > 0));
+
+        if (user.subscribers) {
+          dispatch(setSubscription(user.subscribers.length > 0));
+        }
       } else if (error) {
         toast({
           title: 'Подписка',

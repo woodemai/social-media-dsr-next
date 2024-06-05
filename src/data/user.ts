@@ -9,6 +9,7 @@ export type FullUser = {
     subscribed: number;
     subscribers: number;
   };
+  subscribers?: User[];
 } & User;
 
 export const getUserById = async (id: string): Promise<FullUser | null> => {

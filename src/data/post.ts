@@ -23,8 +23,6 @@ export const getPosts = async ({
   userId,
   page,
 }: getPostsProps): Promise<FullPost[]> => {
-  console.log(page);
-
   const user = await getCurrentUser();
   if (!user) return [];
   const author = userId
