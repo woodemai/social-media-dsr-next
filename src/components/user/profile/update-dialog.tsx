@@ -69,11 +69,13 @@ export const UpdateDialog = () => {
   return (
     <Dialog
       onOpenChange={isOpen => setOpen(isOpen)}
-      open={open}>
+      open={open}
+    >
       <DialogTrigger asChild>
         <Button
           disabled={isPending}
-          variant='secondary'>
+          variant='secondary'
+        >
           Изменить
         </Button>
       </DialogTrigger>
@@ -82,7 +84,8 @@ export const UpdateDialog = () => {
         <Form {...form}>
           <form
             className='space-y-4 w-full'
-            onSubmit={form.handleSubmit(onSubmit)}>
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <FormField
               control={form.control}
               name='name'
@@ -153,7 +156,8 @@ export const UpdateDialog = () => {
               <Button
                 className='ml-auto'
                 disabled={isPending}
-                type='submit'>
+                type='submit'
+              >
                 Обновить
               </Button>
             </DialogFooter>

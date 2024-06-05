@@ -5,9 +5,9 @@ import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
 import { db } from '@/config/prisma';
-import { getCurrentUser, getFullCurrentUser, getUserById } from '@/data/user';
-import { updateSchema } from '@/schemas/user';
 import { FullSubscriptionRequest } from '@/data/subscription-request';
+import { getCurrentUser, getUserById } from '@/data/user';
+import { updateSchema } from '@/schemas/user';
 
 export const getUsers = async (name: string) => {
   const user = await getCurrentUser();

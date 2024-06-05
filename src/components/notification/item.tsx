@@ -1,9 +1,11 @@
 'use client';
 
-import { FullSubscriptionRequest } from '@/data/subscription-request';
 import { Button } from '../ui/button';
-import { subscribeAcceptAction, subscribeRejectAction } from '@/actions/user';
+
 import { useToast } from '../ui/use-toast';
+
+import { subscribeAcceptAction, subscribeRejectAction } from '@/actions/user';
+import { FullSubscriptionRequest } from '@/data/subscription-request';
 
 interface NotificationItemProps {
   notification: FullSubscriptionRequest;
@@ -37,13 +39,15 @@ export const NotificationItem = ({ notification }: NotificationItemProps) => {
       <div className='space-x-4'>
         <Button
           onClick={handleAccept}
-          size='sm'>
+          size='sm'
+        >
           Принять
         </Button>
         <Button
           onClick={handleReject}
           size='sm'
-          variant='secondary'>
+          variant='secondary'
+        >
           Отклонить
         </Button>
       </div>

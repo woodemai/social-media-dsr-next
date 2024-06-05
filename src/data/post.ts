@@ -1,8 +1,12 @@
+'use server';
+
 import { getCurrentUser } from './user';
 
 import { Post, User } from '@prisma/client';
 
 import { db } from '@/config/prisma';
+
+const PAGE_SIZE = 10;
 
 export type FullPost = {
   author: Pick<User, 'name' | 'image'>;
@@ -21,52 +25,22 @@ export const getPosts = async ({
 }: getPostsProps): Promise<FullPost[]> => {
   const user = await getCurrentUser();
   if (!user) return [];
-  if (userId) {
-    return db.post.findMany({
-      skip: (page - 1) * 10,
-      take: 10,
-      where: {
-        author: {
-          id: userId,
+  const author = userId
+    ? {
+      id: userId,
+    }
+    : {
+      subscribers: {
+        some: {
+          id: user.id,
         },
       },
-      include: {
-        _count: {
-          select: {
-            likedUsers: true,
-          },
-        },
-        likedUsers: {
-          where: {
-            id: user.id,
-          },
-          select: {
-            id: true,
-          },
-        },
-        author: {
-          select: {
-            name: true,
-            image: true,
-          },
-        },
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-  }
-  return await db.post.findMany({
-    skip: (page - 1) * 10,
-    take: 10,
+    };
+  return db.post.findMany({
+    skip: (page - 1) * PAGE_SIZE,
+    take: PAGE_SIZE,
     where: {
-      author: {
-        subscribers: {
-          some: {
-            id: user.id,
-          },
-        },
-      },
+      author,
     },
     include: {
       _count: {

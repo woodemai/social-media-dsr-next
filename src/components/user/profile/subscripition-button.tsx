@@ -51,7 +51,8 @@ export const SubscriptionButton = () => {
     <Button
       disabled={isPending}
       onClick={handleSubscribe}
-      variant={isSubscribed ? 'outline' : 'default'}>
+      variant={isSubscribed ? 'outline' : 'default'}
+    >
       {isSubscribed ? 'Отписаться' : 'Подписаться'}
     </Button>
   );
