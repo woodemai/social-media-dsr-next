@@ -17,11 +17,7 @@ export const Notifications = async () => {
         <BellIcon className='size-4' />
       </DialogTrigger>
       <DialogContent>
-        {subscriptionRequests.length > 0 ? (
-          <NotificationList notifications={subscriptionRequests} />
-        ) : (
-          <h1>No notifications</h1>
-        )}
+        <NotificationList notifications={subscriptionRequests} />
       </DialogContent>
     </Dialog>
   );
