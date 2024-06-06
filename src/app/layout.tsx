@@ -1,16 +1,16 @@
-import { ThemeProvider } from './_components/theme-provider';
-
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import { ViewTransitions } from 'next-view-transitions';
 
-import type { Metadata } from 'next';
-
 import '@/config/globals.css';
+import { VERCEL_ENV } from '@/config/next.constants.mjs';
 import StoreProvider from '@/config/store/provider';
 import { cn } from '@/config/utils';
 import { Toaster } from '@/shared/ui/toaster';
+
+import { ThemeProvider } from './_components/theme-provider';
 
 const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -43,8 +43,12 @@ export default function RootLayout({
             <StoreProvider>
               <Toaster />
               {children}
-              <Analytics />
-              <SpeedInsights />
+              {VERCEL_ENV ? (
+                <>
+                  <Analytics />
+                  <SpeedInsights />
+                </>
+              ) : null}
             </StoreProvider>
           </ThemeProvider>
         </body>

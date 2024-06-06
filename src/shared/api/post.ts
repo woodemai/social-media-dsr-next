@@ -1,11 +1,12 @@
 'use server';
 
-import { getCurrentUser } from './user';
 
 import { Post, User } from '@prisma/client';
 
-import { PAGE_SIZE } from '@/config/consts';
+import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { db } from '@/config/prisma';
+
+import { getCurrentUser } from './user';
 
 
 export type FullPost = {

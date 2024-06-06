@@ -1,8 +1,8 @@
-import { RootState, useAppSelector } from '../store';
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { FullUser } from '@/shared/api/user';
+import { RootState, useAppSelector } from 'src/config/store/store';
 
 type userStateType = {
   user: FullUser;

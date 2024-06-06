@@ -1,6 +1,7 @@
+import { getPosts } from '@/shared/api/post';
+
 import { ListClient } from './list-client';
 
-import { getPosts } from '@/shared/api/post';
 
 interface PostListProps {
   userId?: string;

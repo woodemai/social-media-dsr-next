@@ -2,7 +2,6 @@
 
 
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
-
 import { useOptimistic, useState, useTransition } from 'react';
 
 import { likePostAction, unlikePostAction } from '@/shared/actions/post';

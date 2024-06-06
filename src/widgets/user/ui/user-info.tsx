@@ -34,7 +34,7 @@ export const UserInfo = ({
   useEffect(() => {
     dispatch(setUser(user));
     dispatch(setSubscription(isSubscribed));
-  }, [user, dispatch, setUser, isSubscribed]);
+  }, [dispatch, isSubscribed, user]);
 
   return (
     <div className='flex gap-x-4 p-2 sm:p-0 justify-center sm:justify-start'>

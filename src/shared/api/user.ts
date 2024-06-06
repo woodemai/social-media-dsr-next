@@ -1,7 +1,7 @@
-import { auth } from '../../auth';
 
 import { User } from '@prisma/client';
 
+import { auth } from '@/auth';
 import { db } from '@/config/prisma';
 
 export type FullUser = {

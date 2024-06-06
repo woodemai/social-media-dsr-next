@@ -1,9 +1,24 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   trailingSlash: false,
   skipTrailingSlashRedirect: true,
+  webpack: function (config, { webpack }) {
+    config.module.rules.push({
+      test: /\.m?js$/,
+      type: 'javascript/auto',
+      resolve: { fullySpecified: false },
+    });
+
+    config.ignoreWarnings = [
+      {
+        module: /@opentelemetry\/instrumentation/,
+        message: /Critical dependency/,
+      },
+    ];
+
+    return config;
+  },
   experimental: {
     ppr: true,
     reactCompiler: true,

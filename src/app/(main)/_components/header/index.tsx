@@ -1,4 +1,3 @@
-import { Notifications } from './notifications';
 
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -8,6 +7,8 @@ import React from 'react';
 import logo from '@/../public/icons/logo.png';
 import { getFullCurrentUser } from '@/shared/api/user';
 import { ThemeToggle } from '@/shared/ui/theme-toggle';
+
+import { Notifications } from './notifications';
 
 
 const UserHeaderMenu = dynamic(() =>

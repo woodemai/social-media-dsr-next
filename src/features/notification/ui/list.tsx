@@ -1,11 +1,12 @@
 'use client';
 
-import { NotificationItem } from './item';
 
 import { useState } from 'react';
 
 
 import { FullSubscriptionRequest } from '@/shared/api/subscription-request';
+
+import { NotificationItem } from './item';
 
 interface NotificationListProps {
   notifications: FullSubscriptionRequest[];

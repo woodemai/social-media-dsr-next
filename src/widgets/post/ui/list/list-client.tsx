@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import { PAGE_SIZE } from '@/config/consts';
+import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { PostItem } from '@/features/post';
 import { FullPost, getPosts } from '@/shared/api/post';
 
@@ -26,7 +26,7 @@ export const ListClient = ({
     getPosts({ userId, page }).then(newPosts =>
       setPosts(prev => [...prev, ...newPosts]),
     );
-  }, [page]);
+  }, [page, posts.length, userId]);
 
   return (
     <ul className='divide-y border-x px-2 bg-card rounded-md'>

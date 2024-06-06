@@ -2,7 +2,6 @@
 import { User } from '@prisma/client';
 import { signOut } from 'next-auth/react';
 import { Link } from 'next-view-transitions';
-
 import { useState } from 'react';
 
 import { UserAvatar } from '@/features/user';

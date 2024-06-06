@@ -1,7 +1,8 @@
-import { userSlice } from './slices/user-slice';
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, useStore } from 'react-redux';
+
+import { userSlice } from './slices/user-slice';
 
 const reducer = combineReducers({
   [userSlice.reducerPath]: userSlice.reducer,
