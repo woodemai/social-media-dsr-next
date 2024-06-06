@@ -7,10 +7,8 @@ import {
   CldUploadWidget,
   CloudinaryUploadWidgetResults,
 } from 'next-cloudinary';
-
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-
 import { z } from 'zod';
 
 import { createPostAction } from '@/shared/actions/post';

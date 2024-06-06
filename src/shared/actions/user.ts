@@ -149,9 +149,9 @@ export const updateProfileAction = async (
   let hashedNewPassword = undefined;
 
   if (password && user?.password) {
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = bcrypt.compareSync(password, user.password);
     if (!isMatch) {
-      hashedNewPassword = await bcrypt.hash(password, 12);
+      hashedNewPassword = bcrypt.hashSync(password, 8);
     } else {
       return { error: 'Пароль совпадает с текущим' };
     }

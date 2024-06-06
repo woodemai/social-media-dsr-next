@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-
 import { z } from 'zod';
 
 import { updateUser, useUser } from '@/config/store/slices/user-slice';

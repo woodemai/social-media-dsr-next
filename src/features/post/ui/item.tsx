@@ -2,12 +2,10 @@
 
 import dynamic from 'next/dynamic';
 import { Link } from 'next-view-transitions';
-
 import { useEffect, useRef } from 'react';
 
 import { MediaList , Social} from '@/entities/post';
 import { UserAvatar } from '@/features/user';
-
 import { FullPost } from '@/shared/api/post';
 
 interface PostItemProps {
@@ -33,7 +31,7 @@ export const PostItem = ({ post, isOwner = false, isLast = false, newLimit }: Po
     });
 
     observer.observe(itemRef.current);
-  }, [isLast]);
+  }, [isLast, newLimit]);
 
   return (
     <li className='p-4 space-y-4  max-w-full' ref={itemRef}>

@@ -1,10 +1,11 @@
-import { VideoItem } from './video-item';
 
 
 import Image from 'next/image';
 
 import { cn } from '@/config/utils';
 import { Dialog, DialogContent, DialogTrigger } from '@/shared/ui/dialog';
+
+import { VideoItem } from './video-item';
 
 interface MediaListProps {
   media: string[];

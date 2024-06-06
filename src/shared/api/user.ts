@@ -1,8 +1,9 @@
-import { auth } from '../../auth';
 
 import { User } from '@prisma/client';
 
 import { db } from '@/config/prisma';
+
+import { auth } from '../../auth';
 
 export type FullUser = {
   _count: {
