@@ -1,6 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "eslint:recommended", "next", "prettier"],
-  "plugins": ["unicorn", "import"],
+  "plugins": ["unicorn", "import", "no-relative-import-paths"],
   "env": { "es6": true, "node": true },
   "rules": {
     "no-undef":"off",
@@ -33,6 +33,12 @@
           "order": "asc",
           "caseInsensitive": true
         }
+      }
+    ],
+    "no-relative-import-paths/no-relative-import-paths": [
+      "error",
+      {
+        "allowSameFolder": true
       }
     ]
   },
