@@ -1,4 +1,3 @@
-
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { Role } from '@prisma/client';
 import NextAuth, { DefaultSession } from 'next-auth';
@@ -6,7 +5,7 @@ import NextAuth, { DefaultSession } from 'next-auth';
 import authConfig from '@/auth.config';
 
 import { db } from '@/config/prisma';
-import { getUserById } from '@/data/user';
+import { getUserById } from '@/shared/api/user';
 
 declare module 'next-auth' {
   interface Session {

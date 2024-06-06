@@ -4,7 +4,7 @@ import Google from 'next-auth/providers/google';
 import Yandex from 'next-auth/providers/yandex';
 import bcrypt from 'bcryptjs';
 import type { NextAuthConfig } from 'next-auth';
-import { loginSchema } from '@/schemas/auth';
+import { loginSchema } from '@/shared/schemas/auth';
 import { db } from '@/config/prisma';
 
 export default {

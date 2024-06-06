@@ -7,9 +7,9 @@ import { ViewTransitions } from 'next-view-transitions';
 import type { Metadata } from 'next';
 
 import '@/config/globals.css';
-import { Toaster } from '@/components/ui/toaster';
 import StoreProvider from '@/config/store/provider';
 import { cn } from '@/config/utils';
+import { Toaster } from '@/shared/ui/toaster';
 
 const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 

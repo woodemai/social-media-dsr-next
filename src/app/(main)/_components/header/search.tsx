@@ -9,18 +9,18 @@ import debounce from 'debounce';
 import { Link } from 'next-view-transitions';
 import { ChangeEvent, useState, useTransition } from 'react';
 
-import { getUsers } from '@/actions/user';
+import { cn } from '@/config/utils';
+import { UserAvatar } from '@/features/user';
+import { getUsers } from '@/shared/actions/user';
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogHeader,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
-import { UserAvatar } from '@/components/user/avatar';
-import { cn } from '@/config/utils';
+} from '@/shared/ui/dialog';
+import { Input } from '@/shared/ui/input';
+import { Separator } from '@/shared/ui/separator';
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');

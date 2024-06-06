@@ -3,9 +3,9 @@ import { usePathname } from 'next/navigation';
 import { Link } from 'next-view-transitions';
 import { ReactNode } from 'react';
 
-import { Button, ButtonProps } from '@/components/ui/button';
-
 import { cn } from '@/config/utils';
+import { Button, ButtonProps } from '@/shared/ui/button';
+
 
 interface Props extends ButtonProps {
   href: string;

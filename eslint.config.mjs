@@ -51,7 +51,7 @@ export default tseslint.config(
     },
   },
   {
-    ignores: ['**/components/ui/**/*'],
+    ignores: ['**/shared/ui/**/*'],
     rules: {
       'react-compiler/react-compiler': 'error',
       'react/react-in-jsx-scope': 'off',
@@ -204,7 +204,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['src/hooks/*.ts'],
+    files: ['**/hooks/use*.ts'],
     rules: {
       'unicorn/filename-case': [
         'error',
