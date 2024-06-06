@@ -1,6 +1,6 @@
 import { Link } from 'next-view-transitions';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/shared/ui/button';
 
 export default function Error() {
   return (

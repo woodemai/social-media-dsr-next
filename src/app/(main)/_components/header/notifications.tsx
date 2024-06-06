@@ -1,9 +1,9 @@
 import { BellIcon } from '@radix-ui/react-icons';
 
-import { NotificationList } from '@/components/notification/list';
-import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { getSubscriptionRequests } from '@/data/subscription-request';
+import { NotificationList } from '@/features/notification';
+import { getSubscriptionRequests } from '@/shared/api/subscription-request';
+import { Badge } from '@/shared/ui/badge';
+import { Dialog, DialogContent, DialogTrigger } from '@/shared/ui/dialog';
 
 export const Notifications = async () => {
   const subscriptionRequests = await getSubscriptionRequests();

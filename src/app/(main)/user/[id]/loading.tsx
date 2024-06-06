@@ -1,5 +1,5 @@
-import { ListSkeleton } from '@/components/post/list-skeleton';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from '@/shared/ui/skeleton';
+import { ListSkeleton } from '@/widgets/post';
 
 export default function ProfileLoading() {
   return (

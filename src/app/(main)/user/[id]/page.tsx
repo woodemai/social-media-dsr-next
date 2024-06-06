@@ -1,11 +1,8 @@
 import { Suspense } from 'react';
 
-import { PostForm } from '@/components/post/form';
-import { PostList } from '@/components/post/list/list-wrapper';
-import { ListSkeleton } from '@/components/post/list-skeleton';
-import { UserNotFound } from '@/components/user/profile/not-found';
-import { UserInfo } from '@/components/user/profile/user-info';
-import { getCurrentUser, getIsSubscribed, getUserById } from '@/data/user';
+import { getCurrentUser, getIsSubscribed, getUserById } from '@/shared/api/user';
+import { ListSkeleton, PostForm, PostList } from '@/widgets/post';
+import { UserInfo, UserNotFound } from '@/widgets/user';
 
 interface UserPageProps {
   params: {

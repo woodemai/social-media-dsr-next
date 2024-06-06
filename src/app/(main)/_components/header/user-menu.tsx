@@ -5,14 +5,14 @@ import { Link } from 'next-view-transitions';
 
 import { useState } from 'react';
 
-import { Button } from '@/components/ui/button';
+import { UserAvatar } from '@/features/user';
+import { Button } from '@/shared/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { UserAvatar } from '@/components/user/avatar';
+} from '@/shared/ui/dropdown-menu';
 
 interface UserHeaderMenuProps {
   user?: User | null;

@@ -2,7 +2,7 @@ import { RootState, useAppSelector } from '../store';
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { FullUser } from '@/data/user';
+import { FullUser } from '@/shared/api/user';
 
 type userStateType = {
   user: FullUser;
@@ -44,4 +44,5 @@ export const { setUser, updateUser, setSubscription } = userSlice.actions;
 export const useUser = () =>
   useAppSelector((state: RootState) => state.user.user);
 
-export const useSubscription = () => useAppSelector((state: RootState) => state.user.isSubscribed);
+export const useSubscription = () =>
+  useAppSelector((state: RootState) => state.user.isSubscribed);

@@ -1,8 +1,6 @@
 import { Suspense } from 'react';
 
-import { PostForm } from '@/components/post/form';
-import { PostList } from '@/components/post/list/list-wrapper';
-import { ListSkeleton } from '@/components/post/list-skeleton';
+import { ListSkeleton, PostForm, PostList } from '@/widgets/post';
 
 export default function MainPage() {
   return (
