@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import { ViewTransitions } from 'next-view-transitions';
 
@@ -20,6 +20,10 @@ export const metadata: Metadata = {
   keywords: ['Social', 'Media', 'Friends', 'Develop'],
   metadataBase: new URL('https://social-media-dsr-next.vercel.app/'),
 };
+export const viewport: Viewport = {
+  width: 1,
+  themeColor: 'background'
+}
 
 export default function RootLayout({
   children,

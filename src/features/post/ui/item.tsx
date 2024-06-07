@@ -35,7 +35,7 @@ export const PostItem = ({ post, isOwner = false, isLast = false, newLimit }: Po
 
   return (
     <li className='p-4 space-y-4  max-w-full' ref={itemRef}>
-      <div className='flex justify-between w-full prose dark:prose-invert'>
+      <div className='flex justify-between w-full'>
         <div className='flex gap-x-4 items-end'>
           <UserAvatar
             height={32}
