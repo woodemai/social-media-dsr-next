@@ -1,6 +1,6 @@
 'use server';
 
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import { db } from '@/config/prisma';
 import { getCurrentUser } from '@/shared/api/user';

@@ -1,5 +1,5 @@
 'use client';
-import { User } from '@prisma/client';
+import { type User } from '@prisma/client';
 import { signOut } from 'next-auth/react';
 import { Link } from 'next-view-transitions';
 import { useState } from 'react';
@@ -25,8 +25,7 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
       <Button
         asChild
         size='sm'
-        variant='link'
-      >
+        variant='link'>
         <Link href='/auth'>Войти</Link>
       </Button>
     );
@@ -35,8 +34,7 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
   return (
     <DropdownMenu
       onOpenChange={() => setOpen(!open)}
-      open={open}
-    >
+      open={open}>
       <DropdownMenuTrigger>
         <span className='sr-only'>Меню пользователя</span>
         <UserAvatar src={user.image} />
@@ -46,12 +44,10 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
           <Button
             asChild
             onClick={() => setOpen(false)}
-            variant='link'
-          >
+            variant='ghost'>
             <Link
               className='font-bold'
-              href={`/user/${user.id}`}
-            >
+              href={`/user/${user.id}`}>
               {user.name}
             </Link>
           </Button>
@@ -59,8 +55,7 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
         <DropdownMenuItem>
           <Button
             onClick={() => signOut()}
-            variant='link'
-          >
+            variant='ghost'>
             Выйти
           </Button>
         </DropdownMenuItem>

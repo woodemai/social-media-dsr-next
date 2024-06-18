@@ -74,10 +74,10 @@
     @apply bg-background text-foreground scrollbar-track-background scrollbar-thumb-muted scrollbar-thin;
   }
   html {
-    @apply scroll-smooth
+    @apply scroll-smooth;
   }
   body {
-    @apply overflow-y-scroll
+    @apply overflow-y-scroll;
   }
 }
 ::-webkit-scrollbar {

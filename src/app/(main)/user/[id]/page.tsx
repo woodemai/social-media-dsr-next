@@ -1,6 +1,10 @@
 import { Suspense } from 'react';
 
-import { getCurrentUser, getIsSubscribed, getUserById } from '@/shared/api/user';
+import {
+  getCurrentUser,
+  getIsSubscribed,
+  getUserById,
+} from '@/shared/api/user';
 import { ListSkeleton, PostForm, PostList } from '@/widgets/post';
 import { UserInfo, UserNotFound } from '@/widgets/user';
 

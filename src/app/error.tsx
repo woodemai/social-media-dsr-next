@@ -19,8 +19,7 @@ export default function Error({
       </p>
       <Button
         onClick={() => reset()}
-        variant='secondary'
-      >
+        variant='secondary'>
         Попробовать еще раз
       </Button>
       <p className='text-sx text-muted-foreground'>Ошибка: {error.message}</p>

@@ -10,8 +10,7 @@ export default function Error() {
       </h2>
       <Button
         asChild
-        variant='secondary'
-      >
+        variant='secondary'>
         <Link href='/'>На главную</Link>
       </Button>
     </div>

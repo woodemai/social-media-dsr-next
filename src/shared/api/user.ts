@@ -1,5 +1,5 @@
-
-import { User } from '@prisma/client';
+import { type User } from '@prisma/client';
+import { type User as AuthUser } from 'next-auth';
 
 import { auth } from '@/auth';
 import { db } from '@/config/prisma';
@@ -54,20 +54,25 @@ export const getUserByEmail = async (email: string) => {
   }
 };
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (): Promise<AuthUser> => {
   const session = await auth();
-
-  return session?.user;
+  if (!session?.user) {
+    throw new Error('Not authenticated');
+  }
+  return session.user;
 };
 
-export const getFullCurrentUser = async (): Promise<
-  User | null | undefined
-> => {
-  const user = await getCurrentUser();
-  if (!user?.id) return;
-  return db.user.findUnique({
+export const getFullCurrentUser = async (): Promise<User> => {
+  const { id } = await getCurrentUser();
+  const user = await db.user.findUnique({
     where: {
-      id: user?.id,
+      id,
     },
   });
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  return user;
 };

@@ -9,7 +9,7 @@ import {
 } from '@/config/store/slices/user-slice';
 import { useAppDispatch } from '@/config/store/store';
 import { SubscriptionButton, UpdateDialog, UserAvatar } from '@/features/user';
-import { FullUser } from '@/shared/api/user';
+import { type FullUser } from '@/shared/api/user';
 import { Button } from '@/shared/ui/button';
 
 interface UserInfoProps {
@@ -24,12 +24,7 @@ export const UserInfo = ({
   user,
 }: UserInfoProps) => {
   const dispatch = useAppDispatch();
-  const {
-    name,
-    bio,
-    image,
-    _count,
-  } = useUser();
+  const { name, bio, image, _count } = useUser();
 
   useEffect(() => {
     dispatch(setUser(user));
@@ -56,15 +51,13 @@ export const UserInfo = ({
           <Button
             className='pl-0 text-muted-foreground hover:text-foreground'
             size='sm'
-            variant='link'
-          >
+            variant='link'>
             Подписчики: {_count?.subscribers}
           </Button>
           <Button
             className='pl-0 text-muted-foreground hover:text-foreground'
             size='sm'
-            variant='link'
-          >
+            variant='link'>
             Подписки: {_count?.subscribed}
           </Button>
         </div>

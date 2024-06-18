@@ -1,11 +1,9 @@
 interface UserLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
-export default function UserLayout({children}:UserLayoutProps) {
+export default function UserLayout({ children }: UserLayoutProps) {
   return (
-    <div className='mx-auto w-full max-w-3xl py-8 space-y-8'>
-      {children}
-    </div>
+    <div className='mx-auto w-full max-w-3xl py-8 space-y-8'>{children}</div>
   );
 }
