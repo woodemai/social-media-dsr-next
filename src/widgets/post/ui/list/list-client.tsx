@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { PostItem } from '@/features/post';
-import { FullPost, getPosts } from '@/shared/api/post';
+import { type FullPost, getPosts } from '@/shared/api/post';
 
 interface ListClientProps {
   userId?: string;
@@ -25,11 +25,11 @@ export const ListClient = ({
     if (page === 1 || posts.length % PAGE_SIZE !== 0) return;
     getPosts({ userId, page }).then(newPosts =>
       setPosts(prev => [...prev, ...newPosts]),
-    );
+    ).catch(console.error);
   }, [page, posts.length, userId]);
 
   return (
-    <ul className='divide-y border-x px-2 bg-card rounded-md'>
+    <ul className='space-y-4'>
       {posts.map((post, index) => (
         <PostItem
           isLast={index === posts.length - 1}

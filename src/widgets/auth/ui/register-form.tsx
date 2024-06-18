@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import type * as z from 'zod';
 
 import { CardWrapper } from '@/features/auth';
 import { register } from '@/shared/actions/auth';
@@ -39,7 +39,7 @@ export const RegisterForm = () => {
     startTransition(async () => {
       setError('');
       setSuccess('');
-      await register(values).then((data) => {
+      await register(values).then(data => {
         setError(data?.error);
         setSuccess(data.success);
       });
@@ -51,13 +51,11 @@ export const RegisterForm = () => {
       backButtonHref='/auth/login'
       backButtonLabel='Уже есть аккаунт?'
       headerLabel='Добро пожаловать'
-      showSocial
-    >
+      showSocial>
       <Form {...form}>
         <form
           className='space-y-6'
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
+          onSubmit={form.handleSubmit(onSubmit)}>
           <div className='space-y-4'>
             <FormField
               control={form.control}
@@ -118,8 +116,7 @@ export const RegisterForm = () => {
           <Button
             className='w-full'
             disabled={isPending}
-            type='submit'
-          >
+            type='submit'>
             Создать аккаунт
           </Button>
         </form>

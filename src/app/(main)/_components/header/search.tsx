@@ -1,13 +1,10 @@
 'use client';
 
-import { User } from '@prisma/client';
-import {
-  MagnifyingGlassIcon,
-  SymbolIcon,
-} from '@radix-ui/react-icons';
+import { type User } from '@prisma/client';
+import { MagnifyingGlassIcon, SymbolIcon } from '@radix-ui/react-icons';
 import debounce from 'debounce';
 import { Link } from 'next-view-transitions';
-import { ChangeEvent, useState, useTransition } from 'react';
+import { type ChangeEvent, useState, useTransition } from 'react';
 
 import { cn } from '@/config/utils';
 import { UserAvatar } from '@/features/user';
@@ -30,7 +27,7 @@ export const Search = () => {
   const updateSuggestions = debounce((value: string) => {
     if (!value.length) return;
     startTransition(() => {
-      getUsers(value).then(res => {
+      void getUsers(value).then(res => {
         setSuggestions(res);
       });
     });
@@ -54,7 +51,7 @@ export const Search = () => {
       <DialogContent>
         <DialogHeader>
           <Input
-            className='border-none focus-visible:ring-0 focus-visible:ring-offset-0'
+            className='border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0'
             onChange={handleChange}
             placeholder='Начните вводить имя'
             value={searchValue}
@@ -64,8 +61,7 @@ export const Search = () => {
           className={cn(
             'size-full flex justify-center items-center',
             !isPending && 'hidden',
-          )}
-        >
+          )}>
           <SymbolIcon className='size-8 animate-spin' />
         </div>
         {suggestions.length ? (
@@ -75,13 +71,11 @@ export const Search = () => {
               {suggestions.map(suggestion => (
                 <li
                   className='w-full hover:underline underline-offset-4 transition-all duration-150'
-                  key={suggestion.id}
-                >
+                  key={suggestion.id}>
                   <DialogClose asChild>
                     <Link
                       className='min-w-full flex gap-x-4 items-center'
-                      href={`/user/${suggestion.id}`}
-                    >
+                      href={`/user/${suggestion.id}`}>
                       <UserAvatar src={suggestion.image} />
                       {suggestion.name}
                     </Link>

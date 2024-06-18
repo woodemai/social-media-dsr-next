@@ -2,7 +2,6 @@ import { getPosts } from '@/shared/api/post';
 
 import { ListClient } from './list-client';
 
-
 interface PostListProps {
   userId?: string;
   isOwner?: boolean;
@@ -24,7 +23,11 @@ export const PostList = async ({ userId, isOwner }: PostListProps) => {
     );
   }
 
-  return <ListClient isOwner={isOwner} posts={posts} userId={userId} />;
-
-
+  return (
+    <ListClient
+      isOwner={isOwner}
+      posts={posts}
+      userId={userId}
+    />
+  );
 };

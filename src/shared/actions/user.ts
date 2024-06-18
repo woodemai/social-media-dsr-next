@@ -1,12 +1,12 @@
 'use server';
 
-import { SubscriptionRequest } from '@prisma/client';
+import { type SubscriptionRequest } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import { db } from '@/config/prisma';
-import { FullSubscriptionRequest } from '@/shared/api/subscription-request';
-import { FullUser, getCurrentUser, getUserById } from '@/shared/api/user';
+import { type FullSubscriptionRequest } from '@/shared/api/subscription-request';
+import { type FullUser, getCurrentUser, getUserById } from '@/shared/api/user';
 import { updateSchema } from '@/shared/schemas/user';
 
 export const getUsers = async (name: string) => {

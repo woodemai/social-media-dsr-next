@@ -22,13 +22,11 @@ export const LoginForm = () => {
       backButtonHref='/auth/register'
       backButtonLabel='Еще нет аккаунта?'
       headerLabel='С возвращением'
-      showSocial
-    >
+      showSocial>
       <Form {...form}>
         <form
           className='space-y-6'
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
+          onSubmit={form.handleSubmit(onSubmit)}>
           <div className='space-y-4'>
             <FormField
               control={form.control}
@@ -72,8 +70,7 @@ export const LoginForm = () => {
           <Button
             className='w-full'
             disabled={isPending}
-            type='submit'
-          >
+            type='submit'>
             Войти
           </Button>
         </form>

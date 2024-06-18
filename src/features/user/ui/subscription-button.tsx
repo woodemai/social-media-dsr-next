@@ -24,10 +24,7 @@ export const SubscriptionButton = () => {
 
   const handleSubscribe = () => {
     startTransition(async () => {
-      const { user, request, error } = await subscribeAction(
-        id,
-        isSubscribed,
-      );
+      const { user, request, error } = await subscribeAction(id, isSubscribed);
 
       if (user) {
         dispatch(setUser(user));
@@ -54,8 +51,7 @@ export const SubscriptionButton = () => {
     <Button
       disabled={isPending}
       onClick={handleSubscribe}
-      variant={isSubscribed ? 'outline' : 'default'}
-    >
+      variant={isSubscribed ? 'outline' : 'default'}>
       {isSubscribed ? 'Отписаться' : 'Подписаться'}
     </Button>
   );

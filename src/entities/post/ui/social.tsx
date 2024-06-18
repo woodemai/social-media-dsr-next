@@ -1,6 +1,5 @@
 'use client';
 
-
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 import { useOptimistic, useState, useTransition } from 'react';
 
@@ -59,9 +58,10 @@ export const Social = ({
           size='icon'
           title='Лайк'
           type='button'
-          variant='ghost'
-        >
-          <span className='sr-only'>{optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}</span>
+          variant='ghost'>
+          <span className='sr-only'>
+            {optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}
+          </span>
           {optimisticIsLiked ? (
             <HeartFilledIcon className='size-4 text-red-500' />
           ) : (
@@ -74,6 +74,6 @@ export const Social = ({
   );
 };
 
-const LikesCount = ({ count }: { count: number; }) => {
+const LikesCount = ({ count }: { count: number }) => {
   return <span className='tabular-nums'>{count}</span>;
 };

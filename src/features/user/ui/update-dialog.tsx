@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import { updateUser, useUser } from '@/config/store/slices/user-slice';
 import { useAppDispatch } from '@/config/store/store';
@@ -52,7 +52,10 @@ export const UpdateDialog = () => {
     setError(undefined);
     dispatch(updateUser(values));
     startTransition(async () => {
-      const { error, name, bio, isPrivate } = await updateProfileAction(id, values);
+      const { error, name, bio, isPrivate } = await updateProfileAction(
+        id,
+        values,
+      );
       setError(error);
       if (name && bio && isPrivate) {
         setOpen(false);
@@ -68,13 +71,11 @@ export const UpdateDialog = () => {
   return (
     <Dialog
       onOpenChange={isOpen => setOpen(isOpen)}
-      open={open}
-    >
+      open={open}>
       <DialogTrigger asChild>
         <Button
           disabled={isPending}
-          variant='secondary'
-        >
+          variant='secondary'>
           Изменить
         </Button>
       </DialogTrigger>
@@ -83,8 +84,7 @@ export const UpdateDialog = () => {
         <Form {...form}>
           <form
             className='space-y-4 w-full'
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
+            onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name='name'
@@ -155,8 +155,7 @@ export const UpdateDialog = () => {
               <Button
                 className='ml-auto'
                 disabled={isPending}
-                type='submit'
-              >
+                type='submit'>
                 Обновить
               </Button>
             </DialogFooter>

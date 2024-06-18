@@ -1,5 +1,3 @@
-
-
 import Image from 'next/image';
 
 import { cn } from '@/config/utils';
@@ -21,13 +19,11 @@ export const MediaList = ({ media }: MediaListProps) => {
           : media.length % 2 === 0
             ? 'grid-cols-2'
             : 'grid-cols-2',
-      )}
-    >
+      )}>
       {media.map(item => (
         <div
           className='mx-auto size-fit p-0 m-0 '
-          key={item}
-        >
+          key={item}>
           {item.includes('/video/') ? (
             <VideoItem src={item} />
           ) : (

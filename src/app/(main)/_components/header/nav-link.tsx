@@ -1,11 +1,10 @@
 'use client';
 import { usePathname } from 'next/navigation';
 import { Link } from 'next-view-transitions';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import { cn } from '@/config/utils';
-import { Button, ButtonProps } from '@/shared/ui/button';
-
+import { Button, type ButtonProps } from '@/shared/ui/button';
 
 interface Props extends ButtonProps {
   href: string;
@@ -20,8 +19,7 @@ export const NavLink = ({ href, children, ...otherProps }: Props) => {
       size='icon'
       variant='ghost'
       {...otherProps}
-      asChild
-    >
+      asChild>
       <Link href={href}>{children}</Link>
     </Button>
   );

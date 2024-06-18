@@ -1,6 +1,5 @@
 'use client';
 
-
 import { DotsHorizontalIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { deleteAction } from '@/shared/actions/post';
@@ -44,8 +43,7 @@ export const DeleteButton = ({ id }: DeleteButtonProps) => {
           name='Меню поста'
           size='icon'
           title='Меню поста'
-          variant='ghost'
-        >
+          variant='ghost'>
           <span className='sr-only'>Меню поста</span>
           <DotsHorizontalIcon className='size-4' />
         </Button>
@@ -55,8 +53,7 @@ export const DeleteButton = ({ id }: DeleteButtonProps) => {
           <button
             className='flex gap-x-4 items-center'
             onClick={handleDelete}
-            type='button'
-          >
+            type='button'>
             <TrashIcon className='size-4' />
             <span>Удалить</span>
           </button>

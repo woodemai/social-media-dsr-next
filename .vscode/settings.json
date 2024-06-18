@@ -1,0 +1,12 @@
+{
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "css.validate": false,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "a-file-icon-vscode.opacity": 1,
+  "a-file-icon-vscode.arrowTheme": "material",
+  "a-file-icon-vscode.folderColor": "#979fad",
+  "a-file-icon-vscode.folderTheme": "specific"
+}

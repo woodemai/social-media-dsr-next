@@ -1,5 +1,4 @@
-
-import { SubscriptionRequest } from '@prisma/client';
+import { type SubscriptionRequest } from '@prisma/client';
 
 import { db } from '@/config/prisma';
 
@@ -14,11 +13,11 @@ export type FullSubscriptionRequest = {
 export const getSubscriptionRequests = async (): Promise<
   FullSubscriptionRequest[]
 > => {
-  const currentUser = await getCurrentUser();
+  const { id } = await getCurrentUser();
 
   return db.subscriptionRequest.findMany({
     where: {
-      requestToId: currentUser?.id,
+      requestToId: id,
     },
     include: {
       requestBy: {

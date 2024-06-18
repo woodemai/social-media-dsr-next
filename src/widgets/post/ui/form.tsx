@@ -5,11 +5,11 @@ import { UploadIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import {
   CldUploadWidget,
-  CloudinaryUploadWidgetResults,
+  type CloudinaryUploadWidgetResults,
 } from 'next-cloudinary';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import { createPostAction } from '@/shared/actions/post';
 import { createSchema } from '@/shared/schemas/post';
@@ -68,9 +68,8 @@ export const PostForm = () => {
   return (
     <Form {...form}>
       <form
-        className='flex flex-col gap-y-4 border rounded-md shadow-sm bg-card'
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
+        className='flex flex-col gap-y-4 rounded-md shadow-sm bg-card/50'
+        onSubmit={form.handleSubmit(onSubmit)}>
         <div className='flex gap-x-2 p-4'>
           <FormField
             control={form.control}
@@ -80,8 +79,7 @@ export const PostForm = () => {
                 <FormControl>
                   <CldUploadWidget
                     onSuccess={handleMediaUpload}
-                    uploadPreset='fkkcjhmy'
-                  >
+                    uploadPreset='fkkcjhmy'>
                     {({ open }) => (
                       <Button
                         name='Загрузить'
@@ -89,8 +87,7 @@ export const PostForm = () => {
                         size='icon'
                         title='Загрузить'
                         type='button'
-                        variant='ghost'
-                      >
+                        variant='ghost'>
                         <span className='sr-only'>Загрузить</span>
                         <UploadIcon className='size-4' />
                       </Button>
@@ -108,7 +105,7 @@ export const PostForm = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    className='w-full bg-card border-none hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
+                    className='w-full bg-transparent border-none hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
                     placeholder='Напишите, что у вас нового...'
                   />
                 </FormControl>
@@ -118,8 +115,7 @@ export const PostForm = () => {
           />
           <Button
             type='submit'
-            variant='ghost'
-          >
+            variant='ghost'>
             Отправить
           </Button>
         </div>
@@ -130,8 +126,7 @@ export const PostForm = () => {
             {uploadedMedia.map(media => (
               <div
                 className='p-2'
-                key={media}
-              >
+                key={media}>
                 {media.includes('/video/') ? (
                   <video
                     className='rounded-md'
@@ -139,8 +134,7 @@ export const PostForm = () => {
                     height={256}
                     muted
                     preload='none'
-                    width={256}
-                  >
+                    width={256}>
                     <source
                       src={media}
                       type='video/mp4'

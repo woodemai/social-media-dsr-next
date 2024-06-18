@@ -13,10 +13,10 @@ export const VideoItem = ({ src }: VideoItemProps) => {
 
     if (!videoElement) return;
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-          videoElement.play();
+          void videoElement.play();
         } else {
           videoElement.pause();
         }
@@ -39,9 +39,11 @@ export const VideoItem = ({ src }: VideoItemProps) => {
       muted
       preload='auto'
       ref={videoRef}
-      width={256}
-    >
-      <source src={src} type='video/mp4' />
+      width={256}>
+      <source
+        src={src}
+        type='video/mp4'
+      />
     </video>
   );
 };

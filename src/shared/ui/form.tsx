@@ -1,11 +1,11 @@
-import * as LabelPrimitive from '@radix-ui/react-label';
+import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
 import {
   Controller,
-  ControllerProps,
-  FieldPath,
-  FieldValues,
+  type ControllerProps,
+  type FieldPath,
+  type FieldValues,
   FormProvider,
   useFormContext,
 } from 'react-hook-form';
@@ -17,21 +17,21 @@ const Form = FormProvider;
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = {
   name: TName;
 };
 
 const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue
+  {} as FormFieldContextValue,
 );
 
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
-    ...props
-  }: ControllerProps<TFieldValues, TName>) => {
+  ...props
+}: ControllerProps<TFieldValues, TName>) => {
   return (
     <FormFieldContext.Provider value={{ name: props.name }}>
       <Controller {...props} />
@@ -67,7 +67,7 @@ type FormItemContextValue = {
 };
 
 const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue
+  {} as FormItemContextValue,
 );
 
 const FormItem = React.forwardRef<
@@ -78,7 +78,11 @@ const FormItem = React.forwardRef<
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div className={cn('space-y-2', className)} ref={ref} {...props} />
+      <div
+        className={cn('space-y-2', className)}
+        ref={ref}
+        {...props}
+      />
     </FormItemContext.Provider>
   );
 });
@@ -105,7 +109,8 @@ const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
 >(({ ...props }, ref) => {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+  const { error, formItemId, formDescriptionId, formMessageId } =
+    useFormField();
 
   return (
     <Slot
@@ -156,8 +161,7 @@ const FormMessage = React.forwardRef<
       className={cn('text-sm font-medium text-destructive', className)}
       id={formMessageId}
       ref={ref}
-      {...props}
-    >
+      {...props}>
       {body}
     </p>
   );
