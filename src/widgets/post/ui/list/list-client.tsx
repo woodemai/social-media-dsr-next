@@ -9,13 +9,13 @@ import { type FullPost, getPosts } from '@/shared/api/post';
 interface ListClientProps {
   userId?: string;
   posts: FullPost[];
-  isOwner?: boolean;
+  currentUserId?: string;
 }
 
 export const ListClient = ({
   posts: initialPosts,
-  isOwner = false,
   userId,
+  currentUserId,
 }: ListClientProps) => {
   const endRef = useRef<HTMLLIElement>(null);
   const [posts, setPosts] = useState(initialPosts);
@@ -33,7 +33,7 @@ export const ListClient = ({
       {posts.map((post, index) => (
         <PostItem
           isLast={index === posts.length - 1}
-          isOwner={isOwner}
+          isOwner={currentUserId ? post.authorId === currentUserId : false}
           key={post.id}
           newLimit={() => setPage(page + 1)}
           post={post}
