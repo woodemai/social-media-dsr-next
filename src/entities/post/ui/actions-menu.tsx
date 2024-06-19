@@ -1,6 +1,6 @@
 'use client';
 
-import { DotsHorizontalIcon, TrashIcon } from '@radix-ui/react-icons';
+import { DotsHorizontalIcon, Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 
 import { deleteAction } from '@/shared/actions/post';
 import { Button } from '@/shared/ui/button';
@@ -18,7 +18,7 @@ interface DeleteButtonProps {
   id: string;
 }
 
-export const DeleteButton = ({ id }: DeleteButtonProps) => {
+export const ActionsMenu = ({ id }: DeleteButtonProps) => {
   const { toast } = useToast();
   const dispatch = useAppDispatch();
 
@@ -53,6 +53,15 @@ export const DeleteButton = ({ id }: DeleteButtonProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
+        <DropdownMenuItem>
+          <button
+            className='flex gap-x-4 items-center'
+            // onClick={handleDelete}
+            type='button'>
+            <Pencil1Icon className='size-4' />
+            <span>Редактировать</span>
+          </button>
+        </DropdownMenuItem>
         <DropdownMenuItem>
           <button
             className='flex gap-x-4 items-center'
