@@ -1,27 +1,82 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { createStore } from 'zustand';
+import {
+  initialPostState,
+  type PostState,
+  type PostStore,
+} from './slices/post-slice';
+import {
+  initialUserState,
+  type UserState,
+  type UserStore,
+} from './slices/user-slice';
 
-import { userSlice } from './slices/user-slice';
-import { postSlice } from './slices/post-slice';
-
-const reducer = combineReducers({
-  [userSlice.reducerPath]: userSlice.reducer,
-  [postSlice.reducerPath]: postSlice.reducer,
-});
-
-export const createStore = () => {
-  return configureStore({
-    reducer: combineReducers({
-      [postSlice.reducerPath]: postSlice.reducer,
-      [userSlice.reducerPath]: userSlice.reducer,
-    }),
-  });
+export type Store = {
+  postSlice: PostStore;
+  userSlice: UserStore;
+};
+export type StoreState = {
+  postSlice: PostState;
+  userSlice: UserState;
 };
 
-export type AppStore = ReturnType<typeof createStore>;
-export type RootState = ReturnType<AppStore['getState']>;
-export type AppDispatch = AppStore['dispatch'];
+export const defaultInitialState: StoreState = {
+  postSlice: initialPostState,
+  userSlice: initialUserState,
+};
 
-export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
-export const useAppSelector = useSelector.withTypes<RootState>();
-export const useAppStore = useStore.withTypes<AppStore>();
+export const getStore = (initialState: StoreState = defaultInitialState) => {
+  const { postSlice, userSlice } = initialState;
+  return createStore<Store>()(set => ({
+    userSlice: {
+      ...userSlice,
+      setUser(newUser) {
+        set(({ userSlice }) => ({ userSlice: { ...userSlice, user: newUser } }));
+      },
+      setSubscription(isSubscribed) {
+        set(({ userSlice }) => ({
+          userSlice: { ...userSlice, isSubscribed },
+        }));
+      },
+      updateUser({ name, bio, isPrivate }) {
+        set(({ userSlice }) => {
+          if (userSlice.user) {
+            if (name) userSlice.user.name = name;
+            if (bio) userSlice.user.bio = bio;
+            if (isPrivate) userSlice.user.isPrivate = isPrivate;
+          }
+          return { userSlice: { ...userSlice, user: userSlice.user } };
+        });
+      },
+    },
+    postSlice: {
+      ...postSlice,
+      addPost(post) {
+        set(({ postSlice }) => ({
+          postSlice: {
+            ...postSlice,
+            posts: [post, ...postSlice.posts],
+          },
+        }));
+      },
+      addPosts(posts) {
+        set(({ postSlice }) => ({
+          postSlice: {
+            ...postSlice,
+            posts: [...posts, ...postSlice.posts],
+          },
+        }));
+      },
+      removePost(id) {
+        set(({ postSlice }) => ({
+          postSlice: {
+            ...postSlice,
+            posts: postSlice.posts.filter(post => post.id !== id),
+          },
+        }));
+      },
+      resetPosts() {
+        set(state => ({ postSlice: { ...state.postSlice, posts: [] } }));
+      },
+    },
+  }));
+};

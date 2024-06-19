@@ -5,8 +5,6 @@ import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { type z } from 'zod';
 
-import { updateUser, useUser } from '@/config/store/slices/user-slice';
-import { useAppDispatch } from '@/config/store/store';
 import { updateProfileAction } from '@/shared/actions/user';
 import { updateSchema } from '@/shared/schemas/user';
 import { Button } from '@/shared/ui/button';
@@ -29,10 +27,10 @@ import { FormError } from '@/shared/ui/form-error';
 import { Input } from '@/shared/ui/input';
 import { Switch } from '@/shared/ui/switch';
 import { useToast } from '@/shared/ui/use-toast';
+import { useStore } from '@/config/store';
 
 export const UpdateDialog = () => {
-  const dispatch = useAppDispatch();
-  const user = useUser();
+  const { user, updateUser } = useStore(state => state.userSlice);
   const [error, setError] = useState<string | undefined>();
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -54,7 +52,7 @@ export const UpdateDialog = () => {
 
   const onSubmit = async (values: z.infer<typeof updateSchema>) => {
     setError(undefined);
-    dispatch(updateUser(values));
+    updateUser(values);
     startTransition(async () => {
       const { error, name, bio, isPrivate } = await updateProfileAction(
         id,
@@ -63,7 +61,7 @@ export const UpdateDialog = () => {
       setError(error);
       if (name && bio && isPrivate) {
         setOpen(false);
-        dispatch(updateUser({ name, bio, isPrivate }));
+        updateUser(values);
         toast({
           title: 'Успех',
           description: 'Данные сохранены',

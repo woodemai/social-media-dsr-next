@@ -1,6 +1,10 @@
 'use client';
 
-import { DotsHorizontalIcon, Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
+import {
+  DotsHorizontalIcon,
+  Pencil1Icon,
+  TrashIcon,
+} from '@radix-ui/react-icons';
 
 import { deleteAction } from '@/shared/actions/post';
 import { Button } from '@/shared/ui/button';
@@ -11,8 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 import { useToast } from '@/shared/ui/use-toast';
-import { useAppDispatch } from '@/config/store/store';
-import { removePost } from '@/config/store/slices/post-slice';
+import { useStore } from '@/config/store';
 
 interface DeleteButtonProps {
   id: string;
@@ -20,7 +23,7 @@ interface DeleteButtonProps {
 
 export const ActionsMenu = ({ id }: DeleteButtonProps) => {
   const { toast } = useToast();
-  const dispatch = useAppDispatch();
+  const removePost = useStore(state => state.postSlice.removePost);
 
   const handleDelete = async () => {
     await deleteAction(id).then(res => {
@@ -29,7 +32,7 @@ export const ActionsMenu = ({ id }: DeleteButtonProps) => {
           title: 'Успех',
           description: 'Пост успешно удален!',
         });
-        dispatch(removePost(id));
+        removePost(id);
       } else {
         toast({
           title: 'Ошибка',

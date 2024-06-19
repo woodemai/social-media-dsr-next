@@ -1,17 +1,33 @@
 'use client';
 
-import { useRef } from 'react';
-import { Provider } from 'react-redux';
+import { type ReactNode, createContext, useRef, useContext } from 'react';
+import { useStore as useZustandStore } from 'zustand';
 
-import { type AppStore, createStore } from './store';
+import { type Store, getStore } from './store';
 
-const StoreProvider = ({ children }: { children: React.ReactNode }) => {
-  const storeRef = useRef<AppStore>();
+export type StoreApi = ReturnType<typeof getStore>;
+
+export const StoreContext = createContext<StoreApi | undefined>(undefined);
+
+export const StoreProvider = ({ children }: { children: ReactNode; }) => {
+  const storeRef = useRef<StoreApi>();
   if (!storeRef.current) {
-    storeRef.current = createStore();
+    storeRef.current = getStore();
   }
 
-  return <Provider store={storeRef.current}>{children}</Provider>;
+  return (
+    <StoreContext.Provider value={storeRef.current}>
+      {children}
+    </StoreContext.Provider>
+  );
 };
 
-export default StoreProvider;
+export const useStore = <T,>(selector: (store: Store) => T): T => {
+  const counterStoreContext = useContext(StoreContext);
+
+  if (!counterStoreContext) {
+    throw new Error(`useCounterStore must be used within CounterStoreProvider`);
+  }
+
+  return useZustandStore(counterStoreContext, selector);
+};

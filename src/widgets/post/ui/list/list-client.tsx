@@ -5,8 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { PostItem } from '@/features/post';
 import { type FullPost, getPosts } from '@/shared/api/post';
-import { addPosts, resetPosts, usePosts } from '@/config/store/slices/post-slice';
-import { useAppDispatch } from '@/config/store/store';
+import { useStore } from '@/config/store';
 
 interface ListClientProps {
   userId?: string;
@@ -20,23 +19,20 @@ export const ListClient = ({
   currentUserId,
 }: ListClientProps) => {
   const endRef = useRef<HTMLLIElement>(null);
-  const dispatch = useAppDispatch();
-  const posts = usePosts();
+  const { posts, addPosts, resetPosts } = useStore(state => state.postSlice);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(addPosts(initialPosts));
+    addPosts(initialPosts);
     return () => {
-      dispatch(resetPosts());
-    }
-  }, [dispatch, initialPosts]);
+      resetPosts();
+    };
+  }, [addPosts, initialPosts, resetPosts]);
 
   useEffect(() => {
     if (page === 1 || posts.length % PAGE_SIZE !== 0) return;
-    void getPosts({ userId, page }).then(newPosts =>
-      dispatch(addPosts(newPosts)),
-    );
-  }, [dispatch, page, posts.length, userId]);
+    void getPosts({ userId, page }).then(newPosts => addPosts(newPosts));
+  }, [addPosts, page, posts.length, userId]);
 
   return (
     <ul className='space-y-4'>

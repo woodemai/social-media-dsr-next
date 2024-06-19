@@ -25,17 +25,17 @@ export default async function UserPage({ params: { id } }: UserPageProps) {
 
   return (
     <>
-      <UserInfo
-        isOwner={isOwner}
-        isSubscribed={isSubscribed}
-        user={user}
-      />
+      {user && (
+        <UserInfo
+          isOwner={isOwner}
+          isSubscribed={isSubscribed}
+          user={user}
+        />
+      )}
       {isOwner ? <PostForm /> : null}
       {isShowingPosts ? (
         <Suspense fallback={<ListSkeleton />}>
-          <PostList
-            userId={id}
-          />
+          <PostList userId={id} />
         </Suspense>
       ) : (
         <div className='flex flex-col justify-center items-center gap-y-4 text-primary text-center'>

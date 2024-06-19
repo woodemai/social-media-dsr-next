@@ -15,6 +15,9 @@ DevSphere - социальная сеть для разработчиков.
 - vercel - деплой и аналитика
 - eslint - линтинг
 - prettier - форматирование
+- zustand - Глобальный стейт
+- bun - Bundler
+- Edge runtime
 
 ## Структура проекта
 
@@ -24,7 +27,7 @@ DevSphere - социальная сеть для разработчиков.
 
 - `app` - В Next.js используется для роутинга, название папок внутри этой указывают на путь в `url`. В FSD это папка `pages` [подробнее](https://nextjs.org/docs/app/building-your-application/routing)
 - `config` - Конфигурационные файлы приложения
-  - `store` - Конфигурация Redux store
+  - `store` - Конфигурация Zustand store
   - `globals.css` - Глобальные css стили
   - `prisma.ts` - Конфигурация клиента `prisma`
   - `routes.ts` - Паттерны путей, для аутентификации.
@@ -128,3 +131,5 @@ DevSphere - социальная сеть для разработчиков.
 - [React Documentation](https://react.dev/learn)
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Prisma Documentation](https://www.prisma.io/docs)
+- [Zustand Documentation](https://docs.pmnd.rs/zustand/guides/nextjs)
+- [Auth.js Documentation](https://authjs.dev/getting-started)

@@ -7,13 +7,13 @@ import { ViewTransitions } from 'next-view-transitions';
 
 import '@/config/globals.css';
 import { VERCEL_ENV } from '@/config/next.constants.mjs';
-import StoreProvider from '@/config/store/provider';
 import { cn } from '@/config/utils';
 import { Toaster } from '@/shared/ui/toaster';
 
 import backgroundImage from '/public/background.png';
 
 import { ThemeProvider } from './_components/theme-provider';
+import { StoreProvider } from '@/config/store';
 
 const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -35,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <ViewTransitions>
-      <html lang='ru'>
+      <html lang='ru' suppressHydrationWarning>
         <body
           className={cn(
             'min-h-dvh bg-gradient-to-r from-fuchsia-200 to-indigo-200 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-700 font-sans antialiased',
