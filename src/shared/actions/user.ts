@@ -150,7 +150,7 @@ export const updateProfileAction = async (
 
   if (password && user?.password) {
     const isMatch = await bcrypt.compare(password, user.password);
-    
+
     if (isMatch) return { error: 'Пароль совпадает с текущим' };
 
     hashedNewPassword = await bcrypt.hash(password, 8);

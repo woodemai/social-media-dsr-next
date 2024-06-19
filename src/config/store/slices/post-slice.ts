@@ -11,7 +11,7 @@ const initialState: postStateType = {
 };
 
 export const postSlice = createSlice({
-  name: 'postSlice',
+  name: 'post',
   initialState,
   reducers: {
     addPosts: (state, action: PayloadAction<FullPost[]>) => {
@@ -29,4 +29,4 @@ export const postSlice = createSlice({
 export const { addPosts, removePost, resetPosts } = postSlice.actions;
 
 export const usePosts = () =>
-  useAppSelector((state: RootState) => state.postSlice.posts);
+  useAppSelector((state: RootState) => state.post.posts);
