@@ -51,7 +51,7 @@ export const register = async (values: z.infer<typeof registerSchema>) => {
     return { error: 'Email уже занят!' };
   }
 
-  const hashedPassword = bcrypt.hashSync(password, 8);
+  const hashedPassword = await bcrypt.hash(password, 8);
 
   await db.user.create({
     data: {
