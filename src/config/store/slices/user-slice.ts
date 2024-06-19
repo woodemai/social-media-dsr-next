@@ -1,47 +1,19 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-
 import { type FullUser } from '@/shared/api/user';
-import { type RootState, useAppSelector } from 'src/config/store/store';
 
-type userStateType = {
+export type UserState = {
   user?: FullUser;
   isSubscribed: boolean;
 };
-const initialState: userStateType = {
+
+export type UserActions = {
+  setUser: (user: FullUser) => void;
+  setSubscription: (isSubscribed: boolean) => void;
+  updateUser: (user: Partial<Pick<FullUser, 'name' | 'bio' | 'password' | 'isPrivate'>>) => void;
+};
+
+export type UserStore = UserState & UserActions;
+
+export const initialUserState: UserState = {
   user: undefined,
   isSubscribed: false,
 };
-
-export const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {
-    setUser(state, action: PayloadAction<FullUser>) {
-      state.user = action.payload;
-    },
-    setSubscription(state, action: PayloadAction<boolean>) {
-      state.isSubscribed = action.payload;
-    },
-    updateUser(
-      state,
-      action: PayloadAction<
-        Partial<Pick<FullUser, 'name' | 'bio' | 'password' | 'isPrivate'>>
-      >,
-    ) {
-      const { name, bio, isPrivate } = action.payload;
-      if (state.user) {
-        if (name) state.user.name = name;
-        if (bio) state.user.bio = bio;
-        if (isPrivate) state.user.isPrivate = isPrivate;
-      }
-    },
-  },
-});
-
-export const { setUser, updateUser, setSubscription } = userSlice.actions;
-
-export const useUser = () =>
-  useAppSelector((state: RootState) => state.user.user);
-
-export const useSubscription = () =>
-  useAppSelector((state: RootState) => state.user.isSubscribed);
