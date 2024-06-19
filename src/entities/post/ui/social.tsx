@@ -74,6 +74,6 @@ export const Social = ({
   );
 };
 
-const LikesCount = ({ count }: { count: number }) => {
+const LikesCount = ({ count }: { count: number; }) => {
   return <span className='tabular-nums'>{count}</span>;
 };
