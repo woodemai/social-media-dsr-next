@@ -11,6 +11,8 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 import { useToast } from '@/shared/ui/use-toast';
+import { useAppDispatch } from '@/config/store/store';
+import { removePost } from '@/config/store/slices/post-slice';
 
 interface DeleteButtonProps {
   id: string;
@@ -18,6 +20,7 @@ interface DeleteButtonProps {
 
 export const DeleteButton = ({ id }: DeleteButtonProps) => {
   const { toast } = useToast();
+  const dispatch = useAppDispatch();
 
   const handleDelete = async () => {
     await deleteAction(id).then(res => {
@@ -26,6 +29,7 @@ export const DeleteButton = ({ id }: DeleteButtonProps) => {
           title: 'Успех',
           description: 'Пост успешно удален!',
         });
+        dispatch(removePost(id));
       } else {
         toast({
           title: 'Ошибка',

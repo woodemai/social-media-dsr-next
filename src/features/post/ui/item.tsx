@@ -57,7 +57,7 @@ export const PostItem = ({
             </h5>
           ) : (
             <Link
-              className=' underline-offset-4'
+              className='underline-offset-4'
               href={`/user/${post.authorId}`}>
               <h4 className='text-muted-foreground'>{post.author.name}</h4>
             </Link>
