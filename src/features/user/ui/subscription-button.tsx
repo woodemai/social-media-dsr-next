@@ -16,11 +16,14 @@ import { useToast } from '@/shared/ui/use-toast';
 export const SubscriptionButton = () => {
   const dispatch = useAppDispatch();
 
-  const { id } = useUser();
+  const user = useUser();
   const isSubscribed = useSubscription();
+  const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
-  const [isPending, startTransition] = useTransition();
+  if (!user) return null;
+
+  const { id } = user;
 
   const handleSubscribe = () => {
     startTransition(async () => {

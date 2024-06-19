@@ -4,14 +4,12 @@ import { useDispatch, useSelector, useStore } from 'react-redux';
 import { userSlice } from './slices/user-slice';
 import { postSlice } from './slices/post-slice';
 
-const reducer = combineReducers({
-  [userSlice.reducerPath]: userSlice.reducer,
-  [postSlice.reducerPath]: postSlice.reducer,
-});
-
 export const createStore = () => {
   return configureStore({
-    reducer,
+    reducer: combineReducers({
+      [postSlice.reducerPath]: postSlice.reducer,
+      [userSlice.reducerPath]: userSlice.reducer,
+    }),
   });
 };
 

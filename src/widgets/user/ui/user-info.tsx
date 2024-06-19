@@ -21,15 +21,19 @@ interface UserInfoProps {
 export const UserInfo = ({
   isOwner = false,
   isSubscribed = false,
-  user,
+  user: initialUser,
 }: UserInfoProps) => {
   const dispatch = useAppDispatch();
-  const { name, bio, image, _count } = useUser();
+  const user = useUser();
 
   useEffect(() => {
-    dispatch(setUser(user));
+    dispatch(setUser(initialUser));
     dispatch(setSubscription(isSubscribed));
-  }, [dispatch, isSubscribed, user]);
+  }, [dispatch, isSubscribed, initialUser]);
+
+  if(!user) return null;
+
+  const { bio, image, name, _count } = user;
 
   return (
     <div className='flex gap-x-4 p-2 sm:p-0 justify-center sm:justify-start'>

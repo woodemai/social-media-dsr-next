@@ -41,27 +41,27 @@ export default function RootLayout({
             'min-h-dvh bg-gradient-to-r from-fuchsia-200 to-indigo-200 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-700 font-sans antialiased',
             fontSans.variable,
           )}>
-          <Image
-            className='fixed top-[100px] left-[50%] -z-10 dark:brightness-50 blur-3xl'
-            alt='background'
-            src={backgroundImage}
-          />
-          <Image
-            className='fixed top-[60%] left-[5%] dark:brightness-50 -z-10 blur-3xl'
-            alt='background'
-            src={backgroundImage}
-          />
-          <Image
-            className='fixed top-[70%] left-[85%] -z-10 blur-3xl dark:brightness-50'
-            alt='background'
-            src={backgroundImage}
-          />
           <ThemeProvider
             attribute='class'
             defaultTheme='system'
             enableSystem>
             <StoreProvider>
               <Toaster />
+              <Image
+                className='fixed top-[100px] left-[50%] -z-10 dark:brightness-50 blur-3xl'
+                alt='background'
+                src={backgroundImage}
+              />
+              <Image
+                className='fixed top-[60%] left-[5%] dark:brightness-50 -z-10 blur-3xl'
+                alt='background'
+                src={backgroundImage}
+              />
+              <Image
+                className='fixed top-[70%] left-[85%] -z-10 blur-3xl dark:brightness-50'
+                alt='background'
+                src={backgroundImage}
+              />
               {children}
               {VERCEL_ENV ? (
                 <>

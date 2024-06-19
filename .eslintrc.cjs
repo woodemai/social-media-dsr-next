@@ -11,6 +11,7 @@ const config = {
     'plugin:@typescript-eslint/stylistic-type-checked',
   ],
   rules: {
+    'no-use-before-define': 'error',
     'react-compiler/react-compiler': 'error',
     '@typescript-eslint/array-type': 'off',
     '@typescript-eslint/consistent-type-definitions': 'off',
