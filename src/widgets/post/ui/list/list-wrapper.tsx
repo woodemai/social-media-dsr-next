@@ -1,14 +1,15 @@
 import { getPosts } from '@/shared/api/post';
 
 import { ListClient } from './list-client';
+import { getCurrentUser } from '@/shared/api/user';
 
 interface PostListProps {
   userId?: string;
-  isOwner?: boolean;
 }
 
-export const PostList = async ({ userId, isOwner }: PostListProps) => {
+export const PostList = async ({ userId }: PostListProps) => {
   const posts = await getPosts({ userId, page: 1 });
+  const currentUser = await getCurrentUser();
 
   if (!posts.length) {
     return (
@@ -25,7 +26,7 @@ export const PostList = async ({ userId, isOwner }: PostListProps) => {
 
   return (
     <ListClient
-      isOwner={isOwner}
+      currentUserId={currentUser.id}
       posts={posts}
       userId={userId}
     />

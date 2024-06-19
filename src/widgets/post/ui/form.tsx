@@ -24,10 +24,13 @@ import {
 import { FormError } from '@/shared/ui/form-error';
 import { FormSuccess } from '@/shared/ui/form-success';
 import { Input } from '@/shared/ui/input';
+import { useAppDispatch } from '@/config/store/store';
+import { addPosts } from '@/config/store/slices/post-slice';
 
 export const PostForm = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const dispatch = useAppDispatch()
 
   const form = useForm<z.infer<typeof createSchema>>({
     resolver: zodResolver(createSchema),
@@ -47,6 +50,7 @@ export const PostForm = () => {
         setSuccess(res.success);
         setError('');
         form.reset();
+        dispatch(addPosts([res.post]));
       }
     });
   };

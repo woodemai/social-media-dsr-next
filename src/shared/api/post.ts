@@ -27,17 +27,26 @@ export const getPosts = async ({
   page = 1,
 }: getPostsProps): Promise<FullPost[]> => {
   const user = await getCurrentUser();
-  const author = userId
-    ? {
-        id: userId,
-      }
-    : {
-        subscribers: {
-          some: {
-            id: user.id,
-          },
-        },
-      };
+
+  const author =
+    userId === user.id
+      ? {
+          id: userId,
+        }
+      : {
+          OR: [
+            {
+              subscribers: {
+                some: {
+                  id: user.id,
+                },
+              },
+            },
+            {
+              id: user.id,
+            },
+          ],
+        };
   return db.post.findMany({
     skip: (page - 1) * PAGE_SIZE,
     take: PAGE_SIZE,

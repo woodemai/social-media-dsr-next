@@ -15,8 +15,8 @@ interface PostItemProps {
   newLimit: () => void;
 }
 
-const DeleteButton = dynamic(() =>
-  import('@/entities/post').then(mob => mob.DeleteButton),
+const ActionsMenu = dynamic(() =>
+  import('@/entities/post').then(mob => mob.ActionsMenu),
 );
 
 export const PostItem = ({
@@ -57,13 +57,13 @@ export const PostItem = ({
             </h5>
           ) : (
             <Link
-              className=' underline-offset-4'
+              className='underline-offset-4'
               href={`/user/${post.authorId}`}>
               <h4 className='text-muted-foreground'>{post.author.name}</h4>
             </Link>
           )}
         </div>
-        {isOwner ? <DeleteButton id={post.id} /> : null}
+        {isOwner ? <ActionsMenu id={post.id} /> : null}
       </div>
       <p>{post.body}</p>
       <MediaList media={post.multimedia} />

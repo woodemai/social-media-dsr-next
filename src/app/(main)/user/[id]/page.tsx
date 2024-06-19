@@ -20,9 +20,8 @@ export default async function UserPage({ params: { id } }: UserPageProps) {
   const isSubscribed = await getIsSubscribed(id);
   const isOwner = currentUser?.id === id;
   const isShowingPosts = isSubscribed || isOwner || !user?.isPrivate;
-  if (!user) {
-    return <UserNotFound />;
-  }
+
+  if (!user) return <UserNotFound />;
 
   return (
     <>
@@ -35,7 +34,6 @@ export default async function UserPage({ params: { id } }: UserPageProps) {
       {isShowingPosts ? (
         <Suspense fallback={<ListSkeleton />}>
           <PostList
-            isOwner={isOwner}
             userId={id}
           />
         </Suspense>
