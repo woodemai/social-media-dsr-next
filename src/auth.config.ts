@@ -34,7 +34,6 @@ export default {
           });
 
           if (!user?.password) return null;
-
           const passwordMatch = await bcrypt.compare(password, user.password);
 
           if (passwordMatch) return user;

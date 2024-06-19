@@ -11,7 +11,10 @@ const reducer = combineReducers({
 
 export const createStore = () => {
   return configureStore({
-    reducer,
+    reducer: combineReducers({
+      [postSlice.reducerPath]: postSlice.reducer,
+      [userSlice.reducerPath]: userSlice.reducer,
+    }),
   });
 };
 

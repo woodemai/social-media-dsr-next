@@ -6,6 +6,11 @@ import { useOptimistic, useState, useTransition } from 'react';
 import { likePostAction, unlikePostAction } from '@/shared/actions/post';
 import { Button } from '@/shared/ui/button';
 
+const LikesCount = ({ count }: { count: number; }) => {
+  return <span className='tabular-nums'>{count}</span>;
+};
+
+
 interface SocialProps {
   likesCount: number;
   initialIsLiked?: boolean;
@@ -72,8 +77,4 @@ export const Social = ({
       </div>
     </div>
   );
-};
-
-const LikesCount = ({ count }: { count: number; }) => {
-  return <span className='tabular-nums'>{count}</span>;
 };

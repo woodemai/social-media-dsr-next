@@ -4,11 +4,11 @@ import { type FullUser } from '@/shared/api/user';
 import { type RootState, useAppSelector } from 'src/config/store/store';
 
 type userStateType = {
-  user: FullUser;
+  user?: FullUser;
   isSubscribed: boolean;
 };
 const initialState: userStateType = {
-  user: {} as FullUser,
+  user: undefined,
   isSubscribed: false,
 };
 

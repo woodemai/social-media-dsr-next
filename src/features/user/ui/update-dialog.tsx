@@ -32,7 +32,7 @@ import { useToast } from '@/shared/ui/use-toast';
 
 export const UpdateDialog = () => {
   const dispatch = useAppDispatch();
-  const { id, name, bio, isPrivate } = useUser();
+  const user = useUser();
   const [error, setError] = useState<string | undefined>();
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -41,12 +41,16 @@ export const UpdateDialog = () => {
   const form = useForm<z.infer<typeof updateSchema>>({
     resolver: zodResolver(updateSchema),
     defaultValues: {
-      name: name ?? '',
-      bio: bio ?? '',
+      name: user?.name ?? '',
+      bio: user?.bio ?? '',
       password: '',
-      isPrivate: isPrivate ?? false,
+      isPrivate: user?.isPrivate ?? false,
     },
   });
+
+  if (!user) return null;
+
+  const { id } = user;
 
   const onSubmit = async (values: z.infer<typeof updateSchema>) => {
     setError(undefined);

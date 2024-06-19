@@ -24,11 +24,11 @@ export const CardWrapper = ({
         <Header label={headerLabel} />
       </CardHeader>
       <CardContent>{children}</CardContent>
-      {showSocial ? (
+      {showSocial && (
         <CardFooter>
           <Social />
         </CardFooter>
-      ) : undefined}
+      )}
       <CardFooter>
         <BackButton
           href={backButtonHref}
