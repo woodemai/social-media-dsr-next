@@ -10,7 +10,7 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className='size-full flex justify-center items-center flex-col space-y-4 text-center'>
+    <div className='size-full flex justify-center items-center flex-col space-y-4 text-center h-dvh'>
       <h2 className='text-3xl font-bold tracking-tight'>
         Что-то пошло не так!
       </h2>
