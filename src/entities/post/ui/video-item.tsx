@@ -1,49 +1,22 @@
 'use client';
-import { useEffect, useRef } from 'react';
+
+import ReactPlayer from 'react-player/lazy';
 
 interface VideoItemProps {
   src: string;
 }
 
 export const VideoItem = ({ src }: VideoItemProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const videoElement = videoRef.current;
-
-    if (!videoElement) return;
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          void videoElement.play();
-        } else {
-          videoElement.pause();
-        }
-      });
-    });
-
-    observer.observe(videoElement);
-
-    return () => {
-      observer.unobserve(videoElement);
-    };
-  }, []);
-
   return (
-    <video
-      className='rounded-sm size-full shadow-md border m-0 object-cover'
-      controls
-      height={256}
+    <ReactPlayer
+      playing
       loop
+      volume={1}
+      width='auto'
+      height={'auto'}
       muted
-      preload='auto'
-      ref={videoRef}
-      width={256}>
-      <source
-        src={src}
-        type='video/mp4'
-      />
-    </video>
+      controls
+      url={src}
+    />
   );
 };

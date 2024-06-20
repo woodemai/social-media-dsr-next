@@ -38,7 +38,7 @@ export const PostItem = ({
     });
 
     observer.observe(itemRef.current);
-  }, [isLast, newLimit]);
+  }, [isLast]);
 
   return (
     <li

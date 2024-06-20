@@ -62,7 +62,7 @@ export const getStore = (initialState: StoreState = defaultInitialState) => {
         set(({ postSlice }) => ({
           postSlice: {
             ...postSlice,
-            posts: [...posts, ...postSlice.posts],
+            posts: [...postSlice.posts, ...posts],
           },
         }));
       },
