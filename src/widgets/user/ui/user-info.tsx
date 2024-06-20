@@ -3,9 +3,10 @@
 import { useEffect } from 'react';
 
 import { useStore } from '@/config/store';
+import { SubscriptionTabs } from '@/entities/subscription/types';
+import { SubscriptionCount } from '@/entities/subscription/ui/count';
 import { type FullUser } from '@/entities/user';
 import { SubscriptionButton, UpdateDialog, UserAvatar } from '@/features/user';
-import { Button } from '@/shared/ui/button';
 
 type UserInfoProps = {
   isOwner?: boolean;
@@ -42,20 +43,18 @@ export const UserInfo = ({
         </div>
         <p>{user?.bio}</p>
         <div>
-          <Button
-            className='pl-0 text-muted-foreground hover:text-foreground'
-            size='sm'
-            variant='link'
-          >
-            Подписчики: {user?._count.subscribers}
-          </Button>
-          <Button
-            className='pl-0 text-muted-foreground hover:text-foreground'
-            size='sm'
-            variant='link'
-          >
-            Подписки: {user?._count.subscribed}
-          </Button>
+          <SubscriptionCount
+            id={initialUser.id}
+            label='Подписчики'
+            count={user?._count.subscribers}
+            tab={SubscriptionTabs.SUBSCRIBERS}
+          />
+          <SubscriptionCount
+            label='Подписки'
+            id={initialUser.id}
+            count={user?._count.subscribed}
+            tab={SubscriptionTabs.SUBSCRIBED}
+          />
         </div>
       </div>
     </div>

@@ -1,7 +1,9 @@
+'use server';
 import { type SubscriptionRequest } from '@prisma/client';
 
 import { db } from '@/config/prisma';
-import { type FullUser, getCurrentUser, getUserById } from '@/entities/user';
+import { type FullUser, getCurrentUser } from '@/entities/user';
+import { getUserById } from '@/entities/user/data';
 
 import { type FullSubscriptionRequest } from './types';
 

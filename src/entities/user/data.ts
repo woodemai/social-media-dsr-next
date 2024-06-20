@@ -1,3 +1,4 @@
+'use server';
 import { type User } from '@prisma/client';
 import { type User as AuthUser } from 'next-auth';
 
