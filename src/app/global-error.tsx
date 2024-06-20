@@ -23,7 +23,8 @@ const GlobalError = ({
           onClick={() => {
             reset();
           }}
-          variant='secondary'>
+          variant='secondary'
+        >
           Попробовать еще раз
         </Button>
         <p className='text-sx text-muted-foreground'>Ошибка: {error.message}</p>

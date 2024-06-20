@@ -51,7 +51,8 @@ const DropdownMenuSubTrigger = forwardRef<
       className,
     )}
     ref={ref}
-    {...props}>
+    {...props}
+  >
     {children}
     <ChevronRight className='ml-auto h-4 w-4' />
   </SubTrigger>
@@ -120,7 +121,8 @@ const DropdownMenuCheckboxItem = forwardRef<
       className,
     )}
     ref={ref}
-    {...props}>
+    {...props}
+  >
     <span className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
       <ItemIndicator>
         <Check className='h-4 w-4' />
@@ -141,7 +143,8 @@ const DropdownMenuRadioItem = forwardRef<
       className,
     )}
     ref={ref}
-    {...props}>
+    {...props}
+  >
     <span className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
       <ItemIndicator>
         <Circle className='h-2 w-2 fill-current' />

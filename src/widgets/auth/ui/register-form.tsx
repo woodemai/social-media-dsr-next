@@ -51,11 +51,13 @@ export const RegisterForm = () => {
       backButtonHref='/auth/login'
       backButtonLabel='Уже есть аккаунт?'
       headerLabel='Добро пожаловать'
-      showSocial>
+      showSocial
+    >
       <Form {...form}>
         <form
           className='space-y-6'
-          onSubmit={form.handleSubmit(onSubmit)}>
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
           <div className='space-y-4'>
             <FormField
               control={form.control}
@@ -116,7 +118,8 @@ export const RegisterForm = () => {
           <Button
             className='w-full'
             disabled={isPending}
-            type='submit'>
+            type='submit'
+          >
             Создать аккаунт
           </Button>
         </form>

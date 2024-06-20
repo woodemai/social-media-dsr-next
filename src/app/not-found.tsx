@@ -11,7 +11,8 @@ const Error = () => {
       <p>Такой страницы не существует. Попробуйте вернуться на главную</p>
       <Button
         asChild
-        variant='secondary'>
+        variant='secondary'
+      >
         <Link href='/'>На главную</Link>
       </Button>
     </div>

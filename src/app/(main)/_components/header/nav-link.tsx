@@ -19,7 +19,8 @@ export const NavLink = ({ href, children, ...otherProps }: Props) => {
       size='icon'
       variant='ghost'
       {...otherProps}
-      asChild>
+      asChild
+    >
       <Link href={href}>{children}</Link>
     </Button>
   );

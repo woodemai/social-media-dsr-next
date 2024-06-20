@@ -61,7 +61,8 @@ export const Search = () => {
           className={cn(
             'flex size-full items-center justify-center',
             !isPending && 'hidden',
-          )}>
+          )}
+        >
           <SymbolIcon className='size-8 animate-spin' />
         </div>
         {suggestions.length ? (
@@ -71,11 +72,13 @@ export const Search = () => {
               {suggestions.map(suggestion => (
                 <li
                   className='w-full underline-offset-4 transition-all duration-150 hover:underline'
-                  key={suggestion.id}>
+                  key={suggestion.id}
+                >
                   <DialogClose asChild>
                     <Link
                       className='flex min-w-full items-center gap-x-4'
-                      href={`/user/${suggestion.id}`}>
+                      href={`/user/${suggestion.id}`}
+                    >
                       <UserAvatar src={suggestion.image} />
                       {suggestion.name}
                     </Link>

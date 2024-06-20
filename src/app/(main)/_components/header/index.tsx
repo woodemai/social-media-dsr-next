@@ -21,7 +21,8 @@ export const Header = async () => {
       <div className='mx-auto flex size-full max-w-7xl items-center justify-between'>
         <Link
           className='flex flex-row items-center gap-x-4'
-          href='/'>
+          href='/'
+        >
           <Image
             alt='Logo'
             className='rounded-full'

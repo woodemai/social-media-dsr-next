@@ -12,11 +12,13 @@ export const Notifications = async () => {
     <Dialog>
       <DialogTrigger
         className='relative'
-        title='Уведомления'>
+        title='Уведомления'
+      >
         {subscriptionRequests.length > 0 && (
           <Badge
             className='absolute right-[-10px] top-[-10px]'
-            variant='notification'>
+            variant='notification'
+          >
             {subscriptionRequests.length}
           </Badge>
         )}

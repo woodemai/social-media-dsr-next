@@ -51,14 +51,16 @@ export const NotificationItem = ({
         <Button
           disabled={isPending}
           onClick={handleAccept}
-          size='sm'>
+          size='sm'
+        >
           Принять
         </Button>
         <Button
           disabled={isPending}
           onClick={handleReject}
           size='sm'
-          variant='secondary'>
+          variant='secondary'
+        >
           Отклонить
         </Button>
       </div>

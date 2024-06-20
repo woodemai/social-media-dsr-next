@@ -62,7 +62,8 @@ export const Social = ({
           size='icon'
           title='Лайк'
           type='button'
-          variant='ghost'>
+          variant='ghost'
+        >
           <span className='sr-only'>
             {optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}
           </span>

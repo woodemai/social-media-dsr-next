@@ -23,7 +23,8 @@ export const Social = () => {
           onClick('google');
         }}
         size='lg'
-        variant='outline'>
+        variant='outline'
+      >
         <FcGoogle className='size-5' />
       </Button>
       <Button
@@ -32,7 +33,8 @@ export const Social = () => {
           onClick('github');
         }}
         size='lg'
-        variant='outline'>
+        variant='outline'
+      >
         <FaGithub className='size-5' />
       </Button>
       <Button
@@ -41,7 +43,8 @@ export const Social = () => {
           onClick('yandex');
         }}
         size='lg'
-        variant='outline'>
+        variant='outline'
+      >
         <YandexLogo className='size-5 rounded-full dark:bg-primary' />
       </Button>
     </div>

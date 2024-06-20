@@ -42,7 +42,8 @@ export const PostItem = ({
   return (
     <li
       className='max-w-full space-y-4 rounded-md bg-card/50 p-4'
-      ref={itemRef}>
+      ref={itemRef}
+    >
       <div className='flex w-full justify-between'>
         <div className='flex items-end gap-x-4'>
           <UserAvatar
@@ -57,7 +58,8 @@ export const PostItem = ({
           ) : (
             <Link
               className='underline-offset-4'
-              href={`/user/${post.authorId}`}>
+              href={`/user/${post.authorId}`}
+            >
               <h4 className='text-muted-foreground'>{post.author.name}</h4>
             </Link>
           )}

@@ -41,7 +41,8 @@ export const ActionsMenu = ({ id }: DeleteButtonProps) => {
           name='Меню поста'
           size='icon'
           title='Меню поста'
-          variant='ghost'>
+          variant='ghost'
+        >
           <span className='sr-only'>Меню поста</span>
           <DotsHorizontalIcon className='size-4' />
         </Button>
@@ -51,7 +52,8 @@ export const ActionsMenu = ({ id }: DeleteButtonProps) => {
           <button
             className='flex items-center gap-x-4'
             // onClick={handleDelete}
-            type='button'>
+            type='button'
+          >
             <Pencil1Icon className='size-4' />
             <span>Редактировать</span>
           </button>
@@ -60,7 +62,8 @@ export const ActionsMenu = ({ id }: DeleteButtonProps) => {
           <button
             className='flex items-center gap-x-4'
             onClick={handleDelete}
-            type='button'>
+            type='button'
+          >
             <TrashIcon className='size-4' />
             <span>Удалить</span>
           </button>
