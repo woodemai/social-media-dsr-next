@@ -1,6 +1,6 @@
 import { db } from '@/config/prisma';
+import { getCurrentUser } from '@/entities/user';
 
-import { getCurrentUser } from '../user/data';
 import { type FullSubscriptionRequest } from './types';
 
 export const getSubscriptionRequests = async (): Promise<
@@ -27,7 +27,7 @@ export const getIsSubscribed = async (id: string) => {
 
   if (!currentUser) return false;
 
-  if (currentUser?.id === id) return false;
+  if (currentUser.id === id) return false;
 
   const subscribersWithCurrentUserId = await db.user.count({
     where: {

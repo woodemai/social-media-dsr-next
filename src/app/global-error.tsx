@@ -2,13 +2,13 @@
 
 import { Button } from '@/shared/ui/button';
 
-export default function GlobalError({
+const GlobalError = ({
   error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}) => {
   return (
     <html>
       <body className='h-dvh w-full flex justify-center items-center flex-col space-y-4 text-center'>
@@ -20,7 +20,9 @@ export default function GlobalError({
           попытку
         </p>
         <Button
-          onClick={() => reset()}
+          onClick={() => {
+            reset();
+          }}
           variant='secondary'>
           Попробовать еще раз
         </Button>
@@ -28,4 +30,5 @@ export default function GlobalError({
       </body>
     </html>
   );
-}
+};
+export default GlobalError;

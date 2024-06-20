@@ -6,7 +6,7 @@ import debounce from 'debounce';
 import { Link } from 'next-view-transitions';
 import { type ChangeEvent, useState, useTransition } from 'react';
 
-import { cn } from '@/shared/utils';
+import { getUsersByNameAction } from '@/entities/user';
 import { UserAvatar } from '@/features/user';
 import {
   Dialog,
@@ -17,7 +17,7 @@ import {
 } from '@/shared/ui/dialog';
 import { Input } from '@/shared/ui/input';
 import { Separator } from '@/shared/ui/separator';
-import { getUsersByNameAction } from '@/entities/user';
+import { cn } from '@/shared/utils';
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');

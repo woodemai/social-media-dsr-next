@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { Link } from 'next-view-transitions';
-import React from 'react';
 
 import logo from '@/../public/icons/logo.png';
 import { getFullCurrentUser } from '@/entities/user/data';

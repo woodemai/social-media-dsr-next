@@ -1,8 +1,8 @@
 import { cn } from '@/shared/utils';
 
-interface HeaderProps {
+type HeaderProps = {
   label: string;
-}
+};
 
 export const Header = ({ label }: HeaderProps) => {
   return (

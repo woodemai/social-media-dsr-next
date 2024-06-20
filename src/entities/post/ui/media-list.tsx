@@ -1,13 +1,13 @@
 import Image from 'next/image';
 
-import { cn } from '@/shared/utils';
 import { Dialog, DialogContent, DialogTrigger } from '@/shared/ui/dialog';
+import { cn } from '@/shared/utils';
 
 import { VideoItem } from './video-item';
 
-interface MediaListProps {
+type MediaListProps = {
   media: string[];
-}
+};
 
 export const MediaList = ({ media }: MediaListProps) => {
   return (

@@ -1,13 +1,13 @@
 import { PersonIcon } from '@radix-ui/react-icons';
 
-import { cn } from '@/shared/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
-interface UserAvatarProps {
+import { cn } from '@/shared/utils';
+type UserAvatarProps = {
   src?: string | null;
   width?: number;
   height?: number;
   size?: 'lg' | 'md' | 'sm';
-}
+};
 
 export const UserAvatar = ({
   src,

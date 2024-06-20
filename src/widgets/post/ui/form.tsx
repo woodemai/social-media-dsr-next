@@ -11,8 +11,8 @@ import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { type z } from 'zod';
 
-import { createPostAction } from '@/entities/post';
-import { createSchema } from '@/entities/post';
+import { useStore } from '@/config/store';
+import { createPostAction, createSchema } from '@/entities/post';
 import { Button } from '@/shared/ui/button';
 import {
   Form,
@@ -24,7 +24,6 @@ import {
 import { FormError } from '@/shared/ui/form-error';
 import { FormSuccess } from '@/shared/ui/form-success';
 import { Input } from '@/shared/ui/input';
-import { useStore } from '@/config/store';
 
 export const PostForm = () => {
   const [error, setError] = useState('');
@@ -85,7 +84,9 @@ export const PostForm = () => {
                     {({ open }) => (
                       <Button
                         name='Загрузить'
-                        onClick={() => open()}
+                        onClick={() => {
+                          open();
+                        }}
                         size='icon'
                         title='Загрузить'
                         type='button'

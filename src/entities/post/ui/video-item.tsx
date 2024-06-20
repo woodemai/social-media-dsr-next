@@ -2,9 +2,9 @@
 
 import ReactPlayer from 'react-player/lazy';
 
-interface VideoItemProps {
+type VideoItemProps = {
   src: string;
-}
+};
 
 export const VideoItem = ({ src }: VideoItemProps) => {
   return (

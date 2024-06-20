@@ -1,7 +1,9 @@
 import { type SubscriptionRequest } from '@prisma/client';
-import { type FullUser, getCurrentUser, getUserById } from '@/entities/user';
-import { type FullSubscriptionRequest } from './types';
+
 import { db } from '@/config/prisma';
+import { type FullUser, getCurrentUser, getUserById } from '@/entities/user';
+
+import { type FullSubscriptionRequest } from './types';
 
 type SubscriptionActionReturnType = {
   request?: SubscriptionRequest;
@@ -49,7 +51,7 @@ export const subscribeAction = async (
   const currentUser = await getCurrentUser();
 
   if (user?.isPrivate && !isSubscribed) {
-    if (currentUser?.id) {
+    if (currentUser.id) {
       const isRequestExists = await db.subscriptionRequest.findFirst({
         where: {
           requestById: currentUser.id,
@@ -77,8 +79,8 @@ export const subscribeAction = async (
     }
   } else {
     const subscribers = isSubscribed
-      ? { disconnect: { id: currentUser?.id } }
-      : { connect: { id: currentUser?.id } };
+      ? { disconnect: { id: currentUser.id } }
+      : { connect: { id: currentUser.id } };
     return {
       user: await db.user.update({
         where: {
@@ -96,7 +98,7 @@ export const subscribeAction = async (
           },
           subscribers: {
             where: {
-              id: currentUser?.id,
+              id: currentUser.id,
             },
           },
         },

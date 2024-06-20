@@ -7,12 +7,12 @@ import { useEffect, useRef } from 'react';
 import { type FullPost, MediaList, Social } from '@/entities/post';
 import { UserAvatar } from '@/features/user';
 
-interface PostItemProps {
+type PostItemProps = {
   post: FullPost;
   isOwner?: boolean;
   isLast?: boolean;
   newLimit: () => void;
-}
+};
 
 const ActionsMenu = dynamic(() =>
   import('@/entities/post').then(mob => mob.ActionsMenu),
@@ -27,7 +27,7 @@ export const PostItem = ({
   const itemRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
-    if (!itemRef?.current) return;
+    if (!itemRef.current) return;
 
     const observer = new IntersectionObserver(([entry]) => {
       if (isLast && entry.isIntersecting) {

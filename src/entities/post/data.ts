@@ -2,10 +2,17 @@
 
 import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { db } from '@/config/prisma';
-import { type FullPost } from './types';
 import { getCurrentUser } from '@/entities/user';
 
-const getAuthor = ({selectedUserId, currentUserId}:{selectedUserId?: string, currentUserId?: string}) => {
+import { type FullPost } from './types';
+
+const getAuthor = ({
+  selectedUserId,
+  currentUserId,
+}: {
+  selectedUserId?: string;
+  currentUserId?: string;
+}) => {
   if (selectedUserId) {
     return {
       id: selectedUserId,
@@ -47,7 +54,7 @@ export const getPosts = async ({
     skip: (page - 1) * PAGE_SIZE,
     take: PAGE_SIZE,
     where: {
-      author: getAuthor({ selectedUserId: userId, currentUserId: user.id}),
+      author: getAuthor({ selectedUserId: userId, currentUserId: user.id }),
     },
     include: {
       _count: {

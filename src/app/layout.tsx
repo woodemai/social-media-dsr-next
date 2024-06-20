@@ -7,13 +7,13 @@ import { ViewTransitions } from 'next-view-transitions';
 
 import '@/config/globals.css';
 import { VERCEL_ENV } from '@/config/next.constants.mjs';
-import { cn } from '@/shared/utils';
+import { StoreProvider } from '@/config/store';
 import { Toaster } from '@/shared/ui/toaster';
+import { cn } from '@/shared/utils';
 
 import backgroundImage from '/public/background.png';
 
 import { ThemeProvider } from './_components/theme-provider';
-import { StoreProvider } from '@/config/store';
 
 const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -28,14 +28,12 @@ export const viewport: Viewport = {
   themeColor: 'background',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <ViewTransitions>
-      <html lang='ru' suppressHydrationWarning>
+      <html
+        lang='ru'
+        suppressHydrationWarning>
         <body
           className={cn(
             'min-h-dvh bg-gradient-to-r from-fuchsia-200 to-indigo-200 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-700 font-sans antialiased',
@@ -75,4 +73,6 @@ export default function RootLayout({
       </html>
     </ViewTransitions>
   );
-}
+};
+
+export default RootLayout;

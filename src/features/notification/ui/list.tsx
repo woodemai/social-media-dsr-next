@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 
-import { NotificationItem } from './item';
 import { type FullSubscriptionRequest } from '@/entities/subscription';
 
-interface NotificationListProps {
+import { NotificationItem } from './item';
+
+type NotificationListProps = {
   notifications: FullSubscriptionRequest[];
-}
+};
 
 export const NotificationList = ({
   notifications: initialNotifications,

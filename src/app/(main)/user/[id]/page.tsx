@@ -1,20 +1,21 @@
 import { Suspense } from 'react';
+
+import { getIsSubscribed } from '@/entities/subscription';
 import { getCurrentUser, getUserById } from '@/entities/user';
 import { ListSkeleton, PostForm, PostList } from '@/widgets/post';
 import { UserInfo, UserNotFound } from '@/widgets/user';
-import { getIsSubscribed } from '@/entities/subscription';
 
-interface UserPageProps {
+type UserPageProps = {
   params: {
     id: string;
   };
-}
+};
 
-export default async function UserPage({ params: { id } }: UserPageProps) {
+const UserPage = async ({ params: { id } }: UserPageProps) => {
   const user = await getUserById(id);
   const currentUser = await getCurrentUser();
   const isSubscribed = await getIsSubscribed(id);
-  const isOwner = currentUser?.id === id;
+  const isOwner = currentUser.id === id;
   const isShowingPosts = isSubscribed || isOwner || !user?.isPrivate;
 
   if (!user) return <UserNotFound />;
@@ -46,4 +47,6 @@ export default async function UserPage({ params: { id } }: UserPageProps) {
       )}
     </>
   );
-}
+};
+
+export default UserPage;

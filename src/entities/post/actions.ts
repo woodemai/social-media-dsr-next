@@ -3,8 +3,9 @@
 import { type z } from 'zod';
 
 import { db } from '@/config/prisma';
-import { getCurrentUser } from '@/entities/user/data';
 import { createSchema } from '@/entities/post/schemas';
+import { getCurrentUser } from '@/entities/user/data';
+
 import { type FullPost } from './types';
 
 export const createPostAction = async (
@@ -72,14 +73,14 @@ export const likePostAction = async (id: string) => {
     data: {
       likedUsers: {
         connect: {
-          id: user?.id,
+          id: user.id,
         },
       },
     },
     include: {
       likedUsers: {
         where: {
-          id: user?.id,
+          id: user.id,
         },
       },
       _count: {
@@ -101,14 +102,14 @@ export const unlikePostAction = async (id: string) => {
     data: {
       likedUsers: {
         disconnect: {
-          id: user?.id,
+          id: user.id,
         },
       },
     },
     include: {
       likedUsers: {
         where: {
-          id: user?.id,
+          id: user.id,
         },
       },
       _count: {

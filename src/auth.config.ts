@@ -6,7 +6,7 @@ import Google from 'next-auth/providers/google';
 import Yandex from 'next-auth/providers/yandex';
 
 import { db } from '@/config/prisma';
-import { loginSchema } from './entities/auth';
+import { loginSchema } from '@/entities/auth/schemas';
 
 export default {
   providers: [

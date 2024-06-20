@@ -3,6 +3,7 @@ import { type User as AuthUser } from 'next-auth';
 
 import { auth } from '@/auth';
 import { db } from '@/config/prisma';
+
 import { type FullUser } from './types';
 
 export const getCurrentUser = async (): Promise<AuthUser> => {
@@ -41,8 +42,6 @@ export const getUserById = async (id: string): Promise<FullUser | null> => {
     },
   });
 };
-
-
 
 export const getUserByEmail = async (email: string) => {
   try {

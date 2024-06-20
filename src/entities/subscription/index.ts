@@ -1,10 +1,10 @@
-import { type FullSubscriptionRequest } from './types';
-import { getSubscriptionRequests, getIsSubscribed } from './data';
 import {
   subscribeAcceptAction,
   subscribeAction,
   subscribeRejectAction,
 } from './actions';
+import { getSubscriptionRequests, getIsSubscribed } from './data';
+import { type FullSubscriptionRequest } from './types';
 
 export {
   FullSubscriptionRequest,
@@ -12,5 +12,5 @@ export {
   subscribeAcceptAction,
   subscribeAction,
   subscribeRejectAction,
-  getIsSubscribed
+  getIsSubscribed,
 };

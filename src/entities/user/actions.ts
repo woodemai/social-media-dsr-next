@@ -5,6 +5,7 @@ import { type z } from 'zod';
 
 import { db } from '@/config/prisma';
 import { getCurrentUser } from '@/entities/user/data';
+
 import { updateSchema } from './schemas';
 
 export const getUsersByNameAction = async (name: string) => {
@@ -16,7 +17,7 @@ export const getUsersByNameAction = async (name: string) => {
         contains: name,
         mode: 'insensitive',
       },
-      NOT: { id: user?.id },
+      NOT: { id: user.id },
     },
   });
 };

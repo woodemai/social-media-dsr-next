@@ -3,19 +3,18 @@
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 import { useOptimistic, useState, useTransition } from 'react';
 
-import { Button } from '@/shared/ui/button';
 import { likePostAction, unlikePostAction } from '@/entities/post/actions';
+import { Button } from '@/shared/ui/button';
 
-const LikesCount = ({ count }: { count: number; }) => {
+const LikesCount = ({ count }: { count: number }) => {
   return <span className='tabular-nums'>{count}</span>;
 };
 
-
-interface SocialProps {
+type SocialProps = {
   likesCount: number;
   initialIsLiked?: boolean;
   id: string;
-}
+};
 
 export const Social = ({
   id,

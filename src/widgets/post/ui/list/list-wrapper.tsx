@@ -1,10 +1,11 @@
 import { getPosts } from '@/entities/post';
-import { ListClient } from './list-client';
 import { getCurrentUser } from '@/entities/user/data';
 
-interface PostListProps {
+import { ListClient } from './list-client';
+
+type PostListProps = {
   userId?: string;
-}
+};
 
 export const PostList = async ({ userId }: PostListProps) => {
   const posts = await getPosts({ userId, page: 1 });

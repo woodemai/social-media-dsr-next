@@ -4,10 +4,10 @@ import Link from 'next/link';
 
 import { Button } from '@/shared/ui/button';
 
-interface BackButtonProps {
+type BackButtonProps = {
   label: string;
   href: string;
-}
+};
 
 export const BackButton = ({ label, href }: BackButtonProps) => {
   return (

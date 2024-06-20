@@ -5,8 +5,9 @@ import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import type * as z from 'zod';
 
-import { CardWrapper } from '@/features/auth';
+import { registerSchema } from '@/entities/auth';
 import { register } from '@/entities/auth/actions';
+import { CardWrapper } from '@/features/auth';
 import { Button } from '@/shared/ui/button';
 import {
   Form,
@@ -19,7 +20,6 @@ import {
 import { FormError } from '@/shared/ui/form-error';
 import { FormSuccess } from '@/shared/ui/form-success';
 import { Input } from '@/shared/ui/input';
-import { registerSchema } from '@/entities/auth';
 
 export const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -40,7 +40,7 @@ export const RegisterForm = () => {
       setError('');
       setSuccess('');
       await register(values).then(data => {
-        setError(data?.error);
+        setError(data.error);
         setSuccess(data.success);
       });
     });

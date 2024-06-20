@@ -1,5 +1,4 @@
 import { RegisterForm } from '@/widgets/auth';
 
-export default function RegisterPage() {
-  return <RegisterForm />;
-}
+const RegisterPage = () => <RegisterForm />;
+export default RegisterPage;

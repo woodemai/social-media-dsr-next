@@ -6,6 +6,8 @@ import {
   TrashIcon,
 } from '@radix-ui/react-icons';
 
+import { useStore } from '@/config/store';
+import { deleteAction } from '@/entities/post/actions';
 import { Button } from '@/shared/ui/button';
 import {
   DropdownMenu,
@@ -14,12 +16,10 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 import { useToast } from '@/shared/ui/use-toast';
-import { useStore } from '@/config/store';
-import { deleteAction } from '../actions';
 
-interface DeleteButtonProps {
+type DeleteButtonProps = {
   id: string;
-}
+};
 
 export const ActionsMenu = ({ id }: DeleteButtonProps) => {
   const { toast } = useToast();

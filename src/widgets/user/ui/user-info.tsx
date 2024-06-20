@@ -2,16 +2,16 @@
 
 import { useEffect } from 'react';
 
-import { SubscriptionButton, UpdateDialog, UserAvatar } from '@/features/user';
-import { Button } from '@/shared/ui/button';
 import { useStore } from '@/config/store';
 import { type FullUser } from '@/entities/user';
+import { SubscriptionButton, UpdateDialog, UserAvatar } from '@/features/user';
+import { Button } from '@/shared/ui/button';
 
-interface UserInfoProps {
+type UserInfoProps = {
   isOwner?: boolean;
   isSubscribed?: boolean;
   user: FullUser;
-}
+};
 
 export const UserInfo = ({
   isOwner = false,
@@ -46,13 +46,13 @@ export const UserInfo = ({
             className='pl-0 text-muted-foreground hover:text-foreground'
             size='sm'
             variant='link'>
-            Подписчики: {user?._count?.subscribers}
+            Подписчики: {user?._count.subscribers}
           </Button>
           <Button
             className='pl-0 text-muted-foreground hover:text-foreground'
             size='sm'
             variant='link'>
-            Подписки: {user?._count?.subscribed}
+            Подписки: {user?._count.subscribed}
           </Button>
         </div>
       </div>

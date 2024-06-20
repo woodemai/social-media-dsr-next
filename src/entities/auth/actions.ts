@@ -8,6 +8,7 @@ import { signIn } from '@/auth';
 import { db } from '@/config/prisma';
 import { DEFAULT_LOGIN_REDIRECT } from '@/config/routes';
 import { getUserByEmail } from '@/entities/user/data';
+
 import { loginSchema, registerSchema } from './schemas';
 
 export const login = async (values: z.infer<typeof loginSchema>) => {

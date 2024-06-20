@@ -1,9 +1,11 @@
-interface UserLayoutProps {
+type UserLayoutProps = {
   children: React.ReactNode;
-}
+};
 
-export default function UserLayout({ children }: UserLayoutProps) {
+const UserLayout = ({ children }: UserLayoutProps) => {
   return (
     <div className='mx-auto w-full max-w-3xl py-8 space-y-8'>{children}</div>
   );
-}
+};
+
+export default UserLayout;

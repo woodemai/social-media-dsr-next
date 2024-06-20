@@ -1,12 +1,12 @@
+import { getUsersByNameAction, updateProfileAction } from './actions';
 import {
   getUserByEmail,
   getUserById,
   getCurrentUser,
   getFullCurrentUser,
 } from './data';
-import { getUsersByNameAction, updateProfileAction } from './actions';
-import { type FullUser } from './types';
 import { updateSchema } from './schemas';
+import { type FullUser } from './types';
 
 export {
   getUserByEmail,
@@ -16,5 +16,5 @@ export {
   getUsersByNameAction,
   updateProfileAction,
   FullUser,
-  updateSchema
+  updateSchema,
 };

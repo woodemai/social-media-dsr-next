@@ -1,4 +1,5 @@
 import { createStore } from 'zustand';
+
 import {
   initialPostState,
   type PostState,
@@ -30,7 +31,9 @@ export const getStore = (initialState: StoreState = defaultInitialState) => {
     userSlice: {
       ...userSlice,
       setUser(newUser) {
-        set(({ userSlice }) => ({ userSlice: { ...userSlice, user: newUser } }));
+        set(({ userSlice }) => ({
+          userSlice: { ...userSlice, user: newUser },
+        }));
       },
       setSubscription(isSubscribed) {
         set(({ userSlice }) => ({

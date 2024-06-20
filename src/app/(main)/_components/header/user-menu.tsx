@@ -13,9 +13,9 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 
-interface UserHeaderMenuProps {
+type UserHeaderMenuProps = {
   user?: User | null;
-}
+};
 
 export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
   const [open, setOpen] = useState(false);
@@ -33,7 +33,9 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
 
   return (
     <DropdownMenu
-      onOpenChange={() => setOpen(!open)}
+      onOpenChange={() => {
+        setOpen(!open);
+      }}
       open={open}>
       <DropdownMenuTrigger>
         <span className='sr-only'>Меню пользователя</span>
@@ -43,7 +45,9 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
         <DropdownMenuItem>
           <Button
             asChild
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false);
+            }}
             variant='ghost'>
             <Link
               className='font-bold'
