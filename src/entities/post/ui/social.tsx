@@ -3,19 +3,18 @@
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 import { useOptimistic, useState, useTransition } from 'react';
 
-import { likePostAction, unlikePostAction } from '@/shared/actions/post';
+import { likePostAction, unlikePostAction } from '@/entities/post/actions';
 import { Button } from '@/shared/ui/button';
 
-const LikesCount = ({ count }: { count: number; }) => {
+const LikesCount = ({ count }: { count: number }) => {
   return <span className='tabular-nums'>{count}</span>;
 };
 
-
-interface SocialProps {
+type SocialProps = {
   likesCount: number;
   initialIsLiked?: boolean;
   id: string;
-}
+};
 
 export const Social = ({
   id,
@@ -56,14 +55,15 @@ export const Social = ({
     <div>
       <div className='flex items-center'>
         <Button
-          className='space-x-2 w-full max-w-16 rounded-lg'
+          className='w-full max-w-16 space-x-2 rounded-lg'
           disabled={isPending}
           name='Лайк'
           onClick={handleLike}
           size='icon'
           title='Лайк'
           type='button'
-          variant='ghost'>
+          variant='ghost'
+        >
           <span className='sr-only'>
             {optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}
           </span>

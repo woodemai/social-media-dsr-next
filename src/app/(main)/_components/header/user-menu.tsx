@@ -13,9 +13,9 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 
-interface UserHeaderMenuProps {
+type UserHeaderMenuProps = {
   user?: User | null;
-}
+};
 
 export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
   const [open, setOpen] = useState(false);
@@ -25,7 +25,8 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
       <Button
         asChild
         size='sm'
-        variant='link'>
+        variant='link'
+      >
         <Link href='/auth'>Войти</Link>
       </Button>
     );
@@ -33,8 +34,11 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
 
   return (
     <DropdownMenu
-      onOpenChange={() => setOpen(!open)}
-      open={open}>
+      onOpenChange={() => {
+        setOpen(!open);
+      }}
+      open={open}
+    >
       <DropdownMenuTrigger>
         <span className='sr-only'>Меню пользователя</span>
         <UserAvatar src={user.image} />
@@ -43,11 +47,15 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
         <DropdownMenuItem>
           <Button
             asChild
-            onClick={() => setOpen(false)}
-            variant='ghost'>
+            onClick={() => {
+              setOpen(false);
+            }}
+            variant='ghost'
+          >
             <Link
               className='font-bold'
-              href={`/user/${user.id}`}>
+              href={`/user/${user.id}`}
+            >
               {user.name}
             </Link>
           </Button>
@@ -55,7 +63,8 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
         <DropdownMenuItem>
           <Button
             onClick={() => signOut()}
-            variant='ghost'>
+            variant='ghost'
+          >
             Выйти
           </Button>
         </DropdownMenuItem>

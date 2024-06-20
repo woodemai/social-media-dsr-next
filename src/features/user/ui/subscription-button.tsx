@@ -2,10 +2,10 @@
 
 import { useTransition } from 'react';
 
-import { subscribeAction } from '@/shared/actions/user';
+import { useStore } from '@/config/store';
+import { subscribeAction } from '@/entities/subscription';
 import { Button } from '@/shared/ui/button';
 import { useToast } from '@/shared/ui/use-toast';
-import { useStore } from '@/config/store';
 
 export const SubscriptionButton = () => {
   const { user, isSubscribed, setUser, setSubscription } = useStore(
@@ -48,7 +48,8 @@ export const SubscriptionButton = () => {
     <Button
       disabled={isPending}
       onClick={handleSubscribe}
-      variant={isSubscribed ? 'outline' : 'default'}>
+      variant={isSubscribed ? 'outline' : 'default'}
+    >
       {isSubscribed ? 'Отписаться' : 'Подписаться'}
     </Button>
   );

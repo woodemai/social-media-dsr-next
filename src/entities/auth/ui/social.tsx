@@ -19,23 +19,32 @@ export const Social = () => {
     <div className='flex w-full items-center gap-x-2'>
       <Button
         className='w-full'
-        onClick={() => onClick('google')}
+        onClick={() => {
+          onClick('google');
+        }}
         size='lg'
-        variant='outline'>
+        variant='outline'
+      >
         <FcGoogle className='size-5' />
       </Button>
       <Button
         className='w-full'
-        onClick={() => onClick('github')}
+        onClick={() => {
+          onClick('github');
+        }}
         size='lg'
-        variant='outline'>
+        variant='outline'
+      >
         <FaGithub className='size-5' />
       </Button>
       <Button
         className='w-full'
-        onClick={() => onClick('yandex')}
+        onClick={() => {
+          onClick('yandex');
+        }}
         size='lg'
-        variant='outline'>
+        variant='outline'
+      >
         <YandexLogo className='size-5 rounded-full dark:bg-primary' />
       </Button>
     </div>

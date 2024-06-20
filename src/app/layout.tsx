@@ -7,13 +7,13 @@ import { ViewTransitions } from 'next-view-transitions';
 
 import '@/config/globals.css';
 import { VERCEL_ENV } from '@/config/next.constants.mjs';
-import { cn } from '@/config/utils';
+import { StoreProvider } from '@/config/store';
 import { Toaster } from '@/shared/ui/toaster';
+import { cn } from '@/shared/utils';
 
 import backgroundImage from '/public/background.png';
 
 import { ThemeProvider } from './_components/theme-provider';
-import { StoreProvider } from '@/config/store';
 
 const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -28,37 +28,38 @@ export const viewport: Viewport = {
   themeColor: 'background',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <ViewTransitions>
-      <html lang='ru' suppressHydrationWarning>
+      <html
+        lang='ru'
+        suppressHydrationWarning
+      >
         <body
           className={cn(
-            'min-h-dvh bg-gradient-to-r from-fuchsia-200 to-indigo-200 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-700 font-sans antialiased',
+            'min-h-dvh bg-gradient-to-r from-fuchsia-200 to-indigo-200 font-sans antialiased dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-700',
             fontSans.variable,
-          )}>
+          )}
+        >
           <ThemeProvider
             attribute='class'
             defaultTheme='system'
-            enableSystem>
+            enableSystem
+          >
             <StoreProvider>
               <Toaster />
               <Image
-                className='fixed top-[100px] left-[50%] -z-10 dark:brightness-50 blur-3xl'
+                className='fixed left-[50%] top-[100px] -z-10 blur-3xl dark:brightness-50'
                 alt='background'
                 src={backgroundImage}
               />
               <Image
-                className='fixed top-[60%] left-[5%] dark:brightness-50 -z-10 blur-3xl'
+                className='fixed left-[5%] top-[60%] -z-10 blur-3xl dark:brightness-50'
                 alt='background'
                 src={backgroundImage}
               />
               <Image
-                className='fixed top-[70%] left-[85%] -z-10 blur-3xl dark:brightness-50'
+                className='fixed left-[85%] top-[70%] -z-10 blur-3xl dark:brightness-50'
                 alt='background'
                 src={backgroundImage}
               />
@@ -75,4 +76,6 @@ export default function RootLayout({
       </html>
     </ViewTransitions>
   );
-}
+};
+
+export default RootLayout;

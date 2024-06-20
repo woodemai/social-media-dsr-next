@@ -1,22 +1,44 @@
 'use server';
 
-import { type Post, type User } from '@prisma/client';
-
 import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { db } from '@/config/prisma';
+import { getCurrentUser } from '@/entities/user';
 
-import { getCurrentUser } from './user';
+import { type FullPost } from './types';
 
-export type FullPost = {
-  author: Pick<User, 'name' | 'image'>;
-  _count: { likedUsers: number };
-  likedUsers: { id: string }[];
-} & Post;
+const getAuthor = ({
+  selectedUserId,
+  currentUserId,
+}: {
+  selectedUserId?: string;
+  currentUserId?: string;
+}) => {
+  if (selectedUserId) {
+    return {
+      id: selectedUserId,
+    };
+  }
+  return {
+    OR: [
+      {
+        subscribers: {
+          some: {
+            id: currentUserId,
+          },
+        },
+      },
+      {
+        id: currentUserId,
+      },
+    ],
+  };
+};
 
 interface getPostsProps {
   userId?: string;
   page?: number;
 }
+
 /**
  * If we are passing `userId` we will look for posts of user with this id.
  *
@@ -28,30 +50,11 @@ export const getPosts = async ({
 }: getPostsProps): Promise<FullPost[]> => {
   const user = await getCurrentUser();
 
-  const author =
-    userId === user.id
-      ? {
-          id: userId,
-        }
-      : {
-          OR: [
-            {
-              subscribers: {
-                some: {
-                  id: user.id,
-                },
-              },
-            },
-            {
-              id: user.id,
-            },
-          ],
-        };
   return db.post.findMany({
     skip: (page - 1) * PAGE_SIZE,
     take: PAGE_SIZE,
     where: {
-      author,
+      author: getAuthor({ selectedUserId: userId, currentUserId: user.id }),
     },
     include: {
       _count: {

@@ -5,9 +5,9 @@ import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import type * as z from 'zod';
 
+import { registerSchema } from '@/entities/auth';
+import { register } from '@/entities/auth/actions';
 import { CardWrapper } from '@/features/auth';
-import { register } from '@/shared/actions/auth';
-import { registerSchema } from '@/shared/schemas/auth';
 import { Button } from '@/shared/ui/button';
 import {
   Form,
@@ -40,7 +40,7 @@ export const RegisterForm = () => {
       setError('');
       setSuccess('');
       await register(values).then(data => {
-        setError(data?.error);
+        setError(data.error);
         setSuccess(data.success);
       });
     });
@@ -51,11 +51,13 @@ export const RegisterForm = () => {
       backButtonHref='/auth/login'
       backButtonLabel='Уже есть аккаунт?'
       headerLabel='Добро пожаловать'
-      showSocial>
+      showSocial
+    >
       <Form {...form}>
         <form
           className='space-y-6'
-          onSubmit={form.handleSubmit(onSubmit)}>
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
           <div className='space-y-4'>
             <FormField
               control={form.control}
@@ -116,7 +118,8 @@ export const RegisterForm = () => {
           <Button
             className='w-full'
             disabled={isPending}
-            type='submit'>
+            type='submit'
+          >
             Создать аккаунт
           </Button>
         </form>

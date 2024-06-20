@@ -5,8 +5,8 @@ import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { type z } from 'zod';
 
-import { updateProfileAction } from '@/shared/actions/user';
-import { updateSchema } from '@/shared/schemas/user';
+import { useStore } from '@/config/store';
+import { updateSchema, updateProfileAction } from '@/entities/user';
 import { Button } from '@/shared/ui/button';
 import {
   Dialog,
@@ -27,7 +27,6 @@ import { FormError } from '@/shared/ui/form-error';
 import { Input } from '@/shared/ui/input';
 import { Switch } from '@/shared/ui/switch';
 import { useToast } from '@/shared/ui/use-toast';
-import { useStore } from '@/config/store';
 
 export const UpdateDialog = () => {
   const { user, updateUser } = useStore(state => state.userSlice);
@@ -72,12 +71,16 @@ export const UpdateDialog = () => {
 
   return (
     <Dialog
-      onOpenChange={isOpen => setOpen(isOpen)}
-      open={open}>
+      onOpenChange={isOpen => {
+        setOpen(isOpen);
+      }}
+      open={open}
+    >
       <DialogTrigger asChild>
         <Button
           disabled={isPending}
-          variant='secondary'>
+          variant='secondary'
+        >
           Изменить
         </Button>
       </DialogTrigger>
@@ -85,8 +88,9 @@ export const UpdateDialog = () => {
         <DialogHeader>Обновление профиля</DialogHeader>
         <Form {...form}>
           <form
-            className='space-y-4 w-full'
-            onSubmit={form.handleSubmit(onSubmit)}>
+            className='w-full space-y-4'
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <FormField
               control={form.control}
               name='name'
@@ -157,7 +161,8 @@ export const UpdateDialog = () => {
               <Button
                 className='ml-auto'
                 disabled={isPending}
-                type='submit'>
+                type='submit'
+              >
                 Обновить
               </Button>
             </DialogFooter>

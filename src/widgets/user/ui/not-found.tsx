@@ -1,7 +1,7 @@
 export const UserNotFound = () => {
   return (
-    <div className='flex justify-center items-center flex-col gap-y-4'>
-      <h3 className='font-bold text-3xl tracking-tight'>
+    <div className='flex flex-col items-center justify-center gap-y-4'>
+      <h3 className='text-3xl font-bold tracking-tight'>
         Пользователь не найден
       </h3>
       <p>Повторите попытку позже</p>

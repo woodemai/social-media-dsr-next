@@ -11,8 +11,8 @@ import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { type z } from 'zod';
 
-import { createPostAction } from '@/shared/actions/post';
-import { createSchema } from '@/shared/schemas/post';
+import { useStore } from '@/config/store';
+import { createPostAction, createSchema } from '@/entities/post';
 import { Button } from '@/shared/ui/button';
 import {
   Form,
@@ -24,7 +24,6 @@ import {
 import { FormError } from '@/shared/ui/form-error';
 import { FormSuccess } from '@/shared/ui/form-success';
 import { Input } from '@/shared/ui/input';
-import { useStore } from '@/config/store';
 
 export const PostForm = () => {
   const [error, setError] = useState('');
@@ -70,8 +69,9 @@ export const PostForm = () => {
   return (
     <Form {...form}>
       <form
-        className='flex flex-col gap-y-4 rounded-md shadow-sm bg-card/50'
-        onSubmit={form.handleSubmit(onSubmit)}>
+        className='flex flex-col gap-y-4 rounded-md bg-card/50 shadow-sm'
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <div className='flex gap-x-2 p-4'>
           <FormField
             control={form.control}
@@ -81,15 +81,19 @@ export const PostForm = () => {
                 <FormControl>
                   <CldUploadWidget
                     onSuccess={handleMediaUpload}
-                    uploadPreset='fkkcjhmy'>
+                    uploadPreset='fkkcjhmy'
+                  >
                     {({ open }) => (
                       <Button
                         name='Загрузить'
-                        onClick={() => open()}
+                        onClick={() => {
+                          open();
+                        }}
                         size='icon'
                         title='Загрузить'
                         type='button'
-                        variant='ghost'>
+                        variant='ghost'
+                      >
                         <span className='sr-only'>Загрузить</span>
                         <UploadIcon className='size-4' />
                       </Button>
@@ -107,7 +111,7 @@ export const PostForm = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    className='w-full bg-transparent border-none hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
+                    className='w-full border-none bg-transparent hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
                     placeholder='Напишите, что у вас нового...'
                   />
                 </FormControl>
@@ -117,18 +121,20 @@ export const PostForm = () => {
           />
           <Button
             type='submit'
-            variant='ghost'>
+            variant='ghost'
+          >
             Отправить
           </Button>
         </div>
         <FormSuccess message={success} />
         <FormError message={error} />
         {uploadedMedia.length ? (
-          <div className='flex gap-x-4 items-center'>
+          <div className='flex items-center gap-x-4'>
             {uploadedMedia.map(media => (
               <div
                 className='p-2'
-                key={media}>
+                key={media}
+              >
                 {media.includes('/video/') ? (
                   <video
                     className='rounded-md'
@@ -136,7 +142,8 @@ export const PostForm = () => {
                     height={256}
                     muted
                     preload='none'
-                    width={256}>
+                    width={256}
+                  >
                     <source
                       src={media}
                       type='video/mp4'

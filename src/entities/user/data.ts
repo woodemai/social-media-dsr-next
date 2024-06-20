@@ -1,8 +1,11 @@
+'use server';
 import { type User } from '@prisma/client';
 import { type User as AuthUser } from 'next-auth';
 
 import { auth } from '@/auth';
 import { db } from '@/config/prisma';
+
+import { type FullUser } from './types';
 
 export const getCurrentUser = async (): Promise<AuthUser> => {
   const session = await auth();
@@ -27,15 +30,6 @@ export const getFullCurrentUser = async (): Promise<User> => {
   return user;
 };
 
-
-export type FullUser = {
-  _count: {
-    subscribed: number;
-    subscribers: number;
-  };
-  subscribers?: User[];
-} & User;
-
 export const getUserById = async (id: string): Promise<FullUser | null> => {
   return await db.user.findUnique({
     where: { id },
@@ -50,26 +44,6 @@ export const getUserById = async (id: string): Promise<FullUser | null> => {
   });
 };
 
-export const getIsSubscribed = async (id: string) => {
-  const currentUser = await getCurrentUser();
-
-  if (!currentUser) return false;
-
-  if (currentUser?.id === id) return false;
-
-  const subscribersWithCurrentUserId = await db.user.count({
-    where: {
-      id,
-      subscribers: {
-        some: {
-          id: currentUser.id,
-        },
-      },
-    },
-  });
-  return subscribersWithCurrentUserId > 0;
-};
-
 export const getUserByEmail = async (email: string) => {
   try {
     return await db.user.findUnique({ where: { email } });
@@ -77,4 +51,3 @@ export const getUserByEmail = async (email: string) => {
     return;
   }
 };
-

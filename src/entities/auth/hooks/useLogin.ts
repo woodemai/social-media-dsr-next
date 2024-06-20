@@ -3,8 +3,8 @@ import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import type * as z from 'zod';
 
-import { login } from '@/shared/actions/auth';
-import { loginSchema } from '@/shared/schemas/auth';
+import { login } from '@/entities/auth/actions';
+import { loginSchema } from '@/entities/auth/schemas';
 /**
  * `useLogin` is a custom hook that manages the login state and interactions.
  *
@@ -36,8 +36,8 @@ export const useLogin = () => {
       setError('');
       setSuccess('');
       void login(values).then(data => {
-        setError(data?.error);
-        setSuccess(data?.success);
+        setError(data.error);
+        setSuccess(data.success);
       });
     });
   };

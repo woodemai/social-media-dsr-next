@@ -1,11 +1,11 @@
-import { getPosts } from '@/shared/api/post';
+import { getPosts } from '@/entities/post';
+import { getCurrentUser } from '@/entities/user/data';
 
 import { ListClient } from './list-client';
-import { getCurrentUser } from '@/shared/api/user';
 
-interface PostListProps {
+type PostListProps = {
   userId?: string;
-}
+};
 
 export const PostList = async ({ userId }: PostListProps) => {
   const posts = await getPosts({ userId, page: 1 });
@@ -13,9 +13,9 @@ export const PostList = async ({ userId }: PostListProps) => {
 
   if (!posts.length) {
     return (
-      <div className='grid place-content-center gap-y-4 text-center h-full'>
-        <div className='p-4 space-y-4'>
-          <h2 className='font-bold tracking-tight text-3xl'>
+      <div className='grid h-full place-content-center gap-y-4 text-center'>
+        <div className='space-y-4 p-4'>
+          <h2 className='text-3xl font-bold tracking-tight'>
             Посты не найдены
           </h2>
           <p>Повторите попытку позже</p>

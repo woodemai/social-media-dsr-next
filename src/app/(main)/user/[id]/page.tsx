@@ -1,24 +1,22 @@
 import { Suspense } from 'react';
 
-import {
-  getCurrentUser,
-  getIsSubscribed,
-  getUserById,
-} from '@/shared/api/user';
+import { getIsSubscribed } from '@/entities/subscription';
+import { getCurrentUser } from '@/entities/user';
+import { getUserById } from '@/entities/user/data';
 import { ListSkeleton, PostForm, PostList } from '@/widgets/post';
 import { UserInfo, UserNotFound } from '@/widgets/user';
 
-interface UserPageProps {
+type UserPageProps = {
   params: {
     id: string;
   };
-}
+};
 
-export default async function UserPage({ params: { id } }: UserPageProps) {
+const UserPage = async ({ params: { id } }: UserPageProps) => {
   const user = await getUserById(id);
   const currentUser = await getCurrentUser();
   const isSubscribed = await getIsSubscribed(id);
-  const isOwner = currentUser?.id === id;
+  const isOwner = currentUser.id === id;
   const isShowingPosts = isSubscribed || isOwner || !user?.isPrivate;
 
   if (!user) return <UserNotFound />;
@@ -38,9 +36,9 @@ export default async function UserPage({ params: { id } }: UserPageProps) {
           <PostList userId={id} />
         </Suspense>
       ) : (
-        <div className='flex flex-col justify-center items-center gap-y-4 text-primary text-center'>
+        <div className='flex flex-col items-center justify-center gap-y-4 text-center text-primary'>
           <span className='text-3xl'>🔒</span>
-          <h1 className='font-bold tracking-tight text-3xl'>
+          <h1 className='text-3xl font-bold tracking-tight'>
             Приватный профиль
           </h1>
           <p className='text-muted-foreground'>
@@ -50,4 +48,6 @@ export default async function UserPage({ params: { id } }: UserPageProps) {
       )}
     </>
   );
-}
+};
+
+export default UserPage;

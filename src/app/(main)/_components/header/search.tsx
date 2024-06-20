@@ -6,9 +6,8 @@ import debounce from 'debounce';
 import { Link } from 'next-view-transitions';
 import { type ChangeEvent, useState, useTransition } from 'react';
 
-import { cn } from '@/config/utils';
+import { getUsersByNameAction } from '@/entities/user';
 import { UserAvatar } from '@/features/user';
-import { getUsers } from '@/shared/actions/user';
 import {
   Dialog,
   DialogClose,
@@ -18,6 +17,7 @@ import {
 } from '@/shared/ui/dialog';
 import { Input } from '@/shared/ui/input';
 import { Separator } from '@/shared/ui/separator';
+import { cn } from '@/shared/utils';
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -27,7 +27,7 @@ export const Search = () => {
   const updateSuggestions = debounce((value: string) => {
     if (!value.length) return;
     startTransition(() => {
-      void getUsers(value).then(res => {
+      void getUsersByNameAction(value).then(res => {
         setSuggestions(res);
       });
     });
@@ -44,7 +44,7 @@ export const Search = () => {
 
   return (
     <Dialog>
-      <DialogTrigger className='bg-muted/60 rounded-md py-2 px-4 text-sm text-muted-foreground flex gap-x-2 items-center'>
+      <DialogTrigger className='flex items-center gap-x-2 rounded-md bg-muted/60 px-4 py-2 text-sm text-muted-foreground'>
         <MagnifyingGlassIcon className='size-4' />
         Найти...
       </DialogTrigger>
@@ -59,23 +59,26 @@ export const Search = () => {
         </DialogHeader>
         <div
           className={cn(
-            'size-full flex justify-center items-center',
+            'flex size-full items-center justify-center',
             !isPending && 'hidden',
-          )}>
+          )}
+        >
           <SymbolIcon className='size-8 animate-spin' />
         </div>
         {suggestions.length ? (
           <>
             <Separator />
-            <ul className='w-full rounded-md space-y-4'>
+            <ul className='w-full space-y-4 rounded-md'>
               {suggestions.map(suggestion => (
                 <li
-                  className='w-full hover:underline underline-offset-4 transition-all duration-150'
-                  key={suggestion.id}>
+                  className='w-full underline-offset-4 transition-all duration-150 hover:underline'
+                  key={suggestion.id}
+                >
                   <DialogClose asChild>
                     <Link
-                      className='min-w-full flex gap-x-4 items-center'
-                      href={`/user/${suggestion.id}`}>
+                      className='flex min-w-full items-center gap-x-4'
+                      href={`/user/${suggestion.id}`}
+                    >
                       <UserAvatar src={suggestion.image} />
                       {suggestion.name}
                     </Link>

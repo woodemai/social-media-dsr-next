@@ -1,14 +1,18 @@
 import { Header } from './_components/header';
 
-interface MainLayoutProps {
+type MainLayoutProps = {
   children: React.ReactNode;
-}
+  modal: React.ReactNode;
+};
 
-export default function MainLayout({ children }: MainLayoutProps) {
+const MainLayout = ({ children, modal }: MainLayoutProps) => {
   return (
     <>
       <Header />
-      <main className='h-full'>{children}</main>
+      {modal}
+      {children}
     </>
   );
-}
+};
+
+export default MainLayout;
