@@ -1,5 +1,6 @@
-import { BackButton } from './ui/back-button';
 import { Header } from './ui/header';
-import { Social } from './ui/social';
+import { login, register } from './actions';
+import { loginSchema, registerSchema } from './schemas';
 
-export { BackButton, Header, Social };
+
+export { Header, login, register, loginSchema, registerSchema };

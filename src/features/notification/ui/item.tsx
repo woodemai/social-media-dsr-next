@@ -1,14 +1,13 @@
 'use client';
 
 import { useTransition } from 'react';
-
+import { Button } from '@/shared/ui/button';
+import { useToast } from '@/shared/ui/use-toast';
 import {
   subscribeAcceptAction,
   subscribeRejectAction,
-} from '@/shared/actions/user';
-import { type FullSubscriptionRequest } from '@/shared/api/subscription-request';
-import { Button } from '@/shared/ui/button';
-import { useToast } from '@/shared/ui/use-toast';
+  type FullSubscriptionRequest,
+} from '@/entities/subscription';
 
 interface NotificationItemProps {
   notification: FullSubscriptionRequest;

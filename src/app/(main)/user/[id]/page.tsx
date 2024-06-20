@@ -1,12 +1,8 @@
 import { Suspense } from 'react';
-
-import {
-  getCurrentUser,
-  getIsSubscribed,
-  getUserById,
-} from '@/shared/api/user';
+import { getCurrentUser, getUserById } from '@/entities/user';
 import { ListSkeleton, PostForm, PostList } from '@/widgets/post';
 import { UserInfo, UserNotFound } from '@/widgets/user';
+import { getIsSubscribed } from '@/entities/subscription';
 
 interface UserPageProps {
   params: {

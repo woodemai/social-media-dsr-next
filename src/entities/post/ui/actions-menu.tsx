@@ -6,7 +6,6 @@ import {
   TrashIcon,
 } from '@radix-ui/react-icons';
 
-import { deleteAction } from '@/shared/actions/post';
 import { Button } from '@/shared/ui/button';
 import {
   DropdownMenu,
@@ -16,6 +15,7 @@ import {
 } from '@/shared/ui/dropdown-menu';
 import { useToast } from '@/shared/ui/use-toast';
 import { useStore } from '@/config/store';
+import { deleteAction } from '../actions';
 
 interface DeleteButtonProps {
   id: string;
@@ -26,21 +26,12 @@ export const ActionsMenu = ({ id }: DeleteButtonProps) => {
   const removePost = useStore(state => state.postSlice.removePost);
 
   const handleDelete = async () => {
-    await deleteAction(id).then(res => {
-      if (res) {
-        toast({
-          title: 'Успех',
-          description: 'Пост успешно удален!',
-        });
-        removePost(id);
-      } else {
-        toast({
-          title: 'Ошибка',
-          description: 'Не удалось удалить пост!',
-          variant: 'destructive',
-        });
-      }
+    await deleteAction(id);
+    toast({
+      title: 'Успех',
+      description: 'Пост успешно удален!',
     });
+    removePost(id);
   };
 
   return (

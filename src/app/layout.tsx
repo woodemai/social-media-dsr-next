@@ -7,7 +7,7 @@ import { ViewTransitions } from 'next-view-transitions';
 
 import '@/config/globals.css';
 import { VERCEL_ENV } from '@/config/next.constants.mjs';
-import { cn } from '@/config/utils';
+import { cn } from '@/shared/utils';
 import { Toaster } from '@/shared/ui/toaster';
 
 import backgroundImage from '/public/background.png';

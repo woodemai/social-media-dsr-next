@@ -11,8 +11,8 @@ import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { type z } from 'zod';
 
-import { createPostAction } from '@/shared/actions/post';
-import { createSchema } from '@/shared/schemas/post';
+import { createPostAction } from '@/entities/post';
+import { createSchema } from '@/entities/post';
 import { Button } from '@/shared/ui/button';
 import {
   Form,

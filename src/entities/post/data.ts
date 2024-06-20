@@ -1,17 +1,9 @@
 'use server';
 
-import { type Post, type User } from '@prisma/client';
-
 import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { db } from '@/config/prisma';
-
-import { getCurrentUser } from './user';
-
-export type FullPost = {
-  author: Pick<User, 'name' | 'image'>;
-  _count: { likedUsers: number };
-  likedUsers: { id: string }[];
-} & Post;
+import { type FullPost } from './types';
+import { getCurrentUser } from '@/entities/user';
 
 const getAuthor = ({selectedUserId, currentUserId}:{selectedUserId?: string, currentUserId?: string}) => {
   if (selectedUserId) {

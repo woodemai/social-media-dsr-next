@@ -1,6 +1,8 @@
 'use client';
 
-import { BackButton, Header, Social } from '@/entities/auth';
+import { Header } from '@/entities/auth';
+import { BackButton } from '@/entities/auth/ui/back-button';
+import { Social } from '@/entities/auth/ui/social';
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui/card';
 
 interface CardWrapperProps {

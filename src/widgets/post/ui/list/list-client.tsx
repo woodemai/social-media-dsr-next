@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { PostItem } from '@/features/post';
-import { type FullPost, getPosts } from '@/shared/api/post';
 import { useStore } from '@/config/store';
+import { type FullPost, getPosts } from '@/entities/post';
 
 interface ListClientProps {
   userId?: string;

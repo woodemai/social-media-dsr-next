@@ -1,4 +1,4 @@
-import { cn } from '@/config/utils';
+import { cn } from '@/shared/utils';
 
 const Skeleton = ({
   className,

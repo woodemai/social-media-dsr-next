@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation';
 import { Link } from 'next-view-transitions';
 import { type ReactNode } from 'react';
 
-import { cn } from '@/config/utils';
+import { cn } from '@/shared/utils';
 import { Button, type ButtonProps } from '@/shared/ui/button';
 
 interface Props extends ButtonProps {

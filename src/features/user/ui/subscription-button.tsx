@@ -1,11 +1,10 @@
 'use client';
 
 import { useTransition } from 'react';
-
-import { subscribeAction } from '@/shared/actions/user';
 import { Button } from '@/shared/ui/button';
 import { useToast } from '@/shared/ui/use-toast';
 import { useStore } from '@/config/store';
+import { subscribeAction } from '@/entities/subscription';
 
 export const SubscriptionButton = () => {
   const { user, isSubscribed, setUser, setSubscription } = useStore(

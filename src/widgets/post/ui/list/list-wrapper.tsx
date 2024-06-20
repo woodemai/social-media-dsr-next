@@ -1,7 +1,6 @@
-import { getPosts } from '@/shared/api/post';
-
+import { getPosts } from '@/entities/post';
 import { ListClient } from './list-client';
-import { getCurrentUser } from '@/shared/api/user';
+import { getCurrentUser } from '@/entities/user/data';
 
 interface PostListProps {
   userId?: string;

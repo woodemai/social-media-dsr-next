@@ -4,7 +4,7 @@ import NextAuth, { type DefaultSession } from 'next-auth';
 
 import authConfig from '@/auth.config';
 import { db } from '@/config/prisma';
-import { getUserById } from '@/shared/api/user';
+import { getUserById } from '@/entities/user/data';
 
 export type AuthUser = {
   role: Role;

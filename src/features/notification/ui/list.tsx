@@ -2,9 +2,8 @@
 
 import { useState } from 'react';
 
-import { type FullSubscriptionRequest } from '@/shared/api/subscription-request';
-
 import { NotificationItem } from './item';
+import { type FullSubscriptionRequest } from '@/entities/subscription';
 
 interface NotificationListProps {
   notifications: FullSubscriptionRequest[];

@@ -4,9 +4,8 @@ import dynamic from 'next/dynamic';
 import { Link } from 'next-view-transitions';
 import { useEffect, useRef } from 'react';
 
-import { MediaList, Social } from '@/entities/post';
+import { type FullPost, MediaList, Social } from '@/entities/post';
 import { UserAvatar } from '@/features/user';
-import { type FullPost } from '@/shared/api/post';
 
 interface PostItemProps {
   post: FullPost;

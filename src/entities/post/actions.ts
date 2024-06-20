@@ -3,9 +3,9 @@
 import { type z } from 'zod';
 
 import { db } from '@/config/prisma';
-import { getCurrentUser } from '@/shared/api/user';
-import { createSchema } from '@/shared/schemas/post';
-import { type FullPost } from '../api/post';
+import { getCurrentUser } from '@/entities/user/data';
+import { createSchema } from '@/entities/post/schemas';
+import { type FullPost } from './types';
 
 export const createPostAction = async (
   values: z.infer<typeof createSchema>,

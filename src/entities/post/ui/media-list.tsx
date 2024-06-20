@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { cn } from '@/config/utils';
+import { cn } from '@/shared/utils';
 import { Dialog, DialogContent, DialogTrigger } from '@/shared/ui/dialog';
 
 import { VideoItem } from './video-item';

@@ -1,4 +1,4 @@
-import { type FullPost } from '@/shared/api/post';
+import { type FullPost } from '@/entities/post';
 
 export type PostState = {
   posts: FullPost[];

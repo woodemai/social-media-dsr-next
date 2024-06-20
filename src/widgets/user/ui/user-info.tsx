@@ -3,9 +3,9 @@
 import { useEffect } from 'react';
 
 import { SubscriptionButton, UpdateDialog, UserAvatar } from '@/features/user';
-import { type FullUser } from '@/shared/api/user';
 import { Button } from '@/shared/ui/button';
 import { useStore } from '@/config/store';
+import { type FullUser } from '@/entities/user';
 
 interface UserInfoProps {
   isOwner?: boolean;

@@ -6,9 +6,8 @@ import debounce from 'debounce';
 import { Link } from 'next-view-transitions';
 import { type ChangeEvent, useState, useTransition } from 'react';
 
-import { cn } from '@/config/utils';
+import { cn } from '@/shared/utils';
 import { UserAvatar } from '@/features/user';
-import { getUsers } from '@/shared/actions/user';
 import {
   Dialog,
   DialogClose,
@@ -18,6 +17,7 @@ import {
 } from '@/shared/ui/dialog';
 import { Input } from '@/shared/ui/input';
 import { Separator } from '@/shared/ui/separator';
+import { getUsersByNameAction } from '@/entities/user';
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -27,7 +27,7 @@ export const Search = () => {
   const updateSuggestions = debounce((value: string) => {
     if (!value.length) return;
     startTransition(() => {
-      void getUsers(value).then(res => {
+      void getUsersByNameAction(value).then(res => {
         setSuggestions(res);
       });
     });

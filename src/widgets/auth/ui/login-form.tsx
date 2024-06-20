@@ -1,7 +1,7 @@
 'use client';
 
+import { useLogin } from '@/entities/auth/hooks/useLogin';
 import { CardWrapper } from '@/features/auth';
-import { useLogin } from '@/shared/hooks/useLogin';
 import { Button } from '@/shared/ui/button';
 import {
   Form,

@@ -3,8 +3,8 @@
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 import { useOptimistic, useState, useTransition } from 'react';
 
-import { likePostAction, unlikePostAction } from '@/shared/actions/post';
 import { Button } from '@/shared/ui/button';
+import { likePostAction, unlikePostAction } from '@/entities/post/actions';
 
 const LikesCount = ({ count }: { count: number; }) => {
   return <span className='tabular-nums'>{count}</span>;

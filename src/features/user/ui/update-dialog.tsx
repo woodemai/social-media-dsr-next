@@ -5,8 +5,7 @@ import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { type z } from 'zod';
 
-import { updateProfileAction } from '@/shared/actions/user';
-import { updateSchema } from '@/shared/schemas/user';
+import { updateSchema } from '@/entities/user';
 import { Button } from '@/shared/ui/button';
 import {
   Dialog,
@@ -28,6 +27,7 @@ import { Input } from '@/shared/ui/input';
 import { Switch } from '@/shared/ui/switch';
 import { useToast } from '@/shared/ui/use-toast';
 import { useStore } from '@/config/store';
+import { updateProfileAction } from '@/entities/user';
 
 export const UpdateDialog = () => {
   const { user, updateUser } = useStore(state => state.userSlice);

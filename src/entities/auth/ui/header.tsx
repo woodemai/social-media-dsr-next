@@ -1,4 +1,4 @@
-import { cn } from '@/config/utils';
+import { cn } from '@/shared/utils';
 
 interface HeaderProps {
   label: string;
