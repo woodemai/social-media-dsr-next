@@ -11,5 +11,7 @@
   "proseWrap": "preserve",
   "quoteProps": "as-needed",
   "singleAttributePerLine": true,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindPreserveWhitespace": true
 }

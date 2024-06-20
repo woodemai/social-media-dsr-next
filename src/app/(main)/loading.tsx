@@ -3,8 +3,8 @@ import { ListSkeleton } from '@/widgets/post';
 
 const MainLoading = () => {
   return (
-    <div className='space-y-4 mx-auto w-full max-w-3xl py-8'>
-      <Skeleton className='w-full h-20' />
+    <div className='mx-auto w-full max-w-3xl space-y-4 py-8'>
+      <Skeleton className='h-20 w-full' />
       <ListSkeleton />
     </div>
   );

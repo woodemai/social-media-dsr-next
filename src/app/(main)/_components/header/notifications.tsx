@@ -15,7 +15,7 @@ export const Notifications = async () => {
         title='Уведомления'>
         {subscriptionRequests.length > 0 && (
           <Badge
-            className='absolute top-[-10px] right-[-10px]'
+            className='absolute right-[-10px] top-[-10px]'
             variant='notification'>
             {subscriptionRequests.length}
           </Badge>

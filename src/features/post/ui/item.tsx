@@ -41,17 +41,17 @@ export const PostItem = ({
 
   return (
     <li
-      className='p-4 space-y-4 max-w-full bg-card/50 rounded-md'
+      className='max-w-full space-y-4 rounded-md bg-card/50 p-4'
       ref={itemRef}>
-      <div className='flex justify-between w-full'>
-        <div className='flex gap-x-4 items-end'>
+      <div className='flex w-full justify-between'>
+        <div className='flex items-end gap-x-4'>
           <UserAvatar
             height={32}
             src={post.author.image}
             width={32}
           />
           {isOwner ? (
-            <h5 className='text-muted-foreground font-semibold'>
+            <h5 className='font-semibold text-muted-foreground'>
               {post.author.name}
             </h5>
           ) : (

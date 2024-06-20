@@ -55,7 +55,7 @@ export const Social = ({
     <div>
       <div className='flex items-center'>
         <Button
-          className='space-x-2 w-full max-w-16 rounded-lg'
+          className='w-full max-w-16 space-x-2 rounded-lg'
           disabled={isPending}
           name='Лайк'
           onClick={handleLike}

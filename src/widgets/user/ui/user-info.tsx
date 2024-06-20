@@ -26,7 +26,7 @@ export const UserInfo = ({
   }, [initialUser, isSubscribed, setSubscription, setUser]);
 
   return (
-    <div className='flex gap-x-4 p-2 sm:p-0 justify-center sm:justify-start'>
+    <div className='flex justify-center gap-x-4 p-2 sm:justify-start sm:p-0'>
       <UserAvatar
         height={256}
         size='lg'
@@ -34,8 +34,8 @@ export const UserInfo = ({
         width={256}
       />
       <div className='space-y-4'>
-        <div className='flex flex-col sm:flex-row gap-4'>
-          <h1 className='font-bold tracking-tight text-xl sm:text-3xl'>
+        <div className='flex flex-col gap-4 sm:flex-row'>
+          <h1 className='text-xl font-bold tracking-tight sm:text-3xl'>
             {user?.name}
           </h1>
           {!isOwner ? <SubscriptionButton /> : <UpdateDialog />}

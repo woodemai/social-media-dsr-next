@@ -11,7 +11,7 @@ const GlobalError = ({
 }) => {
   return (
     <html>
-      <body className='h-dvh w-full flex justify-center items-center flex-col space-y-4 text-center'>
+      <body className='flex h-dvh w-full flex-col items-center justify-center space-y-4 text-center'>
         <h2 className='text-3xl font-bold tracking-tight'>
           Произошла глобальная ошибка!
         </h2>

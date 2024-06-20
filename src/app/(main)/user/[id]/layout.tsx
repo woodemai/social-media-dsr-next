@@ -4,7 +4,7 @@ type UserLayoutProps = {
 
 const UserLayout = ({ children }: UserLayoutProps) => {
   return (
-    <div className='mx-auto w-full max-w-3xl py-8 space-y-8'>{children}</div>
+    <div className='mx-auto w-full max-w-3xl space-y-8 py-8'>{children}</div>
   );
 };
 

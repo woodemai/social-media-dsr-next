@@ -49,7 +49,7 @@ export const ActionsMenu = ({ id }: DeleteButtonProps) => {
       <DropdownMenuContent>
         <DropdownMenuItem>
           <button
-            className='flex gap-x-4 items-center'
+            className='flex items-center gap-x-4'
             // onClick={handleDelete}
             type='button'>
             <Pencil1Icon className='size-4' />
@@ -58,7 +58,7 @@ export const ActionsMenu = ({ id }: DeleteButtonProps) => {
         </DropdownMenuItem>
         <DropdownMenuItem>
           <button
-            className='flex gap-x-4 items-center'
+            className='flex items-center gap-x-4'
             onClick={handleDelete}
             type='button'>
             <TrashIcon className='size-4' />

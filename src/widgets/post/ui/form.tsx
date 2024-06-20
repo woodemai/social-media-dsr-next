@@ -69,7 +69,7 @@ export const PostForm = () => {
   return (
     <Form {...form}>
       <form
-        className='flex flex-col gap-y-4 rounded-md shadow-sm bg-card/50'
+        className='flex flex-col gap-y-4 rounded-md bg-card/50 shadow-sm'
         onSubmit={form.handleSubmit(onSubmit)}>
         <div className='flex gap-x-2 p-4'>
           <FormField
@@ -108,7 +108,7 @@ export const PostForm = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    className='w-full bg-transparent border-none hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
+                    className='w-full border-none bg-transparent hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
                     placeholder='Напишите, что у вас нового...'
                   />
                 </FormControl>
@@ -125,7 +125,7 @@ export const PostForm = () => {
         <FormSuccess message={success} />
         <FormError message={error} />
         {uploadedMedia.length ? (
-          <div className='flex gap-x-4 items-center'>
+          <div className='flex items-center gap-x-4'>
             {uploadedMedia.map(media => (
               <div
                 className='p-2'

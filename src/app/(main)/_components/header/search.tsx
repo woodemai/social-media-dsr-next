@@ -44,7 +44,7 @@ export const Search = () => {
 
   return (
     <Dialog>
-      <DialogTrigger className='bg-muted/60 rounded-md py-2 px-4 text-sm text-muted-foreground flex gap-x-2 items-center'>
+      <DialogTrigger className='flex items-center gap-x-2 rounded-md bg-muted/60 px-4 py-2 text-sm text-muted-foreground'>
         <MagnifyingGlassIcon className='size-4' />
         Найти...
       </DialogTrigger>
@@ -59,7 +59,7 @@ export const Search = () => {
         </DialogHeader>
         <div
           className={cn(
-            'size-full flex justify-center items-center',
+            'flex size-full items-center justify-center',
             !isPending && 'hidden',
           )}>
           <SymbolIcon className='size-8 animate-spin' />
@@ -67,14 +67,14 @@ export const Search = () => {
         {suggestions.length ? (
           <>
             <Separator />
-            <ul className='w-full rounded-md space-y-4'>
+            <ul className='w-full space-y-4 rounded-md'>
               {suggestions.map(suggestion => (
                 <li
-                  className='w-full hover:underline underline-offset-4 transition-all duration-150'
+                  className='w-full underline-offset-4 transition-all duration-150 hover:underline'
                   key={suggestion.id}>
                   <DialogClose asChild>
                     <Link
-                      className='min-w-full flex gap-x-4 items-center'
+                      className='flex min-w-full items-center gap-x-4'
                       href={`/user/${suggestion.id}`}>
                       <UserAvatar src={suggestion.image} />
                       {suggestion.name}

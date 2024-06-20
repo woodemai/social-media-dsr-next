@@ -2,8 +2,8 @@ import { Loader2 } from 'lucide-react';
 
 const RootLoading = () => {
   return (
-    <div className='h-dvh grid place-content-center'>
-      <Loader2 className='animate-spin size-10' />
+    <div className='grid h-dvh place-content-center'>
+      <Loader2 className='size-10 animate-spin' />
     </div>
   );
 };

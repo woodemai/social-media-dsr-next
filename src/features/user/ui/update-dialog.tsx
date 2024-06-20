@@ -86,7 +86,7 @@ export const UpdateDialog = () => {
         <DialogHeader>Обновление профиля</DialogHeader>
         <Form {...form}>
           <form
-            className='space-y-4 w-full'
+            className='w-full space-y-4'
             onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}

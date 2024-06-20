@@ -3,9 +3,9 @@ import { ListSkeleton } from '@/widgets/post';
 
 const ProfileLoading = () => {
   return (
-    <div className='space-y-8 mx-auto w-full max-w-3xl'>
+    <div className='mx-auto w-full max-w-3xl space-y-8'>
       <div className='flex gap-x-4'>
-        <Skeleton className='rounded-full size-32' />
+        <Skeleton className='size-32 rounded-full' />
         <div className='flex flex-col gap-y-4'>
           <div className='flex gap-x-4'>
             <Skeleton className='h-10 w-44' />

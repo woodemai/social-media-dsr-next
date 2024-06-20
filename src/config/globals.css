@@ -71,7 +71,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground scrollbar-track-background scrollbar-thumb-muted scrollbar-thin;
+    @apply bg-background text-foreground scrollbar-thin scrollbar-track-background scrollbar-thumb-muted;
   }
   html {
     @apply scroll-smooth;
