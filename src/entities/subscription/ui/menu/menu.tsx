@@ -22,15 +22,21 @@ export const SubscriptionMenu = ({
 }: SubscriptionMenuProps) => {
   return (
     <Tabs defaultValue={tab}>
-      <div className='flex gap-x-2 justify-between items-end'>
-        <div className='flex items-center max-w-fit gap-x-2 rounded-md bg-card px-4'>
+      <div className='flex items-end justify-between gap-x-2'>
+        <div className='flex max-w-fit items-center gap-x-2 rounded-md bg-card px-4'>
           <span className='whitespace-nowrap'>Информация о</span>
-          <Button asChild variant='link' className='p-0 font-bold'>
+          <Button
+            asChild
+            variant='link'
+            className='p-0 font-bold'
+          >
             <Link href={`/user/${id}`}>{name}</Link>
           </Button>
         </div>
         <TabsList>
-          <TabsTrigger value={SubscriptionTabs.SUBSCRIBED}>Подписки</TabsTrigger>
+          <TabsTrigger value={SubscriptionTabs.SUBSCRIBED}>
+            Подписки
+          </TabsTrigger>
           <TabsTrigger value={SubscriptionTabs.SUBSCRIBERS}>
             Подписчики
           </TabsTrigger>

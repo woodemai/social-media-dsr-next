@@ -23,7 +23,7 @@ export const PostItem = ({ post, isOwner = false }: PostItemProps) => {
         <div className='flex items-center gap-x-2'>
           <UserAvatar src={post.author.image} />
           <Button
-            className='text-muted-foreground text-lg'
+            className='text-lg text-muted-foreground'
             asChild
             variant='link'
           >
