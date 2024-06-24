@@ -55,6 +55,8 @@ export const getSubscriptionInfo = async (
         select: {
           name: true,
           id: true,
+          bio: true,
+          image: true,
         },
         take: PAGE_SIZE,
         skip: (page - 1) * PAGE_SIZE,
@@ -63,6 +65,8 @@ export const getSubscriptionInfo = async (
         select: {
           name: true,
           id: true,
+          bio: true,
+          image: true,
         },
         take: PAGE_SIZE,
         skip: (page - 1) * PAGE_SIZE,

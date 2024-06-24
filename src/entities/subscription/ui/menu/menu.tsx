@@ -20,7 +20,6 @@ export const SubscriptionMenu = ({
   return (
     <Tabs
       defaultValue={tab}
-      className='p-8'
     >
       <TabsList>
         <TabsTrigger value={SubscriptionTabs.SUBSCRIBED}>Подписки</TabsTrigger>

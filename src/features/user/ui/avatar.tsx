@@ -6,6 +6,7 @@ type UserAvatarProps = {
   src?: string | null;
   width?: number;
   height?: number;
+  alt?: string,
   size?: 'lg' | 'md' | 'sm';
 };
 
@@ -14,6 +15,7 @@ export const UserAvatar = ({
   width = 32,
   height = 32,
   size = 'sm',
+  alt = 'User avatar'
 }: UserAvatarProps) => {
   return (
     <Avatar
@@ -25,7 +27,7 @@ export const UserAvatar = ({
     >
       {src ? (
         <AvatarImage
-          alt='User avatar'
+          alt={alt}
           className='m-0'
           height={height}
           src={src}

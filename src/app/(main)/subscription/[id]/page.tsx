@@ -18,7 +18,7 @@ const SubscriptionPage = async ({
   const subscriptionInfo = await getSubscriptionInfo(id);
 
   return (
-    <div className='flex h-full items-center justify-center'>
+    <div className='flex h-full items-center justify-center mt-8'>
       <SubscriptionMenu
         tab={tab}
         subscriptionInfo={subscriptionInfo}

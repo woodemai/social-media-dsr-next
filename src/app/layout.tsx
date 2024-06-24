@@ -11,9 +11,11 @@ import { StoreProvider } from '@/config/store';
 import { Toaster } from '@/shared/ui/toaster';
 import { cn } from '@/shared/utils';
 
+import { BackgroundFigure } from './_components/backgound-figure';
+import { ThemeProvider } from './_components/theme-provider';
+
 import backgroundImage from '/public/background.png';
 
-import { ThemeProvider } from './_components/theme-provider';
 
 const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -22,6 +24,12 @@ export const metadata: Metadata = {
   description: 'DevSphere social media for developers',
   keywords: ['Social', 'Media', 'Friends', 'Develop'],
   metadataBase: new URL('https://social-media-dsr-next.vercel.app/'),
+  openGraph: {
+    title: 'DevSphere',
+    description: 'DevSphere social media for developers',
+    url: 'https://social-media-dsr-next.vercel.app/',
+    siteName: 'DevSphere',
+  }
 };
 export const viewport: Viewport = {
   width: 1,
@@ -48,21 +56,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           >
             <StoreProvider>
               <Toaster />
-              <Image
-                className='fixed left-[50%] top-[100px] -z-10 blur-3xl dark:brightness-50'
-                alt='background'
-                src={backgroundImage}
-              />
-              <Image
-                className='fixed left-[5%] top-[60%] -z-10 blur-3xl dark:brightness-50'
-                alt='background'
-                src={backgroundImage}
-              />
-              <Image
-                className='fixed left-[85%] top-[70%] -z-10 blur-3xl dark:brightness-50'
-                alt='background'
-                src={backgroundImage}
-              />
+              <BackgroundFigure className='left-[50%] top-[100px]' />
+              <BackgroundFigure className='left-[5%] top-[60%]' />
+              <BackgroundFigure className='left-[85%] top-[70%]' />
               {children}
               {VERCEL_ENV ? (
                 <>

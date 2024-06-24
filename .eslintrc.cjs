@@ -42,6 +42,12 @@ const config = {
         'plugin:import/typescript',
         'plugin:@typescript-eslint/stylistic-type-checked',
       ],
+      settings: {
+        'import/resolver': {
+          typescript: true,
+          node: true,
+        },
+      },
       parser: '@typescript-eslint/parser',
       parserOptions: {
         project: true,
