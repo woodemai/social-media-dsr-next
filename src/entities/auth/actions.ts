@@ -1,6 +1,6 @@
 'use server';
 
-import bcrypt from 'bcryptjs';
+import { hash } from 'bcryptjs';
 import { AuthError } from 'next-auth';
 import { type z } from 'zod';
 
@@ -51,7 +51,7 @@ export const register = async (values: z.infer<typeof registerSchema>) => {
     return { error: 'Email уже занят!' };
   }
 
-  const hashedPassword = await bcrypt.hash(password, 8);
+  const hashedPassword = await hash(password, 8);
 
   await db.user.create({
     data: {

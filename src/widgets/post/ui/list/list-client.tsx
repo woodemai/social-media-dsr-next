@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import { useEffect, useRef, useState, useTransition } from 'react';
 
-import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { useStore } from '@/config/store';
 import { type FullPost, getPosts } from '@/entities/post';
 import { PostItem } from '@/features/post';
@@ -18,9 +18,11 @@ export const ListClient = ({
   userId,
   currentUserId,
 }: ListClientProps) => {
-  const endRef = useRef<HTMLLIElement>(null);
+  const lastRef = useRef<HTMLLIElement>(null);
   const { posts, addPosts, resetPosts } = useStore(state => state.postSlice);
-  const [page, setPage] = useState(1);
+  const [isPending, startTransition] = useTransition();
+  const [noPosts, setNoPosts] = useState(false);
+  const page = useRef(1);
 
   useEffect(() => {
     addPosts(initialPosts);
@@ -30,26 +32,45 @@ export const ListClient = ({
   }, [addPosts, initialPosts, resetPosts]);
 
   useEffect(() => {
-    if (page === 1 || posts.length % PAGE_SIZE !== 0) return;
-    void getPosts({ userId, page }).then(newPosts => {
-      addPosts(newPosts);
+    if (!lastRef.current) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        startTransition(async () => {
+          const newPosts = await getPosts({ userId, page: page.current + 1 });
+
+          if (newPosts.length === 0) {
+            setNoPosts(true);
+            observer.unobserve(entry.target);
+            return;
+          }
+          addPosts(newPosts);
+          page.current += 1;
+        });
+      }
     });
-  }, [addPosts, page, posts.length, userId]);
+
+    observer.observe(lastRef.current);
+  }, [addPosts, page, userId]);
 
   return (
     <ul className='space-y-4'>
-      {posts.map((post, index) => (
+      {posts.map(post => (
         <PostItem
-          isLast={index === posts.length - 1}
           isOwner={currentUserId ? post.authorId === currentUserId : false}
           key={post.id}
-          newLimit={() => {
-            setPage(page + 1);
-          }}
           post={post}
         />
       ))}
-      <li ref={endRef} />
+      {noPosts && (
+        <div className='flex w-full items-center justify-center p-8'>
+          <h2 className='mx-auto text-xl text-muted-foreground'>
+            Вы долистали до конца!
+          </h2>
+        </div>
+      )}
+      {isPending && <Loader2 className='mx-auto animate-spin' />}
+      <li ref={lastRef} />
     </ul>
   );
 };

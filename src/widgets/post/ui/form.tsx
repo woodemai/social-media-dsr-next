@@ -28,7 +28,7 @@ import { Input } from '@/shared/ui/input';
 export const PostForm = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const addPosts = useStore(state => state.postSlice.addPosts);
+  const addPost = useStore(state => state.postSlice.addPost);
   const form = useForm<z.infer<typeof createSchema>>({
     resolver: zodResolver(createSchema),
     defaultValues: {
@@ -47,7 +47,7 @@ export const PostForm = () => {
         setSuccess(res.success);
         setError('');
         form.reset();
-        addPosts([res.post]);
+        addPost(res.post);
       }
     });
   };

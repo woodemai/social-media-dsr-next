@@ -4,8 +4,7 @@ import { cn } from '@/shared/utils';
 
 import backgroundFigureImage from '../../../public/images/background.png';
 
-
-export const BackgroundFigure = ({className}:{className: string}) => {
+export const BackgroundFigure = ({ className }: { className: string }) => {
   return (
     <Image
       className={cn('fixed -z-10 blur-3xl dark:brightness-50', className)}
@@ -14,5 +13,5 @@ export const BackgroundFigure = ({className}:{className: string}) => {
       quality={1}
       placeholder='blur'
     />
-  )
-}
+  );
+};

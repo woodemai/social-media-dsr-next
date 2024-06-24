@@ -18,9 +18,7 @@ export const SubscriptionMenu = ({
   subscriptionInfo: { subscribed, subscribers },
 }: SubscriptionMenuProps) => {
   return (
-    <Tabs
-      defaultValue={tab}
-    >
+    <Tabs defaultValue={tab}>
       <TabsList>
         <TabsTrigger value={SubscriptionTabs.SUBSCRIBED}>Подписки</TabsTrigger>
         <TabsTrigger value={SubscriptionTabs.SUBSCRIBERS}>

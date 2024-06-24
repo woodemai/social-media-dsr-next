@@ -2,7 +2,6 @@
 
 import dynamic from 'next/dynamic';
 import { Link } from 'next-view-transitions';
-import { useEffect, useRef } from 'react';
 
 import { type FullPost, MediaList, Social } from '@/entities/post';
 import { UserAvatar } from '@/features/user';
@@ -10,40 +9,15 @@ import { UserAvatar } from '@/features/user';
 type PostItemProps = {
   post: FullPost;
   isOwner?: boolean;
-  isLast?: boolean;
-  newLimit: () => void;
 };
 
 const ActionsMenu = dynamic(() =>
   import('@/entities/post').then(mob => mob.ActionsMenu),
 );
 
-export const PostItem = ({
-  post,
-  isOwner = false,
-  isLast = false,
-  newLimit,
-}: PostItemProps) => {
-  const itemRef = useRef<HTMLLIElement>(null);
-
-  useEffect(() => {
-    if (!itemRef.current) return;
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (isLast && entry.isIntersecting) {
-        newLimit();
-        observer.unobserve(entry.target);
-      }
-    });
-
-    observer.observe(itemRef.current);
-  }, [isLast]);
-
+export const PostItem = ({ post, isOwner = false }: PostItemProps) => {
   return (
-    <li
-      className='max-w-full space-y-4 rounded-md bg-card/50 p-4'
-      ref={itemRef}
-    >
+    <li className='max-w-full space-y-4 rounded-md bg-card/50 p-4'>
       <div className='flex w-full justify-between'>
         <div className='flex items-end gap-x-4'>
           <UserAvatar

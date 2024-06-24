@@ -17,7 +17,7 @@ DevSphere - социальная сеть для разработчиков.
 - [Prettier](https://prettier.io/) - форматирование
 - [zustand](https://docs.pmnd.rs/zustand/getting-started/introduction) - State manager
 - [bun](https://bun.sh/) - JavaScript Runtime, сборщик, пакетный менеджер
-- Edge runtime 
+- Edge runtime
 
 ## Структура проекта
 
@@ -122,6 +122,7 @@ DevSphere - социальная сеть для разработчиков.
 ```bash
   bun run prisma:studio
 ```
+
 ### Форматирование и линтинг
 
 #### Проверить код стайл всего проекта:
@@ -141,11 +142,13 @@ DevSphere - социальная сеть для разработчиков.
 ```bash
   bun run prettier
 ```
+
 #### Исправить форматирование с помощью Prettier:
 
 ```bash
   bun run prettier:fix
 ```
+
 #### Исправить код стайл и форматирование:
 
 ```bash

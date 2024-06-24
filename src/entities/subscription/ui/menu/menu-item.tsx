@@ -36,8 +36,11 @@ export const SubscriptionMenuItem = ({
                 onClick={closeDialog}
               >
                 <Link href={`/user/${id}`}>
-                  <div className='flex gap-x-4 items-center'>
-                    <UserAvatar src={image} alt={`${name} avatar`} />
+                  <div className='flex items-center gap-x-4'>
+                    <UserAvatar
+                      src={image}
+                      alt={`${name} avatar`}
+                    />
                     <div>
                       <h4 className='font-bold'>{name}</h4>
                       <p className='text-muted-foreground'>{bio}</p>

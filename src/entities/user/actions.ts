@@ -1,6 +1,6 @@
 'use server';
 
-import bcrypt from 'bcryptjs';
+import { hash, compare } from 'bcryptjs';
 import { type z } from 'zod';
 
 import { db } from '@/config/prisma';
@@ -46,11 +46,11 @@ export const updateProfileAction = async (
   let hashedNewPassword = undefined;
 
   if (password && user?.password) {
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await compare(password, user.password);
 
     if (isMatch) return { error: 'Пароль совпадает с текущим' };
 
-    hashedNewPassword = await bcrypt.hash(password, 8);
+    hashedNewPassword = await hash(password, 8);
   }
 
   return db.user.update({

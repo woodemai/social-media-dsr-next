@@ -2,7 +2,6 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 import { Inter as FontSans } from 'next/font/google';
-import Image from 'next/image';
 import { ViewTransitions } from 'next-view-transitions';
 
 import '@/config/globals.css';
@@ -13,9 +12,6 @@ import { cn } from '@/shared/utils';
 
 import { BackgroundFigure } from './_components/backgound-figure';
 import { ThemeProvider } from './_components/theme-provider';
-
-import backgroundImage from '/public/background.png';
-
 
 const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -29,7 +25,7 @@ export const metadata: Metadata = {
     description: 'DevSphere social media for developers',
     url: 'https://social-media-dsr-next.vercel.app/',
     siteName: 'DevSphere',
-  }
+  },
 };
 export const viewport: Viewport = {
   width: 1,
