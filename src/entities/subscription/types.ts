@@ -14,6 +14,8 @@ export enum SubscriptionTabs {
 export type UserNameAndId = Pick<User, 'name' | 'id' | 'bio' | 'image'>;
 
 export type SubscriptionInfo = {
+  id: string,
+  name: string | null;
   subscribers: UserNameAndId[];
   subscribed: UserNameAndId[];
 };

@@ -44,16 +44,16 @@ export const UserInfo = ({
         <p>{user?.bio}</p>
         <div>
           <SubscriptionCount
-            id={initialUser.id}
-            label='Подписчики'
-            count={user?._count.subscribers}
-            tab={SubscriptionTabs.SUBSCRIBERS}
-          />
-          <SubscriptionCount
             label='Подписки'
             id={initialUser.id}
             count={user?._count.subscribed}
             tab={SubscriptionTabs.SUBSCRIBED}
+          />
+          <SubscriptionCount
+            id={initialUser.id}
+            label='Подписчики'
+            count={user?._count.subscribers}
+            tab={SubscriptionTabs.SUBSCRIBERS}
           />
         </div>
       </div>

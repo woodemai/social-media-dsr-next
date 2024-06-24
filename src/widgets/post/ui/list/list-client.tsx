@@ -3,6 +3,7 @@
 import { Loader2 } from 'lucide-react';
 import { useEffect, useRef, useState, useTransition } from 'react';
 
+import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { useStore } from '@/config/store';
 import { type FullPost, getPosts } from '@/entities/post';
 import { PostItem } from '@/features/post';
@@ -37,6 +38,10 @@ export const ListClient = ({
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         startTransition(async () => {
+          if (initialPosts.length < PAGE_SIZE) {
+            observer.unobserve(entry.target);
+            return;
+          }
           const newPosts = await getPosts({ userId, page: page.current + 1 });
 
           if (newPosts.length === 0) {
@@ -51,7 +56,7 @@ export const ListClient = ({
     });
 
     observer.observe(lastRef.current);
-  }, [addPosts, page, userId]);
+  }, [addPosts, initialPosts.length, page, userId]);
 
   return (
     <ul className='space-y-4'>
@@ -62,7 +67,7 @@ export const ListClient = ({
           post={post}
         />
       ))}
-      {noPosts && (
+      {noPosts && posts.length > 10 && (
         <div className='flex w-full items-center justify-center p-8'>
           <h2 className='mx-auto text-xl text-muted-foreground'>
             Вы долистали до конца!

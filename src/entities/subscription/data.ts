@@ -51,6 +51,8 @@ export const getSubscriptionInfo = async (
   const subscriptionInfo = await db.user.findUnique({
     where: { id },
     select: {
+      name: true,
+      id: true,
       subscribed: {
         select: {
           name: true,
