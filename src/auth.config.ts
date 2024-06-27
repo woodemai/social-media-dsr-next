@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import { compare } from 'bcryptjs';
 import type { NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import Github from 'next-auth/providers/github';
@@ -6,7 +6,7 @@ import Google from 'next-auth/providers/google';
 import Yandex from 'next-auth/providers/yandex';
 
 import { db } from '@/config/prisma';
-import { loginSchema } from '@/shared/schemas/auth';
+import { loginSchema } from '@/entities/auth/schemas';
 
 export default {
   providers: [
@@ -34,8 +34,7 @@ export default {
           });
 
           if (!user?.password) return null;
-
-          const passwordMatch = bcrypt.compareSync(password, user.password);
+          const passwordMatch = await compare(password, user.password);
 
           if (passwordMatch) return user;
         }

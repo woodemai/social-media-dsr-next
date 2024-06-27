@@ -5,11 +5,11 @@ export const ProfileLoading = () => {
   return (
     <>
       <div className='flex gap-x-4'>
-        <Skeleton className='rounded-full size-12' />
-        <Skeleton className='w-40 h-10' />
-        <Skeleton className='w-28 h-10' />
+        <Skeleton className='size-12 rounded-full' />
+        <Skeleton className='h-10 w-40' />
+        <Skeleton className='h-10 w-28' />
       </div>
-      <Skeleton className='w-full h-5' />
+      <Skeleton className='h-5 w-full' />
       <ListSkeleton />
     </>
   );

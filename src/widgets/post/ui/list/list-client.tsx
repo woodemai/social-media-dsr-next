@@ -1,45 +1,81 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import { useEffect, useRef, useState, useTransition } from 'react';
 
 import { PAGE_SIZE } from '@/config/next.constants.mjs';
+import { useStore } from '@/config/store';
+import { type FullPost, getPosts } from '@/entities/post';
 import { PostItem } from '@/features/post';
-import { FullPost, getPosts } from '@/shared/api/post';
 
-interface ListClientProps {
+type ListClientProps = {
   userId?: string;
   posts: FullPost[];
-  isOwner?: boolean;
-}
+  currentUserId?: string;
+};
 
 export const ListClient = ({
   posts: initialPosts,
-  isOwner = false,
   userId,
+  currentUserId,
 }: ListClientProps) => {
-  const endRef = useRef<HTMLLIElement>(null);
-  const [posts, setPosts] = useState(initialPosts);
-  const [page, setPage] = useState(1);
+  const lastRef = useRef<HTMLLIElement>(null);
+  const { posts, addPosts, resetPosts } = useStore(state => state.postSlice);
+  const [isPending, startTransition] = useTransition();
+  const [noPosts, setNoPosts] = useState(false);
+  const page = useRef(1);
 
   useEffect(() => {
-    if (page === 1 || posts.length % PAGE_SIZE !== 0) return;
-    getPosts({ userId, page }).then(newPosts =>
-      setPosts(prev => [...prev, ...newPosts]),
-    );
-  }, [page, posts.length, userId]);
+    addPosts(initialPosts);
+    return () => {
+      resetPosts();
+    };
+  }, [addPosts, initialPosts, resetPosts]);
+
+  useEffect(() => {
+    if (!lastRef.current) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        startTransition(async () => {
+          if (initialPosts.length < PAGE_SIZE) {
+            observer.unobserve(entry.target);
+            return;
+          }
+          const newPosts = await getPosts({ userId, page: page.current + 1 });
+
+          if (newPosts.length === 0) {
+            setNoPosts(true);
+            observer.unobserve(entry.target);
+            return;
+          }
+          addPosts(newPosts);
+          page.current += 1;
+        });
+      }
+    });
+
+    observer.observe(lastRef.current);
+  }, [addPosts, initialPosts.length, page, userId]);
 
   return (
-    <ul className='divide-y border-x px-2 bg-card rounded-md'>
-      {posts.map((post, index) => (
+    <ul className='space-y-4'>
+      {posts.map(post => (
         <PostItem
-          isLast={index === posts.length - 1}
-          isOwner={isOwner}
+          isOwner={currentUserId ? post.authorId === currentUserId : false}
           key={post.id}
-          newLimit={() => setPage(page + 1)}
           post={post}
         />
       ))}
-      <li ref={endRef} />
+      {noPosts && posts.length > 10 && (
+        <div className='flex w-full items-center justify-center p-8'>
+          <h2 className='mx-auto text-xl text-muted-foreground'>
+            Вы долистали до конца!
+          </h2>
+        </div>
+      )}
+      {isPending && <Loader2 className='mx-auto animate-spin' />}
+      <li ref={lastRef} />
     </ul>
   );
 };

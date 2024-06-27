@@ -1,17 +1,20 @@
 'use client';
 
-
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 import { useOptimistic, useState, useTransition } from 'react';
 
-import { likePostAction, unlikePostAction } from '@/shared/actions/post';
+import { likePostAction, unlikePostAction } from '@/entities/post/actions';
 import { Button } from '@/shared/ui/button';
 
-interface SocialProps {
+const LikesCount = ({ count }: { count: number }) => {
+  return <span className='tabular-nums'>{count}</span>;
+};
+
+type SocialProps = {
   likesCount: number;
   initialIsLiked?: boolean;
   id: string;
-}
+};
 
 export const Social = ({
   id,
@@ -52,7 +55,7 @@ export const Social = ({
     <div>
       <div className='flex items-center'>
         <Button
-          className='space-x-2 w-full max-w-16 rounded-lg'
+          className='w-full max-w-16 space-x-2 rounded-lg'
           disabled={isPending}
           name='Лайк'
           onClick={handleLike}
@@ -61,7 +64,9 @@ export const Social = ({
           type='button'
           variant='ghost'
         >
-          <span className='sr-only'>{optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}</span>
+          <span className='sr-only'>
+            {optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}
+          </span>
           {optimisticIsLiked ? (
             <HeartFilledIcon className='size-4 text-red-500' />
           ) : (
@@ -72,8 +77,4 @@ export const Social = ({
       </div>
     </div>
   );
-};
-
-const LikesCount = ({ count }: { count: number; }) => {
-  return <span className='tabular-nums'>{count}</span>;
 };

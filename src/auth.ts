@@ -1,16 +1,18 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { Role } from '@prisma/client';
-import NextAuth, { DefaultSession } from 'next-auth';
+import { type Role } from '@prisma/client';
+import NextAuth, { type DefaultSession } from 'next-auth';
 
 import authConfig from '@/auth.config';
 import { db } from '@/config/prisma';
-import { getUserById } from '@/shared/api/user';
+import { getUserById } from '@/entities/user/data';
+
+export type AuthUser = {
+  role: Role;
+} & DefaultSession['user'];
 
 declare module 'next-auth' {
   interface Session {
-    user: {
-      role: Role;
-    } & DefaultSession['user'];
+    user: AuthUser;
   }
 }
 
@@ -46,7 +48,6 @@ export const {
       };
     },
   },
-  secret: process.env.AUTH_SECRET,
   adapter: PrismaAdapter(db),
   session: { strategy: 'jwt' },
   ...authConfig,

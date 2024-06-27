@@ -3,12 +3,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { type z } from 'zod';
 
-import { updateUser, useUser } from '@/config/store/slices/user-slice';
-import { useAppDispatch } from '@/config/store/store';
-import { updateProfileAction } from '@/shared/actions/user';
-import { updateSchema } from '@/shared/schemas/user';
+import { useStore } from '@/config/store';
+import { updateSchema, updateProfileAction } from '@/entities/user';
 import { Button } from '@/shared/ui/button';
 import {
   Dialog,
@@ -31,8 +29,7 @@ import { Switch } from '@/shared/ui/switch';
 import { useToast } from '@/shared/ui/use-toast';
 
 export const UpdateDialog = () => {
-  const dispatch = useAppDispatch();
-  const { id, name, bio, isPrivate } = useUser();
+  const { user, updateUser } = useStore(state => state.userSlice);
   const [error, setError] = useState<string | undefined>();
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -41,22 +38,29 @@ export const UpdateDialog = () => {
   const form = useForm<z.infer<typeof updateSchema>>({
     resolver: zodResolver(updateSchema),
     defaultValues: {
-      name: name ?? '',
-      bio: bio ?? '',
+      name: user?.name ?? '',
+      bio: user?.bio ?? '',
       password: '',
-      isPrivate: isPrivate ?? false,
+      isPrivate: user?.isPrivate ?? false,
     },
   });
 
+  if (!user) return null;
+
+  const { id } = user;
+
   const onSubmit = async (values: z.infer<typeof updateSchema>) => {
     setError(undefined);
-    dispatch(updateUser(values));
+    updateUser(values);
     startTransition(async () => {
-      const { error, name, bio, isPrivate } = await updateProfileAction(id, values);
+      const { error, name, bio, isPrivate } = await updateProfileAction(
+        id,
+        values,
+      );
       setError(error);
       if (name && bio && isPrivate) {
         setOpen(false);
-        dispatch(updateUser({ name, bio, isPrivate }));
+        updateUser(values);
         toast({
           title: 'Успех',
           description: 'Данные сохранены',
@@ -67,7 +71,9 @@ export const UpdateDialog = () => {
 
   return (
     <Dialog
-      onOpenChange={isOpen => setOpen(isOpen)}
+      onOpenChange={isOpen => {
+        setOpen(isOpen);
+      }}
       open={open}
     >
       <DialogTrigger asChild>
@@ -82,7 +88,7 @@ export const UpdateDialog = () => {
         <DialogHeader>Обновление профиля</DialogHeader>
         <Form {...form}>
           <form
-            className='space-y-4 w-full'
+            className='w-full space-y-4'
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <FormField

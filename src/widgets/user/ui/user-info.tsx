@@ -2,71 +2,59 @@
 
 import { useEffect } from 'react';
 
-import {
-  setSubscription,
-  setUser,
-  useUser,
-} from '@/config/store/slices/user-slice';
-import { useAppDispatch } from '@/config/store/store';
+import { useStore } from '@/config/store';
+import { SubscriptionTabs } from '@/entities/subscription/types';
+import { SubscriptionCount } from '@/entities/subscription/ui/count';
+import { type FullUser } from '@/entities/user';
 import { SubscriptionButton, UpdateDialog, UserAvatar } from '@/features/user';
-import { FullUser } from '@/shared/api/user';
-import { Button } from '@/shared/ui/button';
 
-interface UserInfoProps {
+type UserInfoProps = {
   isOwner?: boolean;
   isSubscribed?: boolean;
   user: FullUser;
-}
+};
 
 export const UserInfo = ({
   isOwner = false,
   isSubscribed = false,
-  user,
+  user: initialUser,
 }: UserInfoProps) => {
-  const dispatch = useAppDispatch();
-  const {
-    name,
-    bio,
-    image,
-    _count,
-  } = useUser();
+  const { user, setUser, setSubscription } = useStore(state => state.userSlice);
 
   useEffect(() => {
-    dispatch(setUser(user));
-    dispatch(setSubscription(isSubscribed));
-  }, [dispatch, isSubscribed, user]);
+    setUser(initialUser);
+    setSubscription(isSubscribed);
+  }, [initialUser, isSubscribed, setSubscription, setUser]);
 
   return (
-    <div className='flex gap-x-4 p-2 sm:p-0 justify-center sm:justify-start'>
+    <div className='flex justify-center gap-x-4 p-2 sm:justify-start sm:p-0'>
       <UserAvatar
         height={256}
         size='lg'
-        src={image}
+        src={user?.image}
         width={256}
       />
       <div className='space-y-4'>
-        <div className='flex flex-col sm:flex-row gap-4'>
-          <h1 className='font-bold tracking-tight text-xl sm:text-3xl'>
-            {name}
+        <div className='flex flex-col gap-4 sm:flex-row'>
+          <h1 className='text-xl font-bold tracking-tight sm:text-3xl'>
+            {user?.name}
           </h1>
           {!isOwner ? <SubscriptionButton /> : <UpdateDialog />}
         </div>
-        <p>{bio}</p>
+        <p>{user?.bio}</p>
         <div>
-          <Button
-            className='pl-0 text-muted-foreground hover:text-foreground'
-            size='sm'
-            variant='link'
-          >
-            Подписчики: {_count?.subscribers}
-          </Button>
-          <Button
-            className='pl-0 text-muted-foreground hover:text-foreground'
-            size='sm'
-            variant='link'
-          >
-            Подписки: {_count?.subscribed}
-          </Button>
+          <SubscriptionCount
+            label='Подписки'
+            id={initialUser.id}
+            count={user?._count.subscribed}
+            tab={SubscriptionTabs.SUBSCRIBED}
+          />
+          <SubscriptionCount
+            id={initialUser.id}
+            label='Подписчики'
+            count={user?._count.subscribers}
+            tab={SubscriptionTabs.SUBSCRIBERS}
+          />
         </div>
       </div>
     </div>

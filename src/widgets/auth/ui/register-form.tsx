@@ -3,11 +3,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import type * as z from 'zod';
 
+import { registerSchema } from '@/entities/auth';
+import { register } from '@/entities/auth/actions';
 import { CardWrapper } from '@/features/auth';
-import { register } from '@/shared/actions/auth';
-import { registerSchema } from '@/shared/schemas/auth';
 import { Button } from '@/shared/ui/button';
 import {
   Form,
@@ -39,8 +39,8 @@ export const RegisterForm = () => {
     startTransition(async () => {
       setError('');
       setSuccess('');
-      await register(values).then((data) => {
-        setError(data?.error);
+      await register(values).then(data => {
+        setError(data.error);
         setSuccess(data.success);
       });
     });

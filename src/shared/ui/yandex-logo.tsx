@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export const YandexLogo = ({ className }: { className: string; }) => {
+export const YandexLogo = ({ className }: { className: string }) => {
   return (
     <Image
       alt='yandex logo'

@@ -1,10 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import type * as z from 'zod';
 
-import { login } from '@/shared/actions/auth';
-import { loginSchema } from '@/shared/schemas/auth';
+import { login } from '@/entities/auth/actions';
+import { loginSchema } from '@/entities/auth/schemas';
 /**
  * `useLogin` is a custom hook that manages the login state and interactions.
  *
@@ -35,9 +35,9 @@ export const useLogin = () => {
     startTransition(() => {
       setError('');
       setSuccess('');
-      login(values).then(data => {
-        setError(data?.error);
-        setSuccess(data?.success);
+      void login(values).then(data => {
+        setError(data.error);
+        setSuccess(data.success);
       });
     });
   };

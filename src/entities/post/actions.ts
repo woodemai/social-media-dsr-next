@@ -1,10 +1,12 @@
 'use server';
 
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import { db } from '@/config/prisma';
-import { getCurrentUser } from '@/shared/api/user';
-import { createSchema } from '@/shared/schemas/post';
+import { createSchema } from '@/entities/post/schemas';
+import { getCurrentUser } from '@/entities/user/data';
+
+import { type FullPost } from './types';
 
 export const createPostAction = async (
   values: z.infer<typeof createSchema>,
@@ -23,7 +25,7 @@ export const createPostAction = async (
       error: 'Пользователь не авторизован',
     };
 
-  await db.post.create({
+  const createdPost: FullPost = await db.post.create({
     data: {
       multimedia: validatedFields.data.multimedia,
       body: validatedFields.data.body,
@@ -33,9 +35,31 @@ export const createPostAction = async (
         },
       },
     },
+    include: {
+      _count: {
+        select: {
+          likedUsers: true,
+        },
+      },
+      likedUsers: {
+        where: {
+          id: user.id,
+        },
+        select: {
+          id: true,
+        },
+      },
+      author: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
   });
 
   return {
+    post: createdPost,
     success: 'Пост успешно создан',
   };
 };
@@ -49,14 +73,14 @@ export const likePostAction = async (id: string) => {
     data: {
       likedUsers: {
         connect: {
-          id: user?.id,
+          id: user.id,
         },
       },
     },
     include: {
       likedUsers: {
         where: {
-          id: user?.id,
+          id: user.id,
         },
       },
       _count: {
@@ -78,14 +102,14 @@ export const unlikePostAction = async (id: string) => {
     data: {
       likedUsers: {
         disconnect: {
-          id: user?.id,
+          id: user.id,
         },
       },
     },
     include: {
       likedUsers: {
         where: {
-          id: user?.id,
+          id: user.id,
         },
       },
       _count: {

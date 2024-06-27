@@ -6,15 +6,18 @@ DevSphere - социальная сеть для разработчиков.
 
 ## Технологии
 
-- React 19
-- Next.js 15
-- Auth.js - аутентификация
-- Tailwind CSS - стили
-- shadcn.ui - UI компоненты
-- prisma - взаимодействие с БД
-- vercel - деплой и аналитика
-- eslint - линтинг
-- prettier - форматирование
+- [React 19](https://react.dev/) - JS библиотека для создание интерфейсов
+- [Next.js 15](https://nextjs.org/) - React фреймворк
+- [Auth.js](https://authjs.dev/) - аутентификация
+- [TailwindCSS](https://tailwindcss.com/) - стили
+- [shadcn.ui](https://ui.shadcn.com/) - UI компоненты
+- [Prisma ORM](https://www.prisma.io/) - ORM для взаимодействие с БД
+- [Vercel](https://vercel.com/) - деплой и аналитика
+- [ESLint](https://eslint.org/) - линтинг
+- [Prettier](https://prettier.io/) - форматирование
+- [zustand](https://docs.pmnd.rs/zustand/getting-started/introduction) - State manager
+- [bun](https://bun.sh/) - JavaScript Runtime, сборщик, пакетный менеджер
+- Edge runtime
 
 ## Структура проекта
 
@@ -24,7 +27,7 @@ DevSphere - социальная сеть для разработчиков.
 
 - `app` - В Next.js используется для роутинга, название папок внутри этой указывают на путь в `url`. В FSD это папка `pages` [подробнее](https://nextjs.org/docs/app/building-your-application/routing)
 - `config` - Конфигурационные файлы приложения
-  - `store` - Конфигурация Redux store
+  - `store` - Конфигурация Zustand store
   - `globals.css` - Глобальные css стили
   - `prisma.ts` - Конфигурация клиента `prisma`
   - `routes.ts` - Паттерны путей, для аутентификации.
@@ -53,14 +56,7 @@ DevSphere - социальная сеть для разработчиков.
 2. Установите зависимости
 
 ```bash
-  npm install
-```
-
-3. Инициализируйте Prisma
-
-```bash
-  npm run prisma:generate
-  npm run prisma:migrate:dev
+  bun install
 ```
 
 ## Запуск приложения
@@ -68,7 +64,13 @@ DevSphere - социальная сеть для разработчиков.
 #### Для запуска в режиме разработки:
 
 ```bash
-  npm run dev
+  bun run dev
+```
+
+#### Для запуска в режиме разработки с использованием `Turbopack` вместо `Webpack`:
+
+```bash
+  bun run dev:turbo
 ```
 
 Будет доступно по адресу [http://localhost:3000](http://localhost:3000)
@@ -76,13 +78,13 @@ DevSphere - социальная сеть для разработчиков.
 #### Для сборки приложения:
 
 ```bash
-  npm run build
+  bun run build
 ```
 
 #### Для запуска собранного приложения:
 
 ```bash
-  npm run start
+  bun run start
 ```
 
 Также будет доступно по адресу [http://localhost:3000](http://localhost:3000)
@@ -94,31 +96,63 @@ DevSphere - социальная сеть для разработчиков.
 #### Генерация клиента Prisma:
 
 ```bash
-  npm run prisma:generate
+  bun run prisma:generate
 ```
 
 #### Применение миграций:
 
 ```bash
-  npm run prisma:migrate:dev
+  bun run prisma:migrate:dev
 ```
 
 #### Выполнение всех миграций в среде производства:
 
 ```bash
-  npm run prisma:migrate:deploy
+  bun run prisma:migrate:deploy
 ```
 
 #### Сброс базы данных и повторное выполнение всех миграций:
 
 ```bash
-  npm run prisma:migrate:reset
+  bun run prisma:migrate:reset
 ```
 
 #### Запуск Prisma Studio:
 
 ```bash
-  npm run prisma:studio
+  bun run prisma:studio
+```
+
+### Форматирование и линтинг
+
+#### Проверить код стайл всего проекта:
+
+```bash
+  bun run lint
+```
+
+#### Исправить автоисправляемые ошибки в код стайле:
+
+```bash
+  bun run lint:fix
+```
+
+#### Проверить форматирование:
+
+```bash
+  bun run prettier
+```
+
+#### Исправить форматирование с помощью Prettier:
+
+```bash
+  bun run prettier:fix
+```
+
+#### Исправить код стайл и форматирование:
+
+```bash
+  bun run format
 ```
 
 ## Дополнительная информация
@@ -127,4 +161,7 @@ DevSphere - социальная сеть для разработчиков.
 
 - [React Documentation](https://react.dev/learn)
 - [Next.js Documentation](https://nextjs.org/docs)
+- [Next.js App Router Preview](https://app-router.vercel.app)
 - [Prisma Documentation](https://www.prisma.io/docs)
+- [Zustand Documentation](https://docs.pmnd.rs/zustand/guides/nextjs)
+- [Auth.js Documentation](https://authjs.dev/getting-started)

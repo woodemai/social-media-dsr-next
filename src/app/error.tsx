@@ -2,15 +2,15 @@
 
 import { Button } from '@/shared/ui/button';
 
-export default function Error({
+const Error = ({
   error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}) => {
   return (
-    <div className='size-full flex justify-center items-center flex-col space-y-4 text-center'>
+    <div className='flex size-full h-dvh flex-col items-center justify-center space-y-4 text-center'>
       <h2 className='text-3xl font-bold tracking-tight'>
         Что-то пошло не так!
       </h2>
@@ -18,7 +18,9 @@ export default function Error({
         Не переживайте, скоро мы решим проблему, а пока можете повторить попытку
       </p>
       <Button
-        onClick={() => reset()}
+        onClick={() => {
+          reset();
+        }}
         variant='secondary'
       >
         Попробовать еще раз
@@ -26,4 +28,6 @@ export default function Error({
       <p className='text-sx text-muted-foreground'>Ошибка: {error.message}</p>
     </div>
   );
-}
+};
+
+export default Error;

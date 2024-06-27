@@ -4,6 +4,6 @@ export const createSchema = z.object({
   body: z
     .string()
     .min(5, { message: 'Пост не может содержать меньше 5 символов' })
-    .max(255, { message: 'Пост не может содержать больше 255 символов' }),
-  multimedia: z.array(z.string().url())
+    .max(1500, { message: 'Пост не может содержать больше 1500 символов' }),
+  multimedia: z.array(z.string()),
 });

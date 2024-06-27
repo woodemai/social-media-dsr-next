@@ -1,11 +1,9 @@
-import type { Config } from "tailwindcss"
+import type { Config } from 'tailwindcss';
 import { fontFamily } from 'tailwindcss/defaultTheme';
 
 const config = {
   darkMode: ['class'],
-  content: [
-    './src/**/*.{ts,tsx}',
-  ],
+  content: ['./src/**/*.{ts,tsx}'],
   prefix: '',
   theme: {
     container: {
@@ -82,4 +80,4 @@ const config = {
   ],
 } satisfies Config;
 
-export default config
+export default config;
