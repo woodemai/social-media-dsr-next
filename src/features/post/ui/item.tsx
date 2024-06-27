@@ -35,6 +35,7 @@ export const PostItem = ({ post, isOwner = false }: PostItemProps) => {
       <p>{post.body}</p>
       <MediaList media={post.multimedia} />
       <Social
+        comments={post.comments}
         id={post.id}
         initialIsLiked={post.likedUsers.length > 0}
         likesCount={post._count.likedUsers}

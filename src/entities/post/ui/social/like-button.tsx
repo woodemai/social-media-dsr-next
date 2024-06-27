@@ -6,24 +6,18 @@ import { useOptimistic, useState, useTransition } from 'react';
 import { likePostAction, unlikePostAction } from '@/entities/post/actions';
 import { Button } from '@/shared/ui/button';
 
-const LikesCount = ({ count }: { count: number }) => {
-  return <span className='tabular-nums'>{count}</span>;
-};
-
-type SocialProps = {
+type LikeProps = {
   likesCount: number;
   initialIsLiked?: boolean;
   id: string;
 };
 
-export const Social = ({
-  id,
-  likesCount: initialLikesCount,
-  initialIsLiked = true,
-}: SocialProps) => {
+export const LikeButton = ({ id, initialIsLiked = false, likesCount: initialLikesCount }: LikeProps) => {
+
   const [likesCount, setLikesCount] = useState(initialLikesCount);
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [isPending, startTransition] = useTransition();
+
   const [optimisticIsLiked, toggleIsLiked] = useOptimistic<boolean, void>(
     isLiked,
     isLiked => !isLiked,
@@ -52,29 +46,25 @@ export const Social = ({
   };
 
   return (
-    <div>
-      <div className='flex items-center'>
-        <Button
-          className='w-full max-w-16 space-x-2 rounded-lg'
-          disabled={isPending}
-          name='Лайк'
-          onClick={handleLike}
-          size='icon'
-          title='Лайк'
-          type='button'
-          variant='ghost'
-        >
-          <span className='sr-only'>
-            {optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}
-          </span>
-          {optimisticIsLiked ? (
-            <HeartFilledIcon className='size-4 text-red-500' />
-          ) : (
-            <HeartIcon className='size-4' />
-          )}
-          <LikesCount count={optimisticLikesCount} />
-        </Button>
-      </div>
-    </div>
+    <Button
+      className='w-full max-w-16 space-x-2 rounded-lg'
+      disabled={isPending}
+      name='Лайк'
+      onClick={handleLike}
+      size='icon'
+      title='Лайк'
+      type='button'
+      variant='ghost'
+    >
+      <span className='sr-only'>
+        {optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}
+      </span>
+      {optimisticIsLiked ? (
+        <HeartFilledIcon className='size-4 text-red-500' />
+      ) : (
+        <HeartIcon className='size-4' />
+      )}
+      <span className='tabular-nums'>{optimisticLikesCount}</span>
+    </Button>
   );
 };

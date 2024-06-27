@@ -93,6 +93,8 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
+  comments Comment[]
+
   likedUsers User[] @relation("like")
 }
 
@@ -104,6 +106,9 @@ model Comment {
 
   authorId String
   author   User   @relation(fields: [authorId], references: [id])
+
+  postId String
+  post   Post   @relation(fields: [postId], references: [id])
 
   likedUsers User[] @relation("likedComment")
 

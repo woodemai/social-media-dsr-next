@@ -57,6 +57,7 @@ export const getPosts = async ({
       author: getAuthor({ selectedUserId: userId, currentUserId: user.id }),
     },
     include: {
+      comments: true,
       _count: {
         select: {
           likedUsers: true,
@@ -77,7 +78,7 @@ export const getPosts = async ({
         },
       },
     },
-    orderBy: {
+  orderBy: {
       createdAt: 'desc',
     },
   });
