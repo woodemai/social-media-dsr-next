@@ -1,21 +1,24 @@
 'use client';
 
-
-
 import { useTransition } from 'react';
 
-import { subscribeAcceptAction, subscribeRejectAction } from '@/shared/actions/user';
-import { FullSubscriptionRequest } from '@/shared/api/subscription-request';
+import {
+  subscribeAcceptAction,
+  subscribeRejectAction,
+  type FullSubscriptionRequest,
+} from '@/entities/subscription';
 import { Button } from '@/shared/ui/button';
 import { useToast } from '@/shared/ui/use-toast';
 
-interface NotificationItemProps {
+type NotificationItemProps = {
   notification: FullSubscriptionRequest;
   onNotificationRemove: (id: string) => void;
-}
+};
 
-export const NotificationItem = ({ notification, onNotificationRemove }: NotificationItemProps) => {
-
+export const NotificationItem = ({
+  notification,
+  onNotificationRemove,
+}: NotificationItemProps) => {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
 

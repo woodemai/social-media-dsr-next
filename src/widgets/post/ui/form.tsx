@@ -5,14 +5,14 @@ import { UploadIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import {
   CldUploadWidget,
-  CloudinaryUploadWidgetResults,
+  type CloudinaryUploadWidgetResults,
 } from 'next-cloudinary';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { z } from 'zod';
+import { type z } from 'zod';
 
-import { createPostAction } from '@/shared/actions/post';
-import { createSchema } from '@/shared/schemas/post';
+import { useStore } from '@/config/store';
+import { createPostAction, createSchema } from '@/entities/post';
 import { Button } from '@/shared/ui/button';
 import {
   Form,
@@ -28,7 +28,7 @@ import { Input } from '@/shared/ui/input';
 export const PostForm = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-
+  const addPost = useStore(state => state.postSlice.addPost);
   const form = useForm<z.infer<typeof createSchema>>({
     resolver: zodResolver(createSchema),
     defaultValues: {
@@ -47,6 +47,7 @@ export const PostForm = () => {
         setSuccess(res.success);
         setError('');
         form.reset();
+        addPost(res.post);
       }
     });
   };
@@ -68,7 +69,7 @@ export const PostForm = () => {
   return (
     <Form {...form}>
       <form
-        className='flex flex-col gap-y-4 border rounded-md shadow-sm bg-card'
+        className='flex flex-col gap-y-4 rounded-md bg-card/50 shadow-sm'
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className='flex gap-x-2 p-4'>
@@ -85,7 +86,9 @@ export const PostForm = () => {
                     {({ open }) => (
                       <Button
                         name='Загрузить'
-                        onClick={() => open()}
+                        onClick={() => {
+                          open();
+                        }}
                         size='icon'
                         title='Загрузить'
                         type='button'
@@ -108,7 +111,7 @@ export const PostForm = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    className='w-full bg-card border-none hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
+                    className='w-full border-none bg-transparent hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
                     placeholder='Напишите, что у вас нового...'
                   />
                 </FormControl>
@@ -126,7 +129,7 @@ export const PostForm = () => {
         <FormSuccess message={success} />
         <FormError message={error} />
         {uploadedMedia.length ? (
-          <div className='flex gap-x-4 items-center'>
+          <div className='flex items-center gap-x-4'>
             {uploadedMedia.map(media => (
               <div
                 className='p-2'

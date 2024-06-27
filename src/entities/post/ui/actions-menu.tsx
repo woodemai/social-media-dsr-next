@@ -1,9 +1,13 @@
 'use client';
 
+import {
+  DotsHorizontalIcon,
+  Pencil1Icon,
+  TrashIcon,
+} from '@radix-ui/react-icons';
 
-import { DotsHorizontalIcon, TrashIcon } from '@radix-ui/react-icons';
-
-import { deleteAction } from '@/shared/actions/post';
+import { useStore } from '@/config/store';
+import { deleteAction } from '@/entities/post/actions';
 import { Button } from '@/shared/ui/button';
 import {
   DropdownMenu,
@@ -13,28 +17,21 @@ import {
 } from '@/shared/ui/dropdown-menu';
 import { useToast } from '@/shared/ui/use-toast';
 
-interface DeleteButtonProps {
+type DeleteButtonProps = {
   id: string;
-}
+};
 
-export const DeleteButton = ({ id }: DeleteButtonProps) => {
+export const ActionsMenu = ({ id }: DeleteButtonProps) => {
   const { toast } = useToast();
+  const removePost = useStore(state => state.postSlice.removePost);
 
   const handleDelete = async () => {
-    await deleteAction(id).then(res => {
-      if (res) {
-        toast({
-          title: 'Успех',
-          description: 'Пост успешно удален!',
-        });
-      } else {
-        toast({
-          title: 'Ошибка',
-          description: 'Не удалось удалить пост!',
-          variant: 'destructive',
-        });
-      }
+    await deleteAction(id);
+    toast({
+      title: 'Успех',
+      description: 'Пост успешно удален!',
     });
+    removePost(id);
   };
 
   return (
@@ -53,7 +50,17 @@ export const DeleteButton = ({ id }: DeleteButtonProps) => {
       <DropdownMenuContent>
         <DropdownMenuItem>
           <button
-            className='flex gap-x-4 items-center'
+            className='flex items-center gap-x-4'
+            // onClick={handleDelete}
+            type='button'
+          >
+            <Pencil1Icon className='size-4' />
+            <span>Редактировать</span>
+          </button>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <button
+            className='flex items-center gap-x-4'
             onClick={handleDelete}
             type='button'
           >

@@ -1,6 +1,27 @@
-import { DeleteButton } from './ui/delete-button';
+import {
+  createPostAction,
+  likePostAction,
+  unlikePostAction,
+  deleteAction,
+} from './actions';
+import { getPosts } from './data';
+import { createSchema } from './schemas';
+import { type FullPost } from './types';
+import { ActionsMenu } from './ui/actions-menu';
 import { MediaList } from './ui/media-list';
 import { Social } from './ui/social';
 import { VideoItem } from './ui/video-item';
 
-export { DeleteButton, MediaList, Social, VideoItem };
+export {
+  FullPost,
+  ActionsMenu,
+  MediaList,
+  Social,
+  VideoItem,
+  createSchema,
+  getPosts,
+  createPostAction,
+  likePostAction,
+  unlikePostAction,
+  deleteAction,
+};

@@ -9,18 +9,19 @@ import { Button } from '@/shared/ui/button';
 import { YandexLogo } from '@/shared/ui/yandex-logo';
 
 const onClick = (provider: 'google' | 'github' | 'yandex') => {
-  signIn(provider, {
+  void signIn(provider, {
     callbackUrl: DEFAULT_LOGIN_REDIRECT,
   });
 };
 
 export const Social = () => {
-
   return (
     <div className='flex w-full items-center gap-x-2'>
       <Button
         className='w-full'
-        onClick={() => onClick('google')}
+        onClick={() => {
+          onClick('google');
+        }}
         size='lg'
         variant='outline'
       >
@@ -28,7 +29,9 @@ export const Social = () => {
       </Button>
       <Button
         className='w-full'
-        onClick={() => onClick('github')}
+        onClick={() => {
+          onClick('github');
+        }}
         size='lg'
         variant='outline'
       >
@@ -36,7 +39,9 @@ export const Social = () => {
       </Button>
       <Button
         className='w-full'
-        onClick={() => onClick('yandex')}
+        onClick={() => {
+          onClick('yandex');
+        }}
         size='lg'
         variant='outline'
       >

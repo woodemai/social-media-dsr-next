@@ -1,24 +1,10 @@
+'use strict';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   trailingSlash: false,
   skipTrailingSlashRedirect: true,
-  webpack: function (config, { webpack }) {
-    config.module.rules.push({
-      test: /\.m?js$/,
-      type: 'javascript/auto',
-      resolve: { fullySpecified: false },
-    });
-
-    config.ignoreWarnings = [
-      {
-        module: /@opentelemetry\/instrumentation/,
-        message: /Critical dependency/,
-      },
-    ];
-
-    return config;
-  },
   experimental: {
     ppr: true,
     reactCompiler: true,
@@ -36,6 +22,7 @@ const nextConfig = {
     ],
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31_536_000,
     remotePatterns: [
       {

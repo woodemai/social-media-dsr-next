@@ -2,25 +2,27 @@
 
 import { Button } from '@/shared/ui/button';
 
-export default function GlobalError({
+const GlobalError = ({
   error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}) => {
   return (
     <html>
-      <body className='h-dvh w-full flex justify-center items-center flex-col space-y-4 text-center'>
+      <body className='flex h-dvh w-full flex-col items-center justify-center space-y-4 text-center'>
         <h2 className='text-3xl font-bold tracking-tight'>
-          Что-то пошло не так!
+          Произошла глобальная ошибка!
         </h2>
         <p>
           Не переживайте, скоро мы решим проблему, а пока можете повторить
           попытку
         </p>
         <Button
-          onClick={() => reset()}
+          onClick={() => {
+            reset();
+          }}
           variant='secondary'
         >
           Попробовать еще раз
@@ -29,4 +31,5 @@ export default function GlobalError({
       </body>
     </html>
   );
-}
+};
+export default GlobalError;

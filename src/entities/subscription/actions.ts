@@ -1,27 +1,11 @@
 'use server';
-
-import { SubscriptionRequest } from '@prisma/client';
-import bcrypt from 'bcryptjs';
-import { z } from 'zod';
+import { type SubscriptionRequest } from '@prisma/client';
 
 import { db } from '@/config/prisma';
-import { FullSubscriptionRequest } from '@/shared/api/subscription-request';
-import { FullUser, getCurrentUser, getUserById } from '@/shared/api/user';
-import { updateSchema } from '@/shared/schemas/user';
+import { type FullUser, getCurrentUser } from '@/entities/user';
+import { getUserById } from '@/entities/user/data';
 
-export const getUsers = async (name: string) => {
-  const user = await getCurrentUser();
-
-  return db.user.findMany({
-    where: {
-      name: {
-        contains: name,
-        mode: 'insensitive',
-      },
-      NOT: { id: user?.id },
-    },
-  });
-};
+import { type FullSubscriptionRequest } from './types';
 
 type SubscriptionActionReturnType = {
   request?: SubscriptionRequest;
@@ -69,7 +53,7 @@ export const subscribeAction = async (
   const currentUser = await getCurrentUser();
 
   if (user?.isPrivate && !isSubscribed) {
-    if (currentUser?.id) {
+    if (currentUser.id) {
       const isRequestExists = await db.subscriptionRequest.findFirst({
         where: {
           requestById: currentUser.id,
@@ -97,8 +81,8 @@ export const subscribeAction = async (
     }
   } else {
     const subscribers = isSubscribed
-      ? { disconnect: { id: currentUser?.id } }
-      : { connect: { id: currentUser?.id } };
+      ? { disconnect: { id: currentUser.id } }
+      : { connect: { id: currentUser.id } };
     return {
       user: await db.user.update({
         where: {
@@ -116,61 +100,11 @@ export const subscribeAction = async (
           },
           subscribers: {
             where: {
-              id: currentUser?.id,
+              id: currentUser.id,
             },
           },
         },
       }),
     };
   }
-};
-
-type UpdateUserInfoResponse = {
-  name?: string | null;
-  bio?: string | null;
-  isPrivate?: boolean | null;
-  error?: string;
-};
-
-export const updateProfileAction = async (
-  id: string,
-  values: z.infer<typeof updateSchema>,
-): Promise<UpdateUserInfoResponse> => {
-  const user = await db.user.findUnique({ where: { id } });
-  const validatedFields = updateSchema.safeParse(values);
-
-  if (!validatedFields.success)
-    return {
-      error: 'Поля заполнены неверно',
-    };
-
-  const { name, bio, password, isPrivate } = validatedFields.data;
-
-  let hashedNewPassword = undefined;
-
-  if (password && user?.password) {
-    const isMatch = bcrypt.compareSync(password, user.password);
-    if (!isMatch) {
-      hashedNewPassword = bcrypt.hashSync(password, 8);
-    } else {
-      return { error: 'Пароль совпадает с текущим' };
-    }
-  }
-
-  return db.user.update({
-    where: {
-      id,
-    },
-    data: {
-      name,
-      bio,
-      password: hashedNewPassword,
-      isPrivate,
-    },
-    select: {
-      name: true,
-      bio: true,
-      isPrivate: true,
-    },
-  });
 };

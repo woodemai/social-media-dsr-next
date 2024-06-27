@@ -1,5 +1,5 @@
 'use client';
-import { User } from '@prisma/client';
+import { type User } from '@prisma/client';
 import { signOut } from 'next-auth/react';
 import { Link } from 'next-view-transitions';
 import { useState } from 'react';
@@ -13,9 +13,9 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 
-interface UserHeaderMenuProps {
+type UserHeaderMenuProps = {
   user?: User | null;
-}
+};
 
 export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
   const [open, setOpen] = useState(false);
@@ -34,7 +34,9 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
 
   return (
     <DropdownMenu
-      onOpenChange={() => setOpen(!open)}
+      onOpenChange={() => {
+        setOpen(!open);
+      }}
       open={open}
     >
       <DropdownMenuTrigger>
@@ -45,8 +47,10 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
         <DropdownMenuItem>
           <Button
             asChild
-            onClick={() => setOpen(false)}
-            variant='link'
+            onClick={() => {
+              setOpen(false);
+            }}
+            variant='ghost'
           >
             <Link
               className='font-bold'
@@ -59,7 +63,7 @@ export const UserHeaderMenu = ({ user }: UserHeaderMenuProps) => {
         <DropdownMenuItem>
           <Button
             onClick={() => signOut()}
-            variant='link'
+            variant='ghost'
           >
             Выйти
           </Button>
