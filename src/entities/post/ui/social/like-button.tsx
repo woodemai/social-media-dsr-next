@@ -13,8 +13,11 @@ type LikeProps = {
   id: string;
 };
 
-export const LikeButton = ({ id, initialIsLiked = false, likesCount: initialLikesCount }: LikeProps) => {
-
+export const LikeButton = ({
+  id,
+  initialIsLiked = false,
+  likesCount: initialLikesCount,
+}: LikeProps) => {
   const [likesCount, setLikesCount] = useState(initialLikesCount);
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [isPending, startTransition] = useTransition();
@@ -48,7 +51,7 @@ export const LikeButton = ({ id, initialIsLiked = false, likesCount: initialLike
 
   return (
     <Button
-      className='flex gap-x-2 w-auto px-2 rounded-full'
+      className='flex w-auto gap-x-2 rounded-full px-2'
       disabled={isPending}
       name='Лайк'
       onClick={handleLike}
@@ -65,7 +68,11 @@ export const LikeButton = ({ id, initialIsLiked = false, likesCount: initialLike
       ) : (
         <HeartIcon className='size-6 font-bold' />
       )}
-      <span className={cn('tabular-nums text-xs', optimisticIsLiked && 'font-bold')}>{optimisticLikesCount}</span>
+      <span
+        className={cn('text-xs tabular-nums', optimisticIsLiked && 'font-bold')}
+      >
+        {optimisticLikesCount}
+      </span>
     </Button>
   );
 };

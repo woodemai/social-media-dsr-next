@@ -14,10 +14,7 @@ import { Button } from '@/shared/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/shared/ui/form';
 import { Input } from '@/shared/ui/input';
 
-
-
-
-export const CommentForm = ({postId}: {postId: string}) => {
+export const CommentForm = ({ postId }: { postId: string }) => {
   const user = useCurrentUser();
   const [isPending, startTransition] = useTransition();
 
@@ -30,11 +27,10 @@ export const CommentForm = ({postId}: {postId: string}) => {
 
   const onSubmit = (values: z.infer<typeof commentCreateSchema>) => {
     startTransition(async () => {
-      await createCommentAction(values, postId)
+      await createCommentAction(values, postId);
       // TODO: Add comment to the list
       // TODO: Add toast
       form.reset();
-
     });
   };
 
