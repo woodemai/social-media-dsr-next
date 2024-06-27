@@ -5,6 +5,7 @@ import { useOptimistic, useState, useTransition } from 'react';
 
 import { likePostAction, unlikePostAction } from '@/entities/post/actions';
 import { Button } from '@/shared/ui/button';
+import { cn } from '@/shared/utils';
 
 type LikeProps = {
   likesCount: number;
@@ -47,24 +48,24 @@ export const LikeButton = ({ id, initialIsLiked = false, likesCount: initialLike
 
   return (
     <Button
-      className='w-full max-w-16 space-x-2 rounded-lg'
+      className='flex gap-x-2 w-auto px-2 rounded-full'
       disabled={isPending}
       name='Лайк'
       onClick={handleLike}
       size='icon'
       title='Лайк'
       type='button'
-      variant='ghost'
+      variant='secondary'
     >
       <span className='sr-only'>
         {optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}
       </span>
       {optimisticIsLiked ? (
-        <HeartFilledIcon className='size-4 text-red-500' />
+        <HeartFilledIcon className='size-6 font-bold text-red-500' />
       ) : (
-        <HeartIcon className='size-4' />
+        <HeartIcon className='size-6 font-bold' />
       )}
-      <span className='tabular-nums'>{optimisticLikesCount}</span>
+      <span className={cn('tabular-nums text-xs', optimisticIsLiked && 'font-bold')}>{optimisticLikesCount}</span>
     </Button>
   );
 };

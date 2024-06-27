@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { UploadIcon } from '@radix-ui/react-icons';
+import { PaperPlaneIcon, UploadIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import {
   CldUploadWidget,
@@ -121,9 +121,13 @@ export const PostForm = () => {
           />
           <Button
             type='submit'
+            size='icon'
             variant='ghost'
+            className='rounded-full'
+            title='Опубликовать'
+            name='Опубликовать'
           >
-            Отправить
+            <PaperPlaneIcon className='size-4' />
           </Button>
         </div>
         <FormSuccess message={success} />

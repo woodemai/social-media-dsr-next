@@ -18,16 +18,18 @@ const ActionsMenu = dynamic(() =>
 
 export const PostItem = ({ post, isOwner = false }: PostItemProps) => {
   return (
-    <li className='max-w-full space-y-4 rounded-md bg-card/50 p-4'>
+    <li className='max-w-full flex flex-col gap-y-4 rounded-md bg-card/50 p-4'>
       <div className='flex w-full items-center justify-between'>
         <div className='flex items-center gap-x-2'>
-          <UserAvatar src={post.author.image} />
           <Button
-            className='text-lg text-muted-foreground'
+            className='p-1 text-lg text-muted-foreground'
             asChild
             variant='link'
           >
-            <Link href={`/user/${post.authorId}`}>{post.author.name}</Link>
+            <Link href={`/user/${post.authorId}`} className='space-x-2'>
+              <UserAvatar src={post.author.image} />
+              <span>{post.author.name}</span>
+            </Link>
           </Button>
         </div>
         {isOwner ? <ActionsMenu id={post.id} /> : null}

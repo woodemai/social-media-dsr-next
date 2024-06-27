@@ -1,15 +1,15 @@
-import { type Comment } from '@prisma/client';
+import { type FullComment } from '@/entities/comment/types';
 
 import { CommentItem } from './item';
 
 type CommentListProps = {
-  comments: Comment[];
+  comments: FullComment[];
 }
 
 export const CommentList = ({comments}:CommentListProps) => {
 
   return (
-    <ul>
+    <ul className='space-y-4'>
       {comments.map((comment) => (
         <li key={comment.id}><CommentItem comment={comment}/></li>
       ))}
