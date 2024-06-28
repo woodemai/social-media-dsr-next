@@ -35,7 +35,10 @@ export const Social = ({
       </div>
       {isWriting && (
         <>
-          <CommentList comments={comments} />
+          <CommentList
+            postId={id}
+            comments={comments}
+          />
           <CommentForm postId={id} />
         </>
       )}

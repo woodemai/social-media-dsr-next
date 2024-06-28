@@ -9,6 +9,7 @@ type CommentButtonProps = {
 };
 
 export const CommentButton = ({ setWriting }: CommentButtonProps) => {
+  // TODO: add comment quantity
   return (
     <Button
       className='rounded-full'

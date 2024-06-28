@@ -43,3 +43,11 @@ export const createCommentAction = async (
     },
   });
 };
+
+export const removeCommentAction = async (commentId: string) => {
+  return db.comment.delete({
+    where: {
+      id: commentId,
+    },
+  });
+};

@@ -9,6 +9,7 @@ type PostActions = {
   addPosts: (posts: FullPost[]) => void;
   addPost: (post: FullPost) => void;
   addComment: (postId: string, comment: FullComment) => void;
+  removeComment: (postId: string, commentId: string) => void;
   removePost: (id: string) => void;
   resetPosts: () => void;
 };
