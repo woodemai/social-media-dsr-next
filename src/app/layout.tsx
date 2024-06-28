@@ -6,8 +6,8 @@ import { SessionProvider } from 'next-auth/react';
 import { ViewTransitions } from 'next-view-transitions';
 
 import '@/config/globals.css';
-import { VERCEL_ENV } from '@/config/next.constants.mjs';
 import { StoreProvider } from '@/config/store';
+import { env } from '@/env.mjs';
 import { Toaster } from '@/shared/ui/toaster';
 import { cn } from '@/shared/utils';
 
@@ -58,7 +58,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                 <BackgroundFigure className='left-[5%] top-[60%]' />
                 <BackgroundFigure className='left-[85%] top-[70%]' />
                 {children}
-                {VERCEL_ENV ? (
+                {env.NEXT_PUBLIC_VERCEL_ENV ? (
                   <>
                     <Analytics />
                     <SpeedInsights />
