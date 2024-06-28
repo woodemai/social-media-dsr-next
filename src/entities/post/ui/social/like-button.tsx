@@ -51,7 +51,7 @@ export const LikeButton = ({
 
   return (
     <Button
-      className='flex w-auto gap-x-2 rounded-full px-2'
+      className='flex w-auto gap-x-2 rounded-full p-2'
       disabled={isPending}
       name='Лайк'
       onClick={handleLike}
@@ -66,13 +66,18 @@ export const LikeButton = ({
       {optimisticIsLiked ? (
         <HeartFilledIcon className='size-6 font-bold text-red-500' />
       ) : (
-        <HeartIcon className='size-6 font-bold' />
+        <HeartIcon className='size-6 font-bold text-muted-foreground' />
       )}
-      <span
-        className={cn('text-xs tabular-nums', optimisticIsLiked && 'font-bold')}
-      >
-        {optimisticLikesCount}
-      </span>
+      {optimisticLikesCount && (
+        <span
+          className={cn(
+            'text-xs tabular-nums text-muted-foreground',
+            optimisticIsLiked && 'font-bold text-foreground',
+          )}
+        >
+          {optimisticLikesCount}
+        </span>
+      )}
     </Button>
   );
 };
