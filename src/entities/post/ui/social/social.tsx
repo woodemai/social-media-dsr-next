@@ -21,7 +21,7 @@ export const Social = ({
   initialIsLiked = true,
   comments,
 }: SocialProps) => {
-  const [isWriting, setIsWriting] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className='space-y-8'>
@@ -31,9 +31,12 @@ export const Social = ({
           initialIsLiked={initialIsLiked}
           likesCount={initialLikesCount}
         />
-        <CommentButton setWriting={() => setIsWriting(!isWriting)} />
+        <CommentButton
+          commentsCount={comments.length}
+          setWriting={() => setIsOpen(!isOpen)}
+        />
       </div>
-      {isWriting && (
+      {isOpen ? (
         <>
           <CommentList
             postId={id}
@@ -41,6 +44,13 @@ export const Social = ({
           />
           <CommentForm postId={id} />
         </>
+      ) : (
+        comments[0] && (
+          <CommentList
+            postId={id}
+            comments={[comments[0]]}
+          />
+        )
       )}
     </div>
   );
