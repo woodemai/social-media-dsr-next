@@ -36,7 +36,10 @@ export const ActionsMenu = ({ id }: DeleteButtonProps) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger
+        asChild
+        className='opacity-0 group-hover/post:opacity-100'
+      >
         <Button
           name='Меню поста'
           size='icon'

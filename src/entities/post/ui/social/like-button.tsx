@@ -66,12 +66,12 @@ export const LikeButton = ({
       {optimisticIsLiked ? (
         <HeartFilledIcon className='size-6 font-bold text-red-500' />
       ) : (
-        <HeartIcon className='size-6 font-bold text-muted-foreground' />
+        <HeartIcon className='size-6 font-bold' />
       )}
       {optimisticLikesCount && (
         <span
           className={cn(
-            'text-xs tabular-nums text-muted-foreground',
+            'text-xs tabular-nums',
             optimisticIsLiked && 'font-bold text-foreground',
           )}
         >

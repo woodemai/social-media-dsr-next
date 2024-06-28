@@ -1,9 +1,6 @@
-import { Link } from 'next-view-transitions';
-
 import { type FullComment } from '@/entities/comment/types';
 import { useCurrentUser } from '@/entities/user/hooks/useCurrentUser';
-import { UserAvatar } from '@/features/user';
-import { Button } from '@/shared/ui/button';
+import { ProfileLink } from '@/features/user/ui/profile-link';
 
 import { ActionsMenu } from './action-menu';
 
@@ -17,23 +14,19 @@ export const CommentItem = ({
   postId,
 }: CommentItemProps) => {
   const user = useCurrentUser();
+  const isOwner = user?.id === author.id;
   //TODO: Add edit options
   return (
-    <div className='flex items-start justify-between gap-x-2 overflow-hidden'>
-      <div className='flex gap-x-2 overflow-hidden'>
-        <UserAvatar src={author.image} />
-        <div className='flex flex-col gap-x-2 overflow-hidden'>
-          <Button
-            asChild
-            variant='link'
-            className='items-center justify-start p-1 text-muted-foreground'
-          >
-            <Link href={`/user/${author.id}`}>{author.name}</Link>
-          </Button>
-          <div className='break-words'>{body}</div>
-        </div>
+    <div className='group/comment flex items-start justify-between gap-x-2 overflow-hidden'>
+      <div className='flex flex-col gap-y-1 overflow-hidden'>
+        <ProfileLink
+          userId={author.id}
+          userName={author.name}
+          imageUrl={author.image}
+        />
+        <div className='ml-8 break-words'>{body}</div>
       </div>
-      {user?.id === author.id && (
+      {isOwner && (
         <ActionsMenu
           postId={postId}
           commentId={id}

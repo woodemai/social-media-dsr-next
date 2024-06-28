@@ -34,7 +34,10 @@ export const ActionsMenu = ({ postId, commentId }: ActionsMenuProps) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger
+        asChild
+        className='opacity-0 transition-all duration-150 group-hover/comment:opacity-100'
+      >
         <Button
           name='Меню комментария'
           size='icon'
