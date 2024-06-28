@@ -1,3 +1,4 @@
+import { type FullComment } from '@/entities/comment/types';
 import { type FullPost } from '@/entities/post';
 
 export type PostState = {
@@ -7,6 +8,7 @@ export type PostState = {
 type PostActions = {
   addPosts: (posts: FullPost[]) => void;
   addPost: (post: FullPost) => void;
+  addComment: (postId: string, comment: FullComment) => void;
   removePost: (id: string) => void;
   resetPosts: () => void;
 };
