@@ -2,6 +2,7 @@
 
 import { type z } from 'zod';
 
+import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { db } from '@/config/prisma';
 import { createSchema } from '@/entities/post/schemas';
 import { getCurrentUser } from '@/entities/user/data';
@@ -36,6 +37,20 @@ export const createPostAction = async (
       },
     },
     include: {
+      comments: {
+        select: {
+          id: true,
+          body: true,
+          author: {
+            select: {
+              id: true,
+              image: true,
+              name: true,
+            },
+          },
+        },
+        take: PAGE_SIZE,
+      },
       _count: {
         select: {
           likedUsers: true,

@@ -5,25 +5,23 @@ import { useOptimistic, useState, useTransition } from 'react';
 
 import { likePostAction, unlikePostAction } from '@/entities/post/actions';
 import { Button } from '@/shared/ui/button';
+import { cn } from '@/shared/utils';
 
-const LikesCount = ({ count }: { count: number }) => {
-  return <span className='tabular-nums'>{count}</span>;
-};
-
-type SocialProps = {
+type LikeProps = {
   likesCount: number;
   initialIsLiked?: boolean;
   id: string;
 };
 
-export const Social = ({
+export const LikeButton = ({
   id,
+  initialIsLiked = false,
   likesCount: initialLikesCount,
-  initialIsLiked = true,
-}: SocialProps) => {
+}: LikeProps) => {
   const [likesCount, setLikesCount] = useState(initialLikesCount);
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [isPending, startTransition] = useTransition();
+
   const [optimisticIsLiked, toggleIsLiked] = useOptimistic<boolean, void>(
     isLiked,
     isLiked => !isLiked,
@@ -52,29 +50,34 @@ export const Social = ({
   };
 
   return (
-    <div>
-      <div className='flex items-center'>
-        <Button
-          className='w-full max-w-16 space-x-2 rounded-lg'
-          disabled={isPending}
-          name='Лайк'
-          onClick={handleLike}
-          size='icon'
-          title='Лайк'
-          type='button'
-          variant='ghost'
-        >
-          <span className='sr-only'>
-            {optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}
-          </span>
-          {optimisticIsLiked ? (
-            <HeartFilledIcon className='size-4 text-red-500' />
-          ) : (
-            <HeartIcon className='size-4' />
+    <Button
+      className='flex w-auto gap-x-2 rounded-full p-2'
+      disabled={isPending}
+      name='Лайк'
+      onClick={handleLike}
+      size='icon'
+      title='Лайк'
+      type='button'
+      variant='secondary'
+    >
+      <span className='sr-only'>
+        {optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}
+      </span>
+      {optimisticIsLiked ? (
+        <HeartFilledIcon className='size-6 font-bold text-red-500' />
+      ) : (
+        <HeartIcon className='size-6 font-bold' />
+      )}
+      {optimisticLikesCount && (
+        <span
+          className={cn(
+            'text-xs tabular-nums',
+            optimisticIsLiked && 'font-bold text-foreground',
           )}
-          <LikesCount count={optimisticLikesCount} />
-        </Button>
-      </div>
-    </div>
+        >
+          {optimisticLikesCount}
+        </span>
+      )}
+    </Button>
   );
 };

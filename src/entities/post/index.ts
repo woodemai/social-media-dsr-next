@@ -9,7 +9,7 @@ import { createSchema } from './schemas';
 import { type FullPost } from './types';
 import { ActionsMenu } from './ui/actions-menu';
 import { MediaList } from './ui/media-list';
-import { Social } from './ui/social';
+import { Social } from './ui/social/social';
 import { VideoItem } from './ui/video-item';
 
 export {
