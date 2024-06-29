@@ -1,18 +1,14 @@
 'use server';
 
-import { type z } from 'zod';
-
 import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { db } from '@/config/prisma';
-import { createSchema } from '@/entities/post/schemas';
+import { postSchema, type postSchemaType } from '@/entities/post/schemas';
 import { getCurrentUser } from '@/entities/user/data';
 
 import { type FullPost } from './types';
 
-export const createPostAction = async (
-  values: z.infer<typeof createSchema>,
-) => {
-  const validatedFields = createSchema.safeParse(values);
+export const createPostAction = async (values: postSchemaType) => {
+  const validatedFields = postSchema.safeParse(values);
 
   if (!validatedFields.success)
     return {
@@ -28,8 +24,7 @@ export const createPostAction = async (
 
   const createdPost: FullPost = await db.post.create({
     data: {
-      multimedia: validatedFields.data.multimedia,
-      body: validatedFields.data.body,
+      ...validatedFields.data,
       author: {
         connect: {
           id: user.id,
@@ -140,4 +135,62 @@ export const deleteAction = async (id: string) => {
   return db.post.delete({
     where: { id },
   });
+};
+
+export const postUpdateAction = async (
+  id: string,
+  values: postSchemaType,
+): Promise<FullPost | null> => {
+  const validatedFields = postSchema.safeParse(values);
+
+  if (!validatedFields.success) {
+    return null;
+  }
+
+  const user = await getCurrentUser();
+
+  const updatedPost: FullPost = await db.post.update({
+    where: {
+      id,
+    },
+    data: {
+      ...validatedFields.data,
+    },
+    include: {
+      comments: {
+        select: {
+          id: true,
+          body: true,
+          author: {
+            select: {
+              id: true,
+              image: true,
+              name: true,
+            },
+          },
+        },
+        take: PAGE_SIZE,
+      },
+      _count: {
+        select: {
+          likedUsers: true,
+        },
+      },
+      likedUsers: {
+        where: {
+          id: user.id,
+        },
+        select: {
+          id: true,
+        },
+      },
+      author: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+  });
+  return updatedPost;
 };

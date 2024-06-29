@@ -61,6 +61,21 @@ export const getStore = (initialState: StoreState = defaultInitialState) => {
           },
         }));
       },
+      updatePost(id, updatedData) {
+        set(({ postSlice }) => ({
+          postSlice: {
+            ...postSlice,
+            posts: [
+              ...postSlice.posts.map(post => {
+                if (post.id === id) {
+                  return { ...post, ...updatedData };
+                }
+                return post;
+              }),
+            ],
+          },
+        }));
+      },
       addComment(postId, comment) {
         set(({ postSlice }) => ({
           postSlice: {

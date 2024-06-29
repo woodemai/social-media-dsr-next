@@ -8,6 +8,7 @@ export type PostState = {
 type PostActions = {
   addPosts: (posts: FullPost[]) => void;
   addPost: (post: FullPost) => void;
+  updatePost: (id: string, updatedData: Partial<FullPost>) => void;
   addComment: (postId: string, comment: FullComment) => void;
   removeComment: (postId: string, commentId: string) => void;
   removePost: (id: string) => void;

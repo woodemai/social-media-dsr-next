@@ -2,17 +2,17 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PaperPlaneIcon, UploadIcon } from '@radix-ui/react-icons';
-import Image from 'next/image';
 import {
   CldUploadWidget,
   type CloudinaryUploadWidgetResults,
 } from 'next-cloudinary';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { type z } from 'zod';
 
 import { useStore } from '@/config/store';
-import { createPostAction, createSchema } from '@/entities/post';
+import { createPostAction } from '@/entities/post';
+import { postSchema, type postSchemaType } from '@/entities/post/schemas';
+import { FormMediaList } from '@/features/post/ui/form-media-list';
 import { Button } from '@/shared/ui/button';
 import {
   Form,
@@ -29,15 +29,15 @@ export const PostForm = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const addPost = useStore(state => state.postSlice.addPost);
-  const form = useForm<z.infer<typeof createSchema>>({
-    resolver: zodResolver(createSchema),
+  const form = useForm<postSchemaType>({
+    resolver: zodResolver(postSchema),
     defaultValues: {
       body: '',
       multimedia: [],
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof createSchema>) => {
+  const onSubmit = async (values: postSchemaType) => {
     await createPostAction(values).then(res => {
       if (res.error) {
         setError(res.error);
@@ -54,11 +54,16 @@ export const PostForm = () => {
 
   const handleMediaUpload = (results: CloudinaryUploadWidgetResults) => {
     if (typeof results.info !== 'string' && results.info?.secure_url) {
-      form.setValue('multimedia', [
-        ...form.getValues('multimedia'),
-        results.info.secure_url,
-      ]);
+      const currentValue = form.getValues('multimedia');
+      form.setValue('multimedia', [...currentValue, results.info.secure_url]);
     }
+  };
+
+  const handleMediaRemove = (url: string) => {
+    form.setValue(
+      'multimedia',
+      form.getValues('multimedia').filter(media => media !== url),
+    );
   };
 
   const uploadedMedia = useWatch({
@@ -132,40 +137,10 @@ export const PostForm = () => {
         </div>
         <FormSuccess message={success} />
         <FormError message={error} />
-        {uploadedMedia.length ? (
-          <div className='flex items-center gap-x-4'>
-            {uploadedMedia.map(media => (
-              <div
-                className='p-2'
-                key={media}
-              >
-                {media.includes('/video/') ? (
-                  <video
-                    className='rounded-md'
-                    controls
-                    height={256}
-                    muted
-                    preload='none'
-                    width={256}
-                  >
-                    <source
-                      src={media}
-                      type='video/mp4'
-                    />
-                  </video>
-                ) : (
-                  <Image
-                    alt='Загруженное изображение'
-                    className='rounded-md'
-                    height={128}
-                    src={media}
-                    width={128}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        ) : null}
+        <FormMediaList
+          media={uploadedMedia}
+          onRemove={handleMediaRemove}
+        />
       </form>
     </Form>
   );
