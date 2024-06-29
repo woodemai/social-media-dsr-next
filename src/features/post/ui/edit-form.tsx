@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil1Icon, Cross1Icon, UploadIcon } from '@radix-ui/react-icons';
+import { motion } from 'framer-motion';
 import { Save } from 'lucide-react';
 import {
   CldUploadWidget,
@@ -11,7 +12,7 @@ import { useState, useTransition } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
 import { useStore } from '@/config/store';
-import { postUpdateAction } from '@/entities/post/actions';
+import { postUpsertAction } from '@/entities/post/actions';
 import { postSchema, type postSchemaType } from '@/entities/post/schemas';
 import { Button } from '@/shared/ui/button';
 import {
@@ -63,12 +64,17 @@ export const PostEditForm = ({
   const handleSubmit = form.handleSubmit((values: postSchemaType) => {
     startTransition(async () => {
       setError(undefined);
-      const response = await postUpdateAction(id, values);
-      if (!response) {
-        return setError('Ошибка обновления, Попробуйте еще раз');
+
+      const { post, error } = await postUpsertAction(values, id);
+
+      if (error) {
+        return setError(error);
       }
-      close();
-      updatePost(id, response);
+
+      if (post) {
+        close();
+        updatePost(id, post);
+      }
     });
   });
 
@@ -79,7 +85,11 @@ export const PostEditForm = ({
 
   return (
     <Form {...form}>
-      <form
+      <motion.form
+        initial={{ opacity: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.4, ease: 'easeInOut' }}
+        animate={{ opacity: 1 }}
         onSubmit={handleSubmit}
         className='flex flex-col gap-y-4'
       >
@@ -157,7 +167,7 @@ export const PostEditForm = ({
             <span>Сохранить</span>
           </Button>
         </div>
-      </form>
+      </motion.form>
     </Form>
   );
 };

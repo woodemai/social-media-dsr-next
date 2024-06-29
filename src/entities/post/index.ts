@@ -1,5 +1,4 @@
 import {
-  createPostAction,
   likePostAction,
   unlikePostAction,
   deleteAction,
@@ -20,7 +19,6 @@ export {
   VideoItem,
   postSchema as createSchema,
   getPosts,
-  createPostAction,
   likePostAction,
   unlikePostAction,
   deleteAction,

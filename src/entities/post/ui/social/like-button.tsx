@@ -1,6 +1,7 @@
 'use client';
 
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
+import { motion } from 'framer-motion';
 import { useOptimistic, useState, useTransition } from 'react';
 
 import { likePostAction, unlikePostAction } from '@/entities/post/actions';
@@ -63,11 +64,25 @@ export const LikeButton = ({
       <span className='sr-only'>
         {optimisticIsLiked ? 'Лайкнуть' : 'Убрать лайк'}
       </span>
-      {optimisticIsLiked ? (
+      <motion.div
+        className={cn('', !optimisticIsLiked && 'hidden')}
+        animate={
+          optimisticIsLiked
+            ? { scale: [1, 1.4, 1], opacity: 1 }
+            : { scale: 0, opacity: 0 }
+        }
+        transition={{ duration: 0.4, ease: 'easeInOut' }}
+      >
         <HeartFilledIcon className='size-6 font-bold text-red-500' />
-      ) : (
+      </motion.div>
+      <motion.div
+        className={cn('', optimisticIsLiked && 'hidden')}
+        animate={optimisticIsLiked ? { opacity: 0 } : { opacity: 1 }}
+        transition={{ duration: 0.4, ease: 'easeInOut' }}
+      >
         <HeartIcon className='size-6 font-bold' />
-      )}
+      </motion.div>
+
       {optimisticLikesCount && (
         <span
           className={cn(

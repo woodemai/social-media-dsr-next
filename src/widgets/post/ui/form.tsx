@@ -6,11 +6,11 @@ import {
   CldUploadWidget,
   type CloudinaryUploadWidgetResults,
 } from 'next-cloudinary';
-import { useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
 import { useStore } from '@/config/store';
-import { createPostAction } from '@/entities/post';
+import { postUpsertAction } from '@/entities/post/actions';
 import { postSchema, type postSchemaType } from '@/entities/post/schemas';
 import { FormMediaList } from '@/features/post/ui/form-media-list';
 import { Button } from '@/shared/ui/button';
@@ -22,12 +22,13 @@ import {
   FormMessage,
 } from '@/shared/ui/form';
 import { FormError } from '@/shared/ui/form-error';
-import { FormSuccess } from '@/shared/ui/form-success';
-import { Input } from '@/shared/ui/input';
+import { MFormSuccess } from '@/shared/ui/form-success';
+import { Textarea } from '@/shared/ui/textarea';
 
 export const PostForm = () => {
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
+  const [isPending, startTransition] = useTransition();
   const addPost = useStore(state => state.postSlice.addPost);
   const form = useForm<postSchemaType>({
     resolver: zodResolver(postSchema),
@@ -37,17 +38,31 @@ export const PostForm = () => {
     },
   });
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setError(undefined);
+      setSuccess(undefined);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [error, success]);
+
   const onSubmit = async (values: postSchemaType) => {
-    await createPostAction(values).then(res => {
-      if (res.error) {
-        setError(res.error);
-        setSuccess('');
+    startTransition(async () => {
+      const { post, error } = await postUpsertAction(values);
+
+      if (error) {
+        setError(error);
+        setSuccess(undefined);
       }
-      if (res.success) {
-        setSuccess(res.success);
-        setError('');
+
+      if (post) {
+        setSuccess('Пост успешно создан');
+        setError(undefined);
         form.reset();
-        addPost(res.post);
+        addPost(post);
       }
     });
   };
@@ -90,6 +105,7 @@ export const PostForm = () => {
                   >
                     {({ open }) => (
                       <Button
+                        disabled={isPending}
                         name='Загрузить'
                         onClick={() => {
                           open();
@@ -114,9 +130,10 @@ export const PostForm = () => {
             render={({ field }) => (
               <FormItem className='w-full'>
                 <FormControl>
-                  <Input
+                  <Textarea
+                    disabled={isPending}
                     {...field}
-                    className='w-full border-none bg-transparent hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
+                    className='min-h-8 w-full border-none bg-transparent hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
                     placeholder='Напишите, что у вас нового...'
                   />
                 </FormControl>
@@ -125,6 +142,7 @@ export const PostForm = () => {
             )}
           />
           <Button
+            disabled={isPending}
             type='submit'
             size='icon'
             variant='ghost'
@@ -135,7 +153,7 @@ export const PostForm = () => {
             <PaperPlaneIcon className='size-4' />
           </Button>
         </div>
-        <FormSuccess message={success} />
+        <MFormSuccess message={success} />
         <FormError message={error} />
         <FormMediaList
           media={uploadedMedia}

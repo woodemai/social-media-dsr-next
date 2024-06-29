@@ -7,22 +7,77 @@ import { getCurrentUser } from '@/entities/user/data';
 
 import { type FullPost } from './types';
 
-export const createPostAction = async (values: postSchemaType) => {
+export const postUpsertAction = async (
+  values: postSchemaType,
+  postId?: string,
+) => {
   const validatedFields = postSchema.safeParse(values);
 
-  if (!validatedFields.success)
+  if (!validatedFields.success) {
     return {
-      error: 'Ошибка валидации',
+      error: 'Неверно заполнены поля',
     };
+  }
 
   const user = await getCurrentUser();
 
-  if (!user)
+  if (!user) {
     return {
       error: 'Пользователь не авторизован',
     };
+  }
 
-  const createdPost: FullPost = await db.post.create({
+  if (postId) {
+    const post: FullPost = await db.post.update({
+      data: {
+        ...validatedFields.data,
+      },
+      where: {
+        id: postId,
+      },
+      include: {
+        comments: {
+          select: {
+            id: true,
+            body: true,
+            author: {
+              select: {
+                id: true,
+                image: true,
+                name: true,
+              },
+            },
+          },
+          take: PAGE_SIZE,
+        },
+        _count: {
+          select: {
+            likedUsers: true,
+          },
+        },
+        likedUsers: {
+          where: {
+            id: user.id,
+          },
+          select: {
+            id: true,
+          },
+        },
+        author: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+      },
+    });
+
+    return {
+      post: post,
+    };
+  }
+
+  const post: FullPost = await db.post.create({
     data: {
       ...validatedFields.data,
       author: {
@@ -69,8 +124,7 @@ export const createPostAction = async (values: postSchemaType) => {
   });
 
   return {
-    post: createdPost,
-    success: 'Пост успешно создан',
+    post: post,
   };
 };
 
@@ -135,62 +189,4 @@ export const deleteAction = async (id: string) => {
   return db.post.delete({
     where: { id },
   });
-};
-
-export const postUpdateAction = async (
-  id: string,
-  values: postSchemaType,
-): Promise<FullPost | null> => {
-  const validatedFields = postSchema.safeParse(values);
-
-  if (!validatedFields.success) {
-    return null;
-  }
-
-  const user = await getCurrentUser();
-
-  const updatedPost: FullPost = await db.post.update({
-    where: {
-      id,
-    },
-    data: {
-      ...validatedFields.data,
-    },
-    include: {
-      comments: {
-        select: {
-          id: true,
-          body: true,
-          author: {
-            select: {
-              id: true,
-              image: true,
-              name: true,
-            },
-          },
-        },
-        take: PAGE_SIZE,
-      },
-      _count: {
-        select: {
-          likedUsers: true,
-        },
-      },
-      likedUsers: {
-        where: {
-          id: user.id,
-        },
-        select: {
-          id: true,
-        },
-      },
-      author: {
-        select: {
-          name: true,
-          image: true,
-        },
-      },
-    },
-  });
-  return updatedPost;
 };
