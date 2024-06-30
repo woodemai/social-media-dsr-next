@@ -10,6 +10,11 @@ type PostActions = {
   addPost: (post: FullPost) => void;
   updatePost: (id: string, updatedData: Partial<FullPost>) => void;
   addComment: (postId: string, comment: FullComment) => void;
+  updateComment: (
+    postId: string,
+    commentId: string,
+    updatedData: Partial<FullComment>,
+  ) => void;
   removeComment: (postId: string, commentId: string) => void;
   removePost: (id: string) => void;
   resetPosts: () => void;

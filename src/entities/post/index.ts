@@ -1,8 +1,4 @@
-import {
-  likePostAction,
-  unlikePostAction,
-  deleteAction,
-} from './actions';
+import { likePostAction, unlikePostAction, deleteAction } from './actions';
 import { getPosts } from './data';
 import { postSchema } from './schemas';
 import { type FullPost } from './types';
