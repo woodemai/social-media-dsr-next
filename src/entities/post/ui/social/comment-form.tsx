@@ -8,7 +8,7 @@ import { type z } from 'zod';
 
 import { useStore } from '@/config/store';
 import { createCommentAction } from '@/entities/comment/actions';
-import { commentCreateSchema } from '@/entities/comment/schemas';
+import { commentSchema } from '@/entities/comment/schemas';
 import { useCurrentUser } from '@/entities/user/hooks/useCurrentUser';
 import { UserAvatar } from '@/features/user';
 import { Button } from '@/shared/ui/button';
@@ -22,14 +22,14 @@ export const CommentForm = ({ postId }: { postId: string }) => {
   const { toast } = useToast();
   const { addComment } = useStore(state => state.postSlice);
 
-  const form = useForm<z.infer<typeof commentCreateSchema>>({
-    resolver: zodResolver(commentCreateSchema),
+  const form = useForm<z.infer<typeof commentSchema>>({
+    resolver: zodResolver(commentSchema),
     defaultValues: {
       body: '',
     },
   });
 
-  const onSubmit = (values: z.infer<typeof commentCreateSchema>) => {
+  const onSubmit = (values: z.infer<typeof commentSchema>) => {
     startTransition(async () => {
       const createdComment = await createCommentAction(values, postId);
       toast({

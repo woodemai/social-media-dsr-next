@@ -1,18 +1,19 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { PaperPlaneIcon, UploadIcon } from '@radix-ui/react-icons';
+import { Pencil1Icon, Cross1Icon, UploadIcon } from '@radix-ui/react-icons';
+import { motion } from 'framer-motion';
+import { Save } from 'lucide-react';
 import {
   CldUploadWidget,
   type CloudinaryUploadWidgetResults,
 } from 'next-cloudinary';
-import { useEffect, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
 import { useStore } from '@/config/store';
 import { postUpsertAction } from '@/entities/post/actions';
 import { postSchema, type postSchemaType } from '@/entities/post/schemas';
-import { FormMediaList } from '@/features/post/ui/form-media-list';
 import { Button } from '@/shared/ui/button';
 import {
   Form,
@@ -22,50 +23,29 @@ import {
   FormMessage,
 } from '@/shared/ui/form';
 import { FormError } from '@/shared/ui/form-error';
-import { MFormSuccess } from '@/shared/ui/form-success';
 import { Textarea } from '@/shared/ui/textarea';
 
-export const PostForm = () => {
+import { FormMediaList } from './form-media-list';
+
+type PostEditFormProps = {
+  id: string;
+  defaultValues: Partial<postSchemaType>;
+  close: () => void;
+};
+
+export const PostEditForm = ({
+  defaultValues,
+  close,
+  id,
+}: PostEditFormProps) => {
   const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
-  const addPost = useStore(state => state.postSlice.addPost);
+  const { updatePost } = useStore(state => state.postSlice);
+
   const form = useForm<postSchemaType>({
     resolver: zodResolver(postSchema),
-    defaultValues: {
-      body: '',
-      multimedia: [],
-    },
+    defaultValues,
   });
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setError(undefined);
-      setSuccess(undefined);
-    }, 3000);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [error, success]);
-
-  const onSubmit = async (values: postSchemaType) => {
-    startTransition(async () => {
-      const { post, error } = await postUpsertAction(values);
-
-      if (error) {
-        setError(error);
-        setSuccess(undefined);
-      }
-
-      if (post) {
-        setSuccess('Пост успешно создан');
-        setError(undefined);
-        form.reset();
-        addPost(post);
-      }
-    });
-  };
 
   const handleMediaUpload = (results: CloudinaryUploadWidgetResults) => {
     if (typeof results.info !== 'string' && results.info?.secure_url) {
@@ -81,18 +61,73 @@ export const PostForm = () => {
     );
   };
 
-  const uploadedMedia = useWatch({
-    control: form.control,
+  const handleSubmit = form.handleSubmit((values: postSchemaType) => {
+    startTransition(async () => {
+      setError(undefined);
+
+      const { post, error } = await postUpsertAction(values, id);
+
+      if (error) {
+        return setError(error);
+      }
+
+      if (post) {
+        close();
+        updatePost(id, post);
+      }
+    });
+  });
+
+  const multimedia = useWatch({
     name: 'multimedia',
+    control: form.control,
   });
 
   return (
     <Form {...form}>
-      <form
-        className='flex flex-col gap-y-4 rounded-md bg-card/50 shadow-sm'
-        onSubmit={form.handleSubmit(onSubmit)}
+      <motion.form
+        initial={{ opacity: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.4, ease: 'easeInOut' }}
+        animate={{ opacity: 1 }}
+        onSubmit={handleSubmit}
+        className='flex flex-col gap-y-4'
       >
-        <div className='flex gap-x-2 p-4'>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center gap-x-4'>
+            <Pencil1Icon className='size-4' />
+            <h3 className='text-lg font-bold tracking-tight'>Редактирование</h3>
+          </div>
+          <Button
+            variant='ghost'
+            size='icon'
+            onClick={close}
+          >
+            <Cross1Icon className='size-4' />
+          </Button>
+        </div>
+        <FormField
+          control={form.control}
+          name='body'
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Textarea
+                  disabled={isPending}
+                  placeholder='Что у вас нового?'
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormMediaList
+          media={multimedia}
+          onRemove={handleMediaRemove}
+        />
+        <FormError message={error} />
+        <div className='flex justify-end gap-x-4'>
           <FormField
             control={form.control}
             name='multimedia'
@@ -110,10 +145,9 @@ export const PostForm = () => {
                         onClick={() => {
                           open();
                         }}
-                        size='icon'
                         title='Загрузить'
                         type='button'
-                        variant='ghost'
+                        variant='secondary'
                       >
                         <span className='sr-only'>Загрузить</span>
                         <UploadIcon className='size-4' />
@@ -124,42 +158,16 @@ export const PostForm = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name='body'
-            render={({ field }) => (
-              <FormItem className='w-full'>
-                <FormControl>
-                  <Textarea
-                    disabled={isPending}
-                    {...field}
-                    className='min-h-8 w-full border-none bg-transparent hover:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'
-                    placeholder='Напишите, что у вас нового...'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <Button
             disabled={isPending}
             type='submit'
-            size='icon'
-            variant='ghost'
-            className='rounded-full'
-            title='Опубликовать'
-            name='Опубликовать'
+            className='space-x-2'
           >
-            <PaperPlaneIcon className='size-4' />
+            <Save className='size-4' />
+            <span>Сохранить</span>
           </Button>
         </div>
-        <MFormSuccess message={success} />
-        <FormError message={error} />
-        <FormMediaList
-          media={uploadedMedia}
-          onRemove={handleMediaRemove}
-        />
-      </form>
+      </motion.form>
     </Form>
   );
 };

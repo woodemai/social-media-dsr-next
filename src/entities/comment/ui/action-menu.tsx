@@ -1,4 +1,8 @@
-import { DotsHorizontalIcon, TrashIcon } from '@radix-ui/react-icons';
+import {
+  DotsHorizontalIcon,
+  Pencil1Icon,
+  TrashIcon,
+} from '@radix-ui/react-icons';
 import { useTransition } from 'react';
 
 import { useStore } from '@/config/store';
@@ -14,9 +18,14 @@ import { useToast } from '@/shared/ui/use-toast';
 type ActionsMenuProps = {
   postId: string;
   commentId: string;
+  startEditing: () => void;
 };
 
-export const ActionsMenu = ({ postId, commentId }: ActionsMenuProps) => {
+export const ActionsMenu = ({
+  postId,
+  commentId,
+  startEditing,
+}: ActionsMenuProps) => {
   const [isPending, startTransition] = useTransition();
   const { removeComment } = useStore(state => state.postSlice);
   const { toast } = useToast();
@@ -48,11 +57,20 @@ export const ActionsMenu = ({ postId, commentId }: ActionsMenuProps) => {
           <DotsHorizontalIcon className='size-4' />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className='flex flex-col gap-y-2'>
+        <Button
+          onClick={startEditing}
+          variant='ghost'
+          className='flex gap-x-2'
+        >
+          <Pencil1Icon className='size-4' />
+          <span>Редактировать</span>
+        </Button>
         <Button
           disabled={isPending}
           onClick={handleDelete}
           variant='ghost'
+          className='flex gap-x-2'
         >
           <TrashIcon className='size-4' />
           <span>Удалить</span>

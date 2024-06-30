@@ -61,6 +61,21 @@ export const getStore = (initialState: StoreState = defaultInitialState) => {
           },
         }));
       },
+      updatePost(id, updatedData) {
+        set(({ postSlice }) => ({
+          postSlice: {
+            ...postSlice,
+            posts: [
+              ...postSlice.posts.map(post => {
+                if (post.id === id) {
+                  return { ...post, ...updatedData };
+                }
+                return post;
+              }),
+            ],
+          },
+        }));
+      },
       addComment(postId, comment) {
         set(({ postSlice }) => ({
           postSlice: {
@@ -68,6 +83,27 @@ export const getStore = (initialState: StoreState = defaultInitialState) => {
             posts: postSlice.posts.map(post => {
               if (post.id === postId) {
                 return { ...post, comments: [...post.comments, comment] };
+              }
+              return post;
+            }),
+          },
+        }));
+      },
+      updateComment(postId, commentId, updatedData) {
+        set(({ postSlice }) => ({
+          postSlice: {
+            ...postSlice,
+            posts: postSlice.posts.map(post => {
+              if (post.id === postId) {
+                return {
+                  ...post,
+                  comments: post.comments.map(comment => {
+                    if (comment.id === commentId) {
+                      return { ...comment, ...updatedData };
+                    }
+                    return comment;
+                  }),
+                };
               }
               return post;
             }),
