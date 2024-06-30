@@ -36,7 +36,7 @@ export const ListClient = ({
     if (!lastRef.current) return;
 
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
+      if (entry?.isIntersecting) {
         startTransition(async () => {
           if (initialPosts.length < PAGE_SIZE) {
             observer.unobserve(entry.target);

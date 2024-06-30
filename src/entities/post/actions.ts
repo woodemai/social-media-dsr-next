@@ -1,34 +1,85 @@
 'use server';
 
-import { type z } from 'zod';
-
+import { PAGE_SIZE } from '@/config/next.constants.mjs';
 import { db } from '@/config/prisma';
-import { createSchema } from '@/entities/post/schemas';
+import { postSchema, type postSchemaType } from '@/entities/post/schemas';
 import { getCurrentUser } from '@/entities/user/data';
 
 import { type FullPost } from './types';
 
-export const createPostAction = async (
-  values: z.infer<typeof createSchema>,
+export const postUpsertAction = async (
+  values: postSchemaType,
+  postId?: string,
 ) => {
-  const validatedFields = createSchema.safeParse(values);
+  const validatedFields = postSchema.safeParse(values);
 
-  if (!validatedFields.success)
+  if (!validatedFields.success) {
     return {
-      error: 'Ошибка валидации',
+      error: 'Неверно заполнены поля',
     };
+  }
 
   const user = await getCurrentUser();
 
-  if (!user)
+  if (!user) {
     return {
       error: 'Пользователь не авторизован',
     };
+  }
 
-  const createdPost: FullPost = await db.post.create({
+  if (postId) {
+    const post: FullPost = await db.post.update({
+      data: {
+        ...validatedFields.data,
+      },
+      where: {
+        id: postId,
+      },
+      include: {
+        comments: {
+          select: {
+            id: true,
+            body: true,
+            author: {
+              select: {
+                id: true,
+                image: true,
+                name: true,
+              },
+            },
+          },
+          take: PAGE_SIZE,
+        },
+        _count: {
+          select: {
+            likedUsers: true,
+          },
+        },
+        likedUsers: {
+          where: {
+            id: user.id,
+          },
+          select: {
+            id: true,
+          },
+        },
+        author: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+      },
+    });
+
+    return {
+      post: post,
+    };
+  }
+
+  const post: FullPost = await db.post.create({
     data: {
-      multimedia: validatedFields.data.multimedia,
-      body: validatedFields.data.body,
+      ...validatedFields.data,
       author: {
         connect: {
           id: user.id,
@@ -36,6 +87,20 @@ export const createPostAction = async (
       },
     },
     include: {
+      comments: {
+        select: {
+          id: true,
+          body: true,
+          author: {
+            select: {
+              id: true,
+              image: true,
+              name: true,
+            },
+          },
+        },
+        take: PAGE_SIZE,
+      },
       _count: {
         select: {
           likedUsers: true,
@@ -59,8 +124,7 @@ export const createPostAction = async (
   });
 
   return {
-    post: createdPost,
-    success: 'Пост успешно создан',
+    post: post,
   };
 };
 

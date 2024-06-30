@@ -8,19 +8,21 @@ import Yandex from 'next-auth/providers/yandex';
 import { db } from '@/config/prisma';
 import { loginSchema } from '@/entities/auth/schemas';
 
+import { env } from './env.mjs';
+
 export default {
   providers: [
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
     Github({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
     Yandex({
-      clientId: process.env.YANDEX_CLIENT_ID,
-      clientSecret: process.env.YANDEX_CLIENT_SECRET,
+      clientId: env.YANDEX_CLIENT_ID,
+      clientSecret: env.YANDEX_CLIENT_SECRET,
     }),
     Credentials({
       async authorize(credentials) {

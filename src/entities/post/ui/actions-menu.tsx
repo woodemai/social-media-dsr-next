@@ -19,9 +19,10 @@ import { useToast } from '@/shared/ui/use-toast';
 
 type DeleteButtonProps = {
   id: string;
+  startEditing: () => void;
 };
 
-export const ActionsMenu = ({ id }: DeleteButtonProps) => {
+export const ActionsMenu = ({ id, startEditing }: DeleteButtonProps) => {
   const { toast } = useToast();
   const removePost = useStore(state => state.postSlice.removePost);
 
@@ -36,7 +37,10 @@ export const ActionsMenu = ({ id }: DeleteButtonProps) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger
+        asChild
+        className='opacity-0 group-hover/post:opacity-100'
+      >
         <Button
           name='Меню поста'
           size='icon'
@@ -51,7 +55,7 @@ export const ActionsMenu = ({ id }: DeleteButtonProps) => {
         <DropdownMenuItem>
           <button
             className='flex items-center gap-x-4'
-            // onClick={handleDelete}
+            onClick={startEditing}
             type='button'
           >
             <Pencil1Icon className='size-4' />

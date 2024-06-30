@@ -2,11 +2,12 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 import { Inter as FontSans } from 'next/font/google';
+import { SessionProvider } from 'next-auth/react';
 import { ViewTransitions } from 'next-view-transitions';
 
 import '@/config/globals.css';
-import { VERCEL_ENV } from '@/config/next.constants.mjs';
 import { StoreProvider } from '@/config/store';
+import { env } from '@/env.mjs';
 import { Toaster } from '@/shared/ui/toaster';
 import { cn } from '@/shared/utils';
 
@@ -50,19 +51,21 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             defaultTheme='system'
             enableSystem
           >
-            <StoreProvider>
-              <Toaster />
-              <BackgroundFigure className='left-[50%] top-[100px]' />
-              <BackgroundFigure className='left-[5%] top-[60%]' />
-              <BackgroundFigure className='left-[85%] top-[70%]' />
-              {children}
-              {VERCEL_ENV ? (
-                <>
-                  <Analytics />
-                  <SpeedInsights />
-                </>
-              ) : null}
-            </StoreProvider>
+            <SessionProvider>
+              <StoreProvider>
+                <Toaster />
+                <BackgroundFigure className='left-[50%] top-[100px]' />
+                <BackgroundFigure className='left-[5%] top-[60%]' />
+                <BackgroundFigure className='left-[85%] top-[70%]' />
+                {children}
+                {env.NEXT_PUBLIC_VERCEL_ENV ? (
+                  <>
+                    <Analytics />
+                    <SpeedInsights />
+                  </>
+                ) : null}
+              </StoreProvider>
+            </SessionProvider>
           </ThemeProvider>
         </body>
       </html>

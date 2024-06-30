@@ -14,25 +14,27 @@ enum Role {
 }
 
 model User {
-  id             String    @id @default(cuid())
-  name           String?
-  bio            String?
-  email          String    @unique
-  emailVerified  DateTime?
-  password       String?
-  image          String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  role           Role      @default(USER)
-  accounts       Account[]
-  posts          Post[]
+  id            String    @id @default(cuid())
+  name          String?
+  bio           String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  role          Role      @default(USER)
+  accounts      Account[]
+  posts         Post[]
+  comments      Comment[]
 
-  isPrivate Boolean?  @default(false)
+  isPrivate Boolean? @default(false)
 
   subscribers User[] @relation("subscription")
   subscribed  User[] @relation("subscription")
 
-  likedPost Post[] @relation("like")
+  likedPost    Post[]    @relation("like")
+  likedComment Comment[] @relation("likedComment")
 
   incomingSubscriptionRequests SubscriptionRequest[] @relation("requestTo")
   outgoingSubscriptionRequests SubscriptionRequest[] @relation("requestBy")
@@ -45,15 +47,15 @@ enum RequestStatus {
 }
 
 model SubscriptionRequest {
-  id             String    @id @default(cuid())
+  id String @id @default(cuid())
 
   requestById String
   requestToId String
 
   status RequestStatus @default(PENDING)
 
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   requestBy User @relation("requestBy", fields: [requestById], references: [id])
   requestTo User @relation("requestTo", fields: [requestToId], references: [id])
@@ -86,10 +88,30 @@ model Post {
   multimedia String[]
 
   authorId String
-  author   User   @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
+  comments Comment[]
+
   likedUsers User[] @relation("like")
+}
+
+model Comment {
+  id String @id @default(cuid())
+
+  body       String
+  multimedia String[]
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  likedUsers User[] @relation("likedComment")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }

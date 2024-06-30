@@ -1,15 +1,10 @@
-import {
-  createPostAction,
-  likePostAction,
-  unlikePostAction,
-  deleteAction,
-} from './actions';
+import { likePostAction, unlikePostAction, deleteAction } from './actions';
 import { getPosts } from './data';
-import { createSchema } from './schemas';
+import { postSchema } from './schemas';
 import { type FullPost } from './types';
 import { ActionsMenu } from './ui/actions-menu';
 import { MediaList } from './ui/media-list';
-import { Social } from './ui/social';
+import { Social } from './ui/social/social';
 import { VideoItem } from './ui/video-item';
 
 export {
@@ -18,9 +13,8 @@ export {
   MediaList,
   Social,
   VideoItem,
-  createSchema,
+  postSchema as createSchema,
   getPosts,
-  createPostAction,
   likePostAction,
   unlikePostAction,
   deleteAction,

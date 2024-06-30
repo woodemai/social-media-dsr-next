@@ -33,7 +33,7 @@ export const MediaList = ({ media }: MediaListProps) => {
               <DialogTrigger className='m-0 size-fit h-full p-0'>
                 <Image
                   alt='Изображение'
-                  className='m-0 size-full rounded-sm object-cover'
+                  className='m-0 size-full rounded-md object-cover'
                   height={1024}
                   priority
                   src={item}
