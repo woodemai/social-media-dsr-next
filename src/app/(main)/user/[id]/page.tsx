@@ -13,9 +13,11 @@ type UserPageProps = {
 };
 
 const UserPage = async ({ params: { id } }: UserPageProps) => {
-  const user = await getUserById(id);
-  const currentUser = await getCurrentUser();
-  const isSubscribed = await getIsSubscribed(id);
+  const [user, currentUser, isSubscribed] = await Promise.all([
+    getUserById(id),
+    getCurrentUser(),
+    getIsSubscribed(id),
+  ]);
   const isOwner = currentUser.id === id;
   const isShowingPosts = isSubscribed || isOwner || !user?.isPrivate;
 
