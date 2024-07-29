@@ -16,23 +16,25 @@ type SubscriptionActionReturnType = {
 export const subscribeAcceptAction = async (
   subscriptionRequest: FullSubscriptionRequest,
 ) => {
-  await db.user.update({
-    where: {
-      id: subscriptionRequest.requestToId,
-    },
-    data: {
-      subscribers: {
-        connect: {
-          id: subscriptionRequest.requestById,
+  await Promise.all([
+    db.user.update({
+      where: {
+        id: subscriptionRequest.requestToId,
+      },
+      data: {
+        subscribers: {
+          connect: {
+            id: subscriptionRequest.requestById,
+          },
         },
       },
-    },
-  });
-  await db.subscriptionRequest.delete({
-    where: {
-      id: subscriptionRequest.id,
-    },
-  });
+    }),
+    db.subscriptionRequest.delete({
+      where: {
+        id: subscriptionRequest.id,
+      },
+    }),
+  ]);
 };
 
 export const subscribeRejectAction = async (
